@@ -1,0 +1,469 @@
+﻿@using NewTiceAI.Helpers
+@model Contact
+@inject IImageService _ImageService
+@inject UserManager<TAUser> _UserManager
+@inject IBTFileService _FileService
+
+@{
+    ViewData["Title"] = "Details";
+    ActionItem ActionItem = new ActionItem() { ContactId = Model.Id, SubmitterId = _UserManager.GetUserId(User) };
+}
+
+<!-- Bootstrap CSS -->
+@*<link rel="stylesheet" href="~/template/assets/css/bootstrap.min.css">
+*@<!-- Fontawesome CSS -->
+@* <link rel="stylesheet" href="~/template/assets/plugins/fontawesome/css/fontawesome.min.css">
+<link rel="stylesheet" href="~/template/assets/plugins/fontawesome/css/all.min.css">
+
+<!-- Lineawesome CSS -->
+<link rel="stylesheet" href="~/template/assets/css/line-awesome.min.css">
+<link rel="stylesheet" href="~/template/assets/css/material.css">
+
+<!-- Fontawesome CSS -->
+<link rel="stylesheet" href="~/template/assets/css/font-awesome.min.css">
+
+<!-- Lineawesome CSS -->
+<link rel="stylesheet" href="~/template/assets/css/line-awesome.min.css">
+
+<!-- Select2 CSS -->
+<link rel="stylesheet" href="~/template/assets/css/select2.min.css">
+
+<!-- Main CSS -->
+<link rel="stylesheet" href="~/template/assets/css/style.css"> *@
+
+@* <div class="block-header">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <ul class="breadcrumb breadcrumb-style ">
+                <li class="breadcrumb-item">
+                    <h4 class="page-title">Dashboard</h4>
+                </li>
+                <li class="breadcrumb-item bcrumb-1">
+                    <a asp-action="Dashboard_new" asp-controller="Home">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                </li>
+                <li class="breadcrumb-item active">Contact Detail</li>
+            </ul>
+        </div>
+    </div>
+</div> *@
+
+<div class="page-header">
+    <div class="row">
+        <div class="col-sm-12">
+            <h3 class="page-title">Contacts</h3>
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item">Dashboard</li>
+                <li class="breadcrumb-item active">Contacts</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- /Page Header -->
+<!-- Page Content -->
+<div class="row">
+    @{
+        string adjustClass = Model.ActionItems.Count > 0 || Model.Attachments.Count > 0 ? "offset-md-1" : "offset-md-2";
+    }
+    <div class="col-md-8 @adjustClass">
+        <h1>CONTACT DETAILS</h1>
+        <div class="col-12 d-flex justify-content-end mb-2">
+            <a asp-action="Index" class="mx-2 btn btn-secondary rounded-pill btnlinks">Back</a>
+            <a asp-action="Edit" asp-route-id="@Model?.Id" class="mx-2 btn btn-warning rounded-pill btnlinks">Edit</a>
+            <a asp-action="Delete" asp-route-id="@Model?.Id" class="mx-2 btn btn-danger rounded-pill btnlinks">Delete</a>
+            <a data-bs-toggle="modal" data-bs-target="#add_actionitem" class="mx-2 btn btn-primary rounded-pill btnlinks">+ Activity</a>
+            <a data-bs-toggle="modal" data-bs-target="#add_attachment" class="mx-2 btn btn-dark rounded-pill btnlinks">+ Attachment</a>
+        </div>
+        <div class="p-3 border border-2 shadow-lg bg-light mb-5">
+            <div class="row g-3 p-2">
+                <div class="col-12 col-lg-4">
+                    <div class="square-img-container mb-3">
+                        <img id="contactImage" class="square-img" src="@(Model?.ImageId == null ? FileUploader.DefaultUserImage:$"/api/uploads/{Model.ImageId}")" />
+                    </div>
+                </div>
+                <div class="col-12 col-lg-8">
+                    <div class="row">
+                        @*                         <div class="col-12 col-lg-6">
+                        <label asp-for="FirstName" class="control-label"></label>
+                        <span asp-for="FirstName" class="form-control">@Model?.FirstName</span>
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                        </div>                <div class="col-12 col-lg-6">
+                        <label asp-for="LastName" class="control-label"></label>
+                        <span asp-for="LastName" class="form-control">@Model?.LastName</span>
+                        <span asp-validation-for="LastName" class="text-danger"></span>
+                        </div> *@
+                        <div class="col-12 col-lg-6">
+                            <label asp-for="FirstName" class="control-label"></label>
+                            <span asp-for="FirstName" class="form-control">@Model?.FirstName</span>
+                            <span asp-validation-for="FirstName" class="text-danger"></span>
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <label asp-for="LastName" class="control-label"></label>
+                            <span asp-for="LastName" class="form-control">@Model?.LastName</span>
+                            <span asp-validation-for="LastName" class="text-danger"></span>
+                        </div>
+                        <div class="col-12 col-lg-6 mt-2">
+                            <label asp-for="Email" class="control-label"></label>
+                            <span asp-for="Email" class="form-control">@Model?.Email</span>
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                        <div class="col-12 col-lg-6 mt-2">
+                            <label asp-for="PhoneNumber" class="control-label"></label>
+                            <span asp-for="PhoneNumber" class="form-control">@Model?.PhoneNumber</span>
+                            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                        </div>
+                        <div class="col-12 col-lg-6 mt-2">
+                            <label asp-for="Mobile" class="control-label"></label>
+                            <span asp-for="Mobile" class="form-control">@Model?.Mobile</span>
+                            <span asp-validation-for="Mobile" class="text-danger"></span>
+                        </div>
+                        <div class="col-12 mt-2">
+                            <label asp-for="Address!.Address1" class="control-label"></label>
+                            <span asp-for="Address!.Address1" class="form-control">@Model?.Address?.Address1</span>
+                            <span asp-validation-for="Address!.Address1" class="text-danger"></span>
+                        </div>
+                        <div class="col-12 mt-2">
+                            <label asp-for="Address!.Address2" class="control-label"></label>
+                            <span asp-for="Address!.Address2" class="form-control">@Model?.Address?.Address2</span>
+                            <span asp-validation-for="Address!.Address2" class="text-danger"></span>
+                        </div>
+                        <div class="col-12 col-lg-6 mt-2">
+                            <label asp-for="Address!.City" class="control-label"></label>
+                            <span asp-for="Address!.City" class="form-control">@Model?.Address?.City</span>
+                            <span asp-validation-for="Address!.City" class="text-danger"></span>
+                        </div>
+                        <div class="col-12 col-lg-4 mt-2">
+                            <label asp-for="Address!.State" class="control-label"></label>
+                            <span asp-for="Address!.State" class="form-select">@Model?.Address?.State</span>
+                            <span asp-validation-for="Address!.State" class="text-danger"></span>
+                        </div>
+                        <div class="col-12 col-lg-2 mt-2">
+                            <label asp-for="Address!.ZipCode" class="control-label"></label>
+                            <span asp-for="Address!.ZipCode" class="form-control">@Model?.Address?.ZipCode</span>
+                            <span asp-validation-for="Address!.ZipCode" class="text-danger"></span>
+                        </div>
+                        <div class="col-12 col-lg-6 mt-3">
+                            <label asp-for="AccountId" class="control-label"></label>
+                            <span asp-for="AccountId" class="form-control">@Model?.Account?.Name</span>
+                        </div>
+                        <div class="col-12 col-lg-6 mt-3">
+                            <label asp-for="DateOfBirth" class="control-label"></label>
+                            <span asp-for="DateOfBirth" class="form-control">@Model?.DateOfBirth</span>
+                            <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <label asp-for="Title" class="control-label"></label>
+                            <span asp-for="Title" class="form-control">@Model?.Title</span>
+                            <span asp-validation-for="Title" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="DoNotCall" class="control-label"></label>
+                            <input class="form-check-input" type="checkbox" asp-for="DoNotCall" disabled />
+                            <span asp-validation-for="DoNotCall" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="EmailOptOut" class="control-label"></label>
+                            <input class="form-check-input" type="checkbox" disabled asp-for="EmailOptOut" />
+                            <span asp-validation-for="EmailOptOut" class="text-danger"></span>
+                        </div>
+                        <div class="col-12 col-lg-6 mt-3">
+                            <label asp-for="Gender" class="control-label"></label>
+                            <span asp-for="Gender" class="form-control">@Model?.Gender</span>
+                            <span asp-validation-for="Gender" class="text-danger"></span>
+                        </div>
+                        <div class="col-12 col-lg-12 mt-3">
+                            <label asp-for="Specialty" class="control-label"></label>
+                            <div class="form-control">@Model?.Specialty</div>
+                            <span asp-validation-for="Specialty" class="text-danger"></span>
+                        </div>
+                        <div class="col-6 col-lg-6 mt-3">
+                            <label asp-for="ResidencyId" class="control-label"></label>
+                            <div class="form-control">@Model?.Residency?.Name</div>
+                        </div>
+                        <div class="col-6 col-lg-6 mt-3">
+                            <label asp-for="Residency_GradYear" class="control-label"></label>
+                            <span asp-for="Residency_GradYear" class="form-control">@Model?.Residency_GradYear</span>
+                            <span asp-validation-for="Residency_GradYear" class="text-danger"></span>
+                        </div>
+                        <div class="col-6 col-lg-6 mt-3">
+                            <label asp-for="FellowshipId" class="control-label"></label>
+                            <div class="form-control">@Model?.Fellowship?.Name</div>
+                        </div>
+                        <div class="col-6 col-lg-6 mt-3">
+                            <label asp-for="Fellowship_GradYear" class="control-label"></label>
+                            <span asp-for="Fellowship_GradYear" class="form-control">@Model?.Fellowship2_GradYear</span>
+                            <span asp-validation-for="Fellowship_GradYear" class="text-danger"></span>
+                        </div>
+                        <div class="col-6 col-lg-6 mt-3">
+                            <label asp-for="Fellowship2Id" class="control-label"></label>
+                            <div class="form-control">@Model?.Fellowship2?.Name</div>
+                        </div>
+                        <div class="col-6 col-lg-6 mt-3">
+                            <label asp-for="Fellowship2_GradYear" class="control-label"></label>
+                            <span asp-for="Fellowship2_GradYear" class="form-control">@Model?.Fellowship2_GradYear</span>
+                            <span asp-validation-for="Fellowship2_GradYear" class="text-danger"></span>
+                        </div>
+                        <div class="col-7 col-lg-6 mt-3">
+                            <label asp-for="RelationshipHolderId" class="control-label"></label>
+                            <div class="form-control">@Model?.RelationshipHolder?.FullName</div>
+                        </div>
+                        <div class="col-12 col-lg-6 mt-3">
+                            <label asp-for="CurrentDistributorId" class="control-label"></label>
+                            <div class="form-control">@Model?.CurrentDistributor?.Name</div>
+                        </div>
+                        <div class="col-6 col-lg-6 mt-3">
+                            <label asp-for="SalesRepresentativeId" class="control-label"></label>
+                            <div class="form-control">@Model?.SalesRepresentative?.FullName</div>
+                        </div>
+                        <div class="col-12 col-lg-6 mt-3">
+                            <label asp-for="PracticeId" class="control-label"></label>
+                            <div class="form-control">@Model?.Practice?.Name</div>
+                        </div>
+                        <div class="col-6 col-lg-6 mt-3">
+                            <label asp-for="MentorId" class="control-label"></label>
+                            <div class="form-control">@Model?.Mentor?.FullName</div>
+                        </div>
+                        <div class="col-6 col-lg-6 mt-3">
+                            <label asp-for="LastMeetingDate" class="control-label"></label>
+                            <span asp-for="LastMeetingDate" class="form-control">@Model?.LastMeetingDate</span>
+                            <span asp-validation-for="LastMeetingDate" class="text-danger"></span>
+                        </div>
+                        <div class="col-6 col-lg-6 mt-3">
+                            <label asp-for="NextActivityDate" class="control-label"></label>
+                            <span asp-for="NextActivityDate" class="form-control">@Model?.NextActivityDate</span>
+                            <span asp-validation-for="NextActivityDate" class="text-danger"></span>
+                        </div>
+                        <div class="col-6 col-lg-6 mt-3">
+                            <label asp-for="FollowupDate" class="control-label"></label>
+                            <span asp-for="FollowupDate" class="form-control">@Model?.FollowupDate</span>
+                            <span asp-validation-for="FollowupDate" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="HandoffConfirmed" class="control-label"></label>
+                            <input class="form-check-input" type="checkbox" disabled asp-for="HandoffConfirmed" />
+                            <span asp-validation-for="HandoffConfirmed" class="text-danger"></span>
+                        </div>
+                        <div class="col-12 col-lg-12 mt-3">
+                            <label asp-for="ContactNotes" class="control-label"></label>
+                            @Html.Raw(Model?.ContactNotes)
+                            <span asp-validation-for="ContactNotes" class="text-danger"></span>
+                        </div>
+                        <div class="col-12 col-lg-12 mt-3">
+                            <label asp-for="ProfileUrl" class="control-label"></label>
+                            <span><a href="@Model?.ProfileUrl" target="_blank" rel="noreferrer noopener">:  @Model?.ProfileUrl</a></span>
+                            <span asp-validation-for="ProfileUrl" class="text-danger"></span>
+                        </div>
+                        <div class="col-12 col-lg-12 mt-3">
+                            <label asp-for="ProfileUrl2" class="control-label"></label>
+                            <span><a href="@Model?.ProfileUrl2" target="_blank" rel="noreferrer noopener">: @Model?.ProfileUrl2</a></span>
+                            <span asp-validation-for="ProfileUrl2" class="text-danger"></span>
+                        </div>
+                        <div class="col-12 d-flex justify-content-end mt-2">
+                            <a asp-action="Index" class="mx-2 btn btn-lg btn-secondary rounded-pill btnlinks">Back</a>
+                            <a asp-action="Edit" asp-route-id="@Model?.Id" class="mx-2 btn btn-lg btn-warning rounded-pill btnlinks">Edit</a>
+                            <a asp-action="Delete" asp-route-id="@Model?.Id" class="mx-2 btn btn-lg btn-danger rounded-pill btnlinks">Delete</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*        <div>
+        <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+        <a asp-action="Index">Back to List</a>
+        </div>*@
+    </div>
+    @if (Model?.ActionItems.Count > 0 || Model?.ActionItems.Count > 0)
+    {
+        <div class="col-md-3">
+            @if (Model?.ActionItems.Count > 0)
+            {
+                <h3>ACTION ITEMS</h3>
+                <div class="faq-card">
+                    @foreach (ActionItem item in Model.ActionItems)
+                    {
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">
+                                    <a class="collapsed" data-bs-toggle="collapse" href="#collapse-@item.Id">@item.Title</a>
+                                </h4>
+                            </div>
+                            <div id="collapse-@item.Id" class="card-collapse collapse">
+                                <div class="card-body">
+                                    <p>@item.Description</p>
+                                    <p>@item.Note</p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+
+            @if (Model?.ActionItems.Count > 0)
+            {
+                <div style="padding-top:80px">
+                    <h3>Attached Files</h3>
+                    <div class="faq-card">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">
+                                    <a class="collapsed" data-bs-toggle="collapse" href="#collapse-contattch">Anim pariatur cliche reprehenderit?</a>
+                                </h4>
+                            </div>
+                            <div id="collapse-contattch" class="card-collapse collapse show">
+                                <div class="card-body">
+                                    @foreach (ContactAttachment item in Model.Attachments)
+                                    {
+                                        <div class="col col-sm-2">
+                                            <a asp-action="ShowFile" asp-controller="Contacts" asp-route-Id="@item.Id">
+                                                <div class="icon">
+                                                    <img src="@_FileService.GetFileIcon(item.FileName!)" style="height:50px;width:50px" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="@item.FileName" />
+                                                </div>
+                                            </a>
+                                            <div style="font-size:x-small">
+                                                <div class="file-name">
+                                                    <strong>@item.Description</strong>
+                                                </div>
+                                                <small>Size: @_FileService.FormatFileSize(item.FileData!.Length) </small>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+    }
+
+</div>
+
+<!-- Add Action Item Modal -->
+<div id="add_actionitem" class="modal custom-modal fade" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">New Action Item</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form asp-action="Create" asp-controller="ActionItems">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="@ActionItem.ContactId" />
+                    <input type="hidden" asp-for="@ActionItem.SubmitterId" />
+                    <div class="form-group">
+                        <label asp-for="@ActionItem.ActorId" class="control-label"></label>
+                        <select asp-for="@ActionItem.ActorId" class="form-select" asp-items="ViewBag.ActorId">
+                            <option></option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="@ActionItem.AccountId" class="control-label"></label>
+                        <select asp-for="@ActionItem.AccountId" class="form-select" asp-items="ViewBag.AccountId">
+                            <option></option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="@ActionItem.ItemType" class="control-label"></label>
+                        <select asp-for="@ActionItem.ItemType" class="form-select" asp-items="ViewBag.ItemType">
+                            <option></option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="@ActionItem.ItemPriority" class="control-label"></label>
+                        <select asp-for="@ActionItem.ItemPriority" class="form-select" asp-items="ViewBag.ItemPriority">
+                            <option></option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="@ActionItem.Title" class="control-label"></label>
+                        <input asp-for="@ActionItem.Title" class="form-control" />
+                        <span asp-validation-for="@ActionItem.Title" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="@ActionItem.Description" class="control-label"></label>
+                        <input asp-for="@ActionItem.Description" class="form-control" />
+                        <span asp-validation-for="@ActionItem.Description" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="@ActionItem.Note" class="control-label"></label>
+                        <textarea asp-for="@ActionItem.Note" class="form-control" id="editor"></textarea>
+                        <span asp-validation-for="@ActionItem.Note" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Create" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Add Action Item Modal -->
+<!-- Add Attachment Modal -->
+<div id="add_attachment" class="modal custom-modal fade" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">New Attchment</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="card m-1 p-2">
+                    <div class="card-header">
+                        <h2>Attachments</h2>
+                    </div>
+                    <div class="card-body" style="overflow-y:auto;height:300px;">
+
+                        <div class="row clearfix">
+                            <div>
+                                <form asp-action="AddContactAttachment" asp-controller="Contacts" enctype="multipart/form-data" method="post">
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                    <input type="hidden" asp-for="Id" name="ContactId">
+
+                                    <div class="media-body ml-3">
+                                        <label>
+                                            Description
+                                            <input asp-for="@(new TicketAttachment().Description)" type="text" class="form-control" />
+                                        </label><br />
+                                        <label class="btn btn-outline-primary btn-sm">
+                                            <input asp-for="@(new TicketAttachment().FormFile)" type="file" class="form-control-file" />
+                                        </label>
+                                        <button type="submit" class="btn btn-outline-secondary btn-sm md-btn-flat">Submit</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Add Attachment Modal -->
+@section Scripts {
+    <!-- Slimscroll JS -->
+    <script src="~/template/assets/js/jquery.slimscroll.min.js"></script>
+    <!-- Ck Editor JS -->
+    <script src="~/template/assets/js/ckeditor.js"></script>
+
+    <!-- Select2 JS -->
+    <script src="~/template/assets/js/select2.min.js"></script>
+
+    <!-- Theme Settings JS -->
+    <script src="~/template/assets/js/layout.js"></script>
+    <script src="~/template/assets/js/theme-settings.js"></script>
+    <script src="~/template/assets/js/greedynav.js"></script>
+    <!-- Custom JS -->
+    <script src="~/template/assets/js/app.js"></script>
+
+    <!--Sweet Alerts-->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+}

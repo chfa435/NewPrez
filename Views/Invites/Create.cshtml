@@ -1,0 +1,104 @@
+﻿@model NewTiceAI.Models.Invite
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+@*<div class="row clearfix">
+    <div class="col-lg-6 col-md-4 col-sm-12 col-xs-12">
+        <div class="card">
+            <div class="header">
+                <h2>
+                    Company Invite
+                </h2>
+                <ul class="header-dropdown">
+                    <li class="dropdown">
+                        <a href="#" onClick="return false;" class="dropdown-toggle"
+                           data-bs-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">
+                            <i class="material-icons">more_vert</i>
+                        </a>
+                        <ul class="dropdown-menu pull-right">
+                            <li>
+                                <a href="#" onClick="return false;">Add</a>
+                            </li>
+                            <li>
+                                <a href="#" onClick="return false;">Edit</a>
+                            </li>
+                            <li>
+                                <a href="#" onClick="return false;">Delete</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="body">
+                <h2 class="card-inside-title">New Member Information</h2>
+                <div class="row clearfix">
+                    <form>
+                        <div>
+                            <input type="email" class="squareInput">
+                            <label>Username</label>
+                        </div>
+                        <div>
+                            <input type="password" class="squareInput">
+                            <label>Password</label>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+*@
+<h1>Create</h1>
+
+<h4>Company Invite</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="ProjectId" class="control-label"></label>
+                <select asp-for="ProjectId" class="form-control" asp-items="ViewBag.ProjectId"></select>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="InviteeEmail" class="control-label"></label>
+                <input asp-for="InviteeEmail" class="form-control" />
+                <span asp-validation-for="InviteeEmail" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="InviteeFirstName" class="control-label"></label>
+                <input asp-for="InviteeFirstName" class="form-control" />
+                <span asp-validation-for="InviteeFirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="InviteeLastName" class="control-label"></label>
+                <input asp-for="InviteeLastName" class="form-control" />
+                <span asp-validation-for="InviteeLastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Message" class="control-label"></label>
+                <input asp-for="Message" class="form-control" />
+                <span asp-validation-for="Message" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@*<div>
+    <a asp-action="Index">Back to List</a>
+</div>*@
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

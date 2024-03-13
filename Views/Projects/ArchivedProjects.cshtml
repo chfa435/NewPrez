@@ -1,0 +1,329 @@
+﻿@model IEnumerable<NewTiceAI.Models.Project>
+
+@{
+    ViewData["Title"] = "Archived Projects";
+}
+
+<h1>Archived Projects</h1>
+
+
+
+
+@*@if (User.IsInRole(nameof(BTRoles.Admin)) || User.IsInRole(nameof(BTRoles.ProjectManager)))
+{
+    <p>
+        <a class="btn btn-primary" asp-action="Create">Create New</a>
+    </p>
+}
+*@
+<!--div class="block-header">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <ul class="breadcrumb breadcrumb-style ">
+                <li class="breadcrumb-item">
+                    <h4 class="page-title">All Projects</h4>
+                </li>
+                <li class="breadcrumb-item bcrumb-1">
+                    <a asp-action="Dashboard_new" asp-controller="Home">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                </li>
+                <li class="breadcrumb-item bcrumb-2">
+                    <a href="#" onclick="return false;">
+                        Projects
+                    </a>
+                </li>
+                <li class="breadcrumb-item active">All Projects</li>
+            </ul>
+        </div>
+    </div>
+</div-->
+<!--div class="row clearfix">
+    <div class="col-xs-12 col-sm-12 col-md-12">
+        <div class="card">
+            <div class="header">
+                <h2>All Projects</h2>
+                <ul class="header-dropdown">
+                    <li class="dropdown">
+                        <a href="#" onClick="return false;" class="dropdown-toggle"
+                           data-bs-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">
+                            <i class="material-icons">more_vert</i>
+                        </a>
+                        <ul class="dropdown-menu pull-right">
+                            <li>
+                                <a href="#" onClick="return false;">Add</a>
+                            </li>
+                            <li>
+                                <a href="#" onClick="return false;">Edit</a>
+                            </li>
+                            <li>
+                                <a href="#" onClick="return false;">Delete</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="tableBody">
+                <div class="">
+                    <table id="projectRow" class="display" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Project Name</th>
+                                <th>Active</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th>Priority</th>
+                                <th>Total Tickets</th>
+                                <th>Total Devs</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+@*                            @foreach (Project project in Model)
+                            {
+                                <tr>
+                                    <td class="table-img">
+                                        @if (project.ImageFileData != null)
+                                        {
+                                            <img src="data:image/*;base64,@(Convert.ToBase64String(project.ImageFileData!))" alt="">
+                                        }
+                                    </td>
+                                    <td>@project.Name</td>
+                                    <td>
+                                        @{
+                                            var start = project.StartDate;
+                                            var end = project.EndDate;
+                                            var today = DateTime.Now;
+                                            var percent = today >= end ? 100 : today < start ? 0 : Math.Round((today.Subtract(start)) / (end.Subtract(start)) * 100);
+                                        }
+                                        @if (today < end && today >= start)
+                                        {
+                                            <span class="label bg-green shadow-style">Active</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="label bg-red shadow-style">Inactive</span>
+                                        }
+                                    </td>
+                                    <td>@project.StartDate.ToString("MM.dd.yy")</td>
+                                    <td>@project.EndDate.ToString("MM.dd.yy")</td>
+                                    <td>@project.ProjectPriority!.Name</td>
+                                    <td>@project.Tickets.Count()</td>
+                                    <td>@((await ProjectService.GetProjectMembersByRoleAsync(project.Id,nameof(BTRoles.Developer))).Count())</td>
+                                    <td>
+                                        <a class="btn tblActnBtn" asp-action="Details" asp-route-id="@project.Id">
+                                            <i class="material-icons">dvr</i>
+                                        </a>
+                                        <a class="btn tblActnBtn" asp-action="Edit" asp-route-id="@project.Id">
+                                            <i class="material-icons">mode_edit</i>
+                                        </a>
+                                        <a class="btn tblActnBtn" asp-action="Archive" asp-route-id="@project.Id">
+                                            <i class="material-icons">archive</i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                @*                                <tr>
+                            <td colspan="9">
+                            <table cellpadding="5" class="child-row-details" cellspacing="0" border="0" style="padding-left:50px;">
+                            <tbody>
+                            <tr>
+                            <td>Project Manager:</td>
+                            <td>undefined</td>
+                            </tr>
+                            <tr>
+                            <td>Description:</td>
+                            <td>undefined</td>
+                            </tr>
+                            <tr>
+                            </tbody>
+                            </table>
+                            </td>
+                            </tr>
+                       
+                            }
+*@                        
+</tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div-->
+
+
+
+
+@*<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <strong>All Tickets</strong>
+            </div>
+            <div class="card-body">
+                <table class="table" id="archived">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Name)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Description)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Created)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.StartDate)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.EndDate)
+                            </th>
+
+                            <th>
+                                Project Image
+                            </th>
+
+                            <th>
+                                @Html.DisplayNameFor(model => model.Archived)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Account)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ProjectPriority)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Description)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Created)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.StartDate)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.EndDate)
+                                </td>
+
+                                <td>
+                                    @if (item.ImageFileData != null)
+                                    {
+                                        <img class="" style="height:120px;width:120px" src="data:image/*;base64,@(Convert.ToBase64String(item.ImageFileData!))" alt="">
+                                    }
+                                </td>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Archived)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Account!.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ProjectPriority!.Name)
+                                </td>
+                                <td>
+                                    <a class="btn btn-sm btn-outline-dark" asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                                    <a class="btn btn-sm" style="background-color:forestgreen" asp-action="Restore" asp-route-id="@item.Id">Restore</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+*@
+
+@section scripts{
+    @*    <script>
+        $(document).ready(function() {
+            $('#allProjects').DataTable();
+        });
+    </script>*@
+    <!-- Custom Js -->
+    <script src="~/assets/js/admin.js"></script>
+    <!-- Demo Js -->
+
+@*    <script>
+        $(function() {
+            projectRowTable();
+        });
+
+        function projectRowTable() {
+            /* Formatting function for row details - modify as you need */
+            function format(d) {
+                // `d` is the original data object for the row
+                return (
+                    '<table cellpadding="0" class="child-row-details" cellspacing="0" border="0" style="padding-left:50px;">' +
+                    "<tr>" +
+                    "<td>Project Manager:</td>" +
+                    "<td>" +
+        @{
+            var pId = d.Id;
+        }
+
+                    @(ProjectService.GetProjectManagerAsync(pId)) +
+                    "</td>" +
+                    "</tr>" +
+                    "<tr>" +
+                    "<td>Description:</td>" +
+                    "<td>" +
+                    d.description +
+                    "</td>" +
+                    "</tr>" +
+                    "</table>"
+                );
+            }
+
+            var table = $("#projectRow").DataTable({
+                columns: [
+                    {
+                        className: "details-control",
+                        orderable: false,
+                        data: null,
+                        defaultContent: "",
+                    },
+                    { data: "project name" },
+                    { data: "active" },
+                    { data: "start date" },
+                    { data: "end date" },
+                    { data: "priority" },
+                    { data: "total tickets" },
+                    { data: "total devs" },
+                    { data: "action" },
+                ],
+                order: [[1, "asc"]],
+            });
+
+            // Add event listener for opening and closing details
+            $("#projectRow tbody").on("click", "td.details-control", function() {
+                var tr = $(this).closest("tr");
+                var row = table.row(tr);
+
+                if (row.child.isShown()) {
+                    // This row is already open - close it
+                    row.child.hide();
+                    tr.removeClass("shown");
+                } else {
+                    // Open this row
+                    row.child(format(row.data())).show();
+                    tr.addClass("shown");
+                }
+            });
+        }
+    </script>
+*@
+}

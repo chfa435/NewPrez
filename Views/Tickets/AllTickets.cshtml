@@ -1,0 +1,113 @@
+﻿@using NewTiceAI.Models.Enums
+@model IEnumerable<NewTiceAI.Models.Ticket>
+
+@{
+    ViewData["Title"] = "All Tickets";
+}
+
+<header class="page-header">
+    <h2>All Tickets</h2>
+
+@*    <div class="right-wrapper text-end">
+        <ol class="breadcrumbs">
+            <li>
+                <a asp-action="Dashboard" asp-controller="Home">
+                    <i class="bx bx-home-alt"></i>
+                </a>
+            </li>
+
+            <li><span>All Tickets</span></li>
+
+        </ol>
+
+        <a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fas fa-chevron-left"></i></a>
+    </div>
+*@</header>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <strong>All Tickets</strong>
+            </div>
+            <div class="card-body">
+                <table class="table" id="allTable">
+                    <thead>
+                        <tr>
+                            <th>
+                                Title
+                            </th>
+                            <th>
+                                Created
+                            </th>
+                            <th>
+                                Last Updated
+                            </th>
+                            <th>
+                                Priority
+                            </th>
+                            <th>
+                                Type
+                            </th>
+                            <th>
+                                Status
+                            </th>
+                            <th>
+                                Developer
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Title)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Created)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Updated)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TicketPriority!.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TicketType!.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TicketStatus!.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.DeveloperUser!.FullName)
+                                </td>
+                                <td>
+                                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                    <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                                    @if (User.IsInRole(nameof(BTRoles.Admin)) || User.IsInRole(nameof(BTRoles.ProjectManager)))
+                                    {
+                                        <span>|</span>
+                                        <a asp-action="Archive" asp-route-id="@item.Id">Archive</a>
+
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+<script>
+    $(document).ready( function () {
+        $('#allTable').DataTable();
+    } );
+</script>
+}
+

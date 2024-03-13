@@ -1,0 +1,61 @@
+﻿@model IEnumerable<Account>
+
+@{
+    ViewData["Title"] = "My Accounts";
+}
+
+<header class="page-header">
+    <h2> Accounts</h2>
+</header>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <strong>All Accounts</strong>
+            </div>
+            <div class="card-body">
+                <table class="table" id="myaccountsTable">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Name)
+                            </th>
+                            <th>Address</th>
+                            <th>City</th>
+                            <th>State</th>
+                            <th>Contacts</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (Account account in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => account.Name)
+                                </td>
+                                <td>@Html.DisplayFor(modelItem => account.ShippingAddress!.Address1)</td>
+                                <td>@Html.DisplayFor(modelItem => account.ShippingAddress!.City)</td>
+                                <td>@Html.DisplayFor(modelItem => account.ShippingAddress!.State)</td>
+                                <td>@account.Contacts.Count</td>
+                                <td>
+                                    <a asp-action="Edit" asp-route-id="@account.Id">Edit</a> |
+                                    <a asp-action="Details" asp-route-id="@account.Id">Details</a> |
+                                    <a asp-action="Delete" asp-route-id="@account.Id">Delete</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $('#myaccountsTable').DataTable();
+        });
+    </script>
+}

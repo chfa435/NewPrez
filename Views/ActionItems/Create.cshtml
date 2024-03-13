@@ -1,0 +1,89 @@
+﻿@model NewTiceAI.Models.ActionItem
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<style>
+    .ck-editor__editable_inline {
+        min-height: 300px;
+    }
+</style>
+
+<h1>Create</h1>
+
+<h4>ActionItem</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @if (Model.ContactId == null)
+            {
+                <div class="form-group">
+                    <label asp-for="ContactId" class="control-label"></label>
+                    <select asp-for="ContactId" class="form-control" asp-items="ViewBag.ContactId"></select>
+                </div>
+            }
+            <div class="form-group">
+                <label asp-for="ActorId" class="control-label"></label>
+                <select asp-for="ActorId" class="form-control" asp-items="ViewBag.ActorId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="AccountId" class="control-label"></label>
+                <select asp-for="AccountId" class="form-control" asp-items="ViewBag.AccountId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="ItemType" class="control-label"></label>
+                <select asp-for="ItemType" class="form-control" asp-items="@Html.GetEnumSelectList<EnumActionItemTypes>()"></select>
+                <span asp-validation-for="ItemType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ItemPriority" class="control-label"></label>
+                <select asp-for="ItemPriority" class="form-control" asp-items="@Html.GetEnumSelectList<EnumActionItemPriorities>()"></select>
+                <span asp-validation-for="ItemPriority" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Note" class="control-label"></label>
+                <textarea asp-for="Note" class="form-control" id="editor" rows="4"></textarea>
+                <span asp-validation-for="Note" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <!-- Slimscroll JS -->
+    <script src="~/template/assets/js/jquery.slimscroll.min.js"></script>
+    <!-- Ck Editor JS -->
+    <script src="~/template/assets/js/ckeditor.js"></script>
+
+    <!-- Select2 JS -->
+    <script src="~/template/assets/js/select2.min.js"></script>
+
+    <!-- Theme Settings JS -->
+    <script src="~/template/assets/js/layout.js"></script>
+    <script src="~/template/assets/js/theme-settings.js"></script>
+    <script src="~/template/assets/js/greedynav.js"></script>
+    <!-- Custom JS -->
+    <script src="~/template/assets/js/app.js"></script>
+}

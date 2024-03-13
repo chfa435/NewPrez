@@ -1,0 +1,60 @@
+﻿@model NewTiceAI.Models.Contact
+@using NewTiceAI.Enums;
+@using NewTiceAI.Helpers
+@using NewTiceAI.Services.Interfaces
+
+@inject IImageService _ImageService
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+
+
+<div class="content" id="mainHero">
+    <section class="container h-100">
+
+        <div class="row">
+            <div class="col-12 col-md-8 offset-md-2">
+                <h2>Are you sure?</h2>
+                <p class="text-lead text-muted">This contact will be permanently deleted.</p>
+                <div class="card mb-3">
+                    <div class="row g-0">
+                        <div class="col-md-4 square-img-container">
+                            <img src="@FileUploader.DefaultUserImage" class="square-img rounded-start" alt="...">
+                        </div>
+                        <div class="col-md-5">
+                            <div class="card-body">
+                                <h5 class="card-title">@Model.FullName</h5>
+                                <address class="card-text">
+                                    @Model.Address?.Address1<br />
+                                    @if (!string.IsNullOrEmpty(Model.Address?.Address2))
+                                    {
+                                        @Model.Address?.Address2
+                                        <br />
+                                    }
+                                    @Model.Address?.City, @Model.Address?.State @Model.Address?.ZipCode
+                                </address>
+                                <div class="card-text">
+                                    <span class="fw-bold me-2">Phone:</span>@Model.PhoneNumber
+                                </div>
+                                <div class="card-text">
+                                    <span class="fw-bold me-2">Email:</span>@Model.Email
+                                </div>
+                                <div>
+                                    <span class="badge rounded-pill border border-1 text-dark fw-normal">@Model.Account?.Name</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <form class="d-flex justify-content-between" asp-action="Delete">
+                    <input hidden asp-for="Id" />
+                    <a asp-action="Index" asp-controller="Contacts" class="btn btn-outline-secondary rounded-pill btnLink">Cancel</a>
+                    <button type="submit" class="btn btn-danger rounded-pill btnLink">Delete</button>
+                </form>
+            </div>
+        </div>
+
+    </section>
+</div>

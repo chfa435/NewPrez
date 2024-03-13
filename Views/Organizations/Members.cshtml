@@ -1,0 +1,68 @@
+﻿@model IEnumerable<TAUser>
+@using NewTiceAI.Enums;
+@using NewTiceAI.Services.Interfaces
+
+@inject IImageService _ImageService
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<header class="page-header">
+    <h2> Members</h2>
+</header>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <strong>All Members</strong>
+            </div>
+            <div class="card-body">
+                <table class="table" id="membersTable">
+                    <thead>
+                        <tr>
+                            <th>                                
+                            </th>
+                            <th>
+                                Member Name
+                            </th>
+                            <th>
+                                Email
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (TAUser member in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <img id="contactImage" class="square-img" style="height:120px;width:120px" src="@_ImageService.ConvertByteArrayToFile(member.AvatarData!, member.AvatarContentType!,(int)DefaultImage.BTUserImage)">
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => member.FullName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => member.Email)
+                                </td>
+                                <td>
+                                    <a asp-action="Edit" asp-route-id="@member.Id" disabled>Edit</a> |
+                                    <a asp-action="Details" asp-route-id="@member.Id">Details</a> |
+                                    <a asp-action="Delete" asp-route-id="@member.Id">Delete</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('#membersTable').DataTable();
+        });
+    </script>
+}

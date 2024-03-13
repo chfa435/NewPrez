@@ -1,0 +1,479 @@
+﻿@using NewTiceAI.Extensions;
+@using NewTiceAI.Models.Enums
+@using Microsoft.AspNetCore.Identity
+@using NewTiceAI.Services.Interfaces
+
+@inject UserManager<TAUser> _UserManager
+@inject IBTRolesService _RolesService
+@inject IBTFileService _FileService
+@inject IConfiguration _Configuration
+@inject IOrganizationService _OrgService
+
+@{
+    ViewData["Title"] = "Home Page";
+    TAUser? taUser = await _UserManager.GetUserAsync(User);
+    string taUserRole = taUser != null ? await _RolesService.GetUserRoleAsync(taUser) : string.Empty;
+    int orgId = User.Identity!.GetOrganizationId();
+    //int recentAccts = (await _OrgService.GetRecentAccountsAsync()).Count;
+    Organization? TiceAI = await _OrgService.GetOrgInfoById(orgId);
+
+}
+
+<!-- Hour chart  -->
+<div class="card bg-transparent border-0 my-4 shadow-none">
+    <div class="card-body row p-0 pb-3">
+        <div class="col-12 col-md-8 card-separator">
+            <h3>Welcome back, @taUser?.FirstName 👋🏻</h3>
+            <div class="col-12 col-lg-7">
+                <p> There are 10 recent accounts in the organization and a total of 32 new contacts. 7 of these accounts are yours.  Click <a asp-controller="Accounts" asp-action="MyAccounts">here</a> to manage your accounts.</p>
+            </div>
+            <div class="d-flex justify-content-between flex-wrap gap-3 me-5">
+                <div class="d-flex align-items-center gap-3 me-4 me-sm-0">
+                    <span class="bg-label-primary p-2 rounded">
+                        <i class="bx bx-layer bx-sm"></i>
+                    </span>
+                    <div class="content-right">
+                        <p class="mb-0">Accounts</p>
+                        <h4 class="text-primary mb-0">34</h4>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center gap-3">
+                    <span class="bg-label-info p-2 rounded">
+                        <i class="bx bx-user bx-sm"></i>
+                    </span>
+                    <div class="content-right">
+                        <p class="mb-0">Contacts</p>
+                        <h4 class="text-info mb-0">82</h4>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center gap-3">
+                    <span class="bg-label-warning p-2 rounded">
+                        <i class="bx bx-bookmarks bx-sm"></i>
+                    </span>
+                    <div class="content-right">
+                        <p class="mb-0">Tickets</p>
+                        <h4 class="text-warning mb-0">14</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-4 ps-md-3 ps-lg-5 pt-3 pt-md-0">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <div>
+                        <h5 class="mb-2">Time Spendings</h5>
+                        <p class="mb-4">Weekly report</p>
+                    </div>
+                    <div class="time-spending-chart">
+                        <h3 class="mb-2">231<span class="text-muted">h</span> 14<span class="text-muted">m</span></h3>
+                        <span class="badge bg-label-success">+18.4%</span>
+                    </div>
+                </div>
+                <div id="leadsReportChart"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Hour chart End  -->
+<!-- Topic and Instructors -->
+<div class="row mb-4 g-4">
+    <div class="col-12 col-xl-8">
+        <div class="card h-100">
+            <div class="card-header d-flex align-items-center justify-content-between">
+                <h5 class="card-title m-0 me-2">Contact & Account analytics</h5>
+                <div class="dropdown">
+                    <button class="btn p-0"
+                            type="button"
+                            id="topic"
+                            data-bs-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false">
+                        <i class="bx bx-dots-vertical-rounded"></i>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="topic">
+                        <a class="dropdown-item" href="javascript:void(0);">Highest Views</a>
+                        <a class="dropdown-item" href="javascript:void(0);">See All</a>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body row g-3">
+                <div class="col-md-6">
+                    <div id="horizontalBarChart"></div>
+                </div>
+                <div class="col-md-6 d-flex justify-content-around align-items-center">
+                    <div>
+                        <div class="d-flex align-items-baseline">
+                            <span class="text-primary me-2"><i class="bx bxs-circle"></i></span>
+                            <div>
+                                <p class="mb-2">UI Design</p>
+                                <h5>35%</h5>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-baseline my-3">
+                            <span class="text-success me-2"><i class="bx bxs-circle"></i></span>
+                            <div>
+                                <p class="mb-2">Music</p>
+                                <h5>14%</h5>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-baseline">
+                            <span class="text-danger me-2"><i class="bx bxs-circle"></i></span>
+                            <div>
+                                <p class="mb-2">React</p>
+                                <h5>10%</h5>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="d-flex align-items-baseline">
+                            <span class="text-info me-2"><i class="bx bxs-circle"></i></span>
+                            <div>
+                                <p class="mb-2">UX Design</p>
+                                <h5>20%</h5>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-baseline my-3">
+                            <span class="text-secondary me-2"><i class="bx bxs-circle"></i></span>
+                            <div>
+                                <p class="mb-2">Animation</p>
+                                <h5>12%</h5>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-baseline">
+                            <span class="text-warning me-2"><i class="bx bxs-circle"></i></span>
+                            <div>
+                                <p class="mb-2">SEO</p>
+                                <h5>9%</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-xl-4 col-md-6">
+        <div class="card h-100">
+            <div class="card-header d-flex align-items-center justify-content-between">
+                <div class="card-title mb-0">
+                    <h5 class="m-0 me-2">Account Holders</h5>
+                </div>
+                <div class="dropdown">
+                    <button class="btn p-0"
+                            type="button"
+                            id="popularInstructors"
+                            data-bs-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false">
+                        <i class="bx bx-dots-vertical-rounded"></i>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="popularInstructors">
+                        <a class="dropdown-item" href="javascript:void(0);">Select All</a>
+                        <a class="dropdown-item" href="javascript:void(0);">Refresh</a>
+                        <a class="dropdown-item" href="javascript:void(0);">Share</a>
+                    </div>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-borderless border-top">
+                    <thead class="border-bottom">
+                        <tr>
+                            <th>holders</th>
+                            <th class="text-end">accounts</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="d-flex justify-content-start align-items-center mt-lg-4">
+                                    <div class="avatar me-3">
+                                        <img src="/assets/img/avatars/1.png" alt="Avatar" class="rounded-circle" />
+                                    </div>
+                                    <div class="d-flex flex-column">
+                                        <h6 class="mb-1 text-truncate">Maven Analytics</h6>
+                                        <small class="text-truncate text-muted">Business Intelligence</small>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="text-end">
+                                <div class="user-progress mt-lg-4">
+                                    <h6 class="mb-0">33</h6>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="d-flex justify-content-start align-items-center">
+                                    <div class="avatar me-3">
+                                        <img src="/assets/img/avatars/2.png" alt="Avatar" class="rounded-circle" />
+                                    </div>
+                                    <div class="d-flex flex-column">
+                                        <h6 class="mb-1 text-truncate">Zsazsa McCleverty</h6>
+                                        <small class="text-truncate text-muted">Digital Marketing</small>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="text-end">
+                                <div class="user-progress">
+                                    <h6 class="mb-0">52</h6>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="d-flex justify-content-start align-items-center">
+                                    <div class="avatar me-3">
+                                        <img src="/assets/img/avatars/3.png" alt="Avatar" class="rounded-circle" />
+                                    </div>
+                                    <div class="d-flex flex-column">
+                                        <h6 class="mb-1 text-truncate">Nathan Wagner</h6>
+                                        <small class="text-truncate text-muted">UI/UX Design</small>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="text-end">
+                                <div class="user-progress">
+                                    <h6 class="mb-0">12</h6>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="d-flex justify-content-start align-items-center">
+                                    <div class="avatar me-3">
+                                        <img src="/assets/img/avatars/4.png" alt="Avatar" class="rounded-circle" />
+                                    </div>
+                                    <div class="d-flex flex-column">
+                                        <h6 class="mb-1 text-truncate">Emma Bowen</h6>
+                                        <small class="text-truncate text-muted">React Native</small>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="text-end">
+                                <div class="user-progress">
+                                    <h6 class="mb-0">8</h6>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!--  Topic and Instructors  End-->
+<!-- Course datatable -->
+<!-- Bootstrap Dark Table -->
+<div class="card">
+    <h5 class="card-header">Table Dark</h5>
+    <div class="table-responsive text-nowrap">
+        <table class="table table-dark">
+            <thead>
+                <tr>
+                    <th>Project</th>
+                    <th>Client</th>
+                    <th>Users</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody class="table-border-bottom-0">
+                <tr>
+                    <td>
+                        <i class="fab fa-angular fa-lg text-danger me-3"></i>
+                        <span class="fw-medium">Angular Project</span>
+                    </td>
+                    <td>Albert Cook</td>
+                    <td>
+                        <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+                            <li data-bs-toggle="tooltip"
+                                data-popup="tooltip-custom"
+                                data-bs-placement="top"
+                                class="avatar avatar-xs pull-up"
+                                title="Lilian Fuller">
+                                <img src="../../assets/img/avatars/5.png" alt="Avatar" class="rounded-circle" />
+                            </li>
+                            <li data-bs-toggle="tooltip"
+                                data-popup="tooltip-custom"
+                                data-bs-placement="top"
+                                class="avatar avatar-xs pull-up"
+                                title="Sophia Wilkerson">
+                                <img src="../../assets/img/avatars/6.png" alt="Avatar" class="rounded-circle" />
+                            </li>
+                            <li data-bs-toggle="tooltip"
+                                data-popup="tooltip-custom"
+                                data-bs-placement="top"
+                                class="avatar avatar-xs pull-up"
+                                title="Christina Parker">
+                                <img src="../../assets/img/avatars/7.png" alt="Avatar" class="rounded-circle" />
+                            </li>
+                        </ul>
+                    </td>
+                    <td><span class="badge bg-label-primary me-1">Active</span></td>
+                    <td>
+                        <div class="dropdown">
+                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                <i class="bx bx-dots-vertical-rounded"></i>
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-1"></i> Edit</a>
+                                <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i> Delete</a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <i class="fab fa-react fa-lg text-info me-3"></i> <span class="fw-medium">React Project</span>
+                    </td>
+                    <td>Barry Hunter</td>
+                    <td>
+                        <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+                            <li data-bs-toggle="tooltip"
+                                data-popup="tooltip-custom"
+                                data-bs-placement="top"
+                                class="avatar avatar-xs pull-up"
+                                title="Lilian Fuller">
+                                <img src="../../assets/img/avatars/5.png" alt="Avatar" class="rounded-circle" />
+                            </li>
+                            <li data-bs-toggle="tooltip"
+                                data-popup="tooltip-custom"
+                                data-bs-placement="top"
+                                class="avatar avatar-xs pull-up"
+                                title="Sophia Wilkerson">
+                                <img src="../../assets/img/avatars/6.png" alt="Avatar" class="rounded-circle" />
+                            </li>
+                            <li data-bs-toggle="tooltip"
+                                data-popup="tooltip-custom"
+                                data-bs-placement="top"
+                                class="avatar avatar-xs pull-up"
+                                title="Christina Parker">
+                                <img src="../../assets/img/avatars/7.png" alt="Avatar" class="rounded-circle" />
+                            </li>
+                        </ul>
+                    </td>
+                    <td><span class="badge bg-label-success me-1">Completed</span></td>
+                    <td>
+                        <div class="dropdown">
+                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                <i class="bx bx-dots-vertical-rounded"></i>
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-1"></i> Edit</a>
+                                <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i> Delete</a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <i class="fab fa-vuejs fa-lg text-success me-3"></i>
+                        <span class="fw-medium">VueJs Project</span>
+                    </td>
+                    <td>Trevor Baker</td>
+                    <td>
+                        <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+                            <li data-bs-toggle="tooltip"
+                                data-popup="tooltip-custom"
+                                data-bs-placement="top"
+                                class="avatar avatar-xs pull-up"
+                                title="Lilian Fuller">
+                                <img src="../../assets/img/avatars/5.png" alt="Avatar" class="rounded-circle" />
+                            </li>
+                            <li data-bs-toggle="tooltip"
+                                data-popup="tooltip-custom"
+                                data-bs-placement="top"
+                                class="avatar avatar-xs pull-up"
+                                title="Sophia Wilkerson">
+                                <img src="../../assets/img/avatars/6.png" alt="Avatar" class="rounded-circle" />
+                            </li>
+                            <li data-bs-toggle="tooltip"
+                                data-popup="tooltip-custom"
+                                data-bs-placement="top"
+                                class="avatar avatar-xs pull-up"
+                                title="Christina Parker">
+                                <img src="../../assets/img/avatars/7.png" alt="Avatar" class="rounded-circle" />
+                            </li>
+                        </ul>
+                    </td>
+                    <td><span class="badge bg-label-info me-1">Scheduled</span></td>
+                    <td>
+                        <div class="dropdown">
+                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                <i class="bx bx-dots-vertical-rounded"></i>
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-1"></i> Edit</a>
+                                <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i> Delete</a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="rounded-start-bottom">
+                        <i class="fab fa-bootstrap fa-lg text-primary me-3"></i>
+                        <span class="fw-medium">Bootstrap Project</span>
+                    </td>
+                    <td>Jerry Milton</td>
+                    <td>
+                        <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+                            <li data-bs-toggle="tooltip"
+                                data-popup="tooltip-custom"
+                                data-bs-placement="top"
+                                class="avatar avatar-xs pull-up"
+                                title="Lilian Fuller">
+                                <img src="../../assets/img/avatars/5.png" alt="Avatar" class="rounded-circle" />
+                            </li>
+                            <li data-bs-toggle="tooltip"
+                                data-popup="tooltip-custom"
+                                data-bs-placement="top"
+                                class="avatar avatar-xs pull-up"
+                                title="Sophia Wilkerson">
+                                <img src="../../assets/img/avatars/6.png" alt="Avatar" class="rounded-circle" />
+                            </li>
+                            <li data-bs-toggle="tooltip"
+                                data-popup="tooltip-custom"
+                                data-bs-placement="top"
+                                class="avatar avatar-xs pull-up"
+                                title="Christina Parker">
+                                <img src="../../assets/img/avatars/7.png" alt="Avatar" class="rounded-circle" />
+                            </li>
+                        </ul>
+                    </td>
+                    <td><span class="badge bg-label-warning me-1">Pending</span></td>
+                    <td class="rounded-end-bottom">
+                        <div class="dropdown">
+                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                <i class="bx bx-dots-vertical-rounded"></i>
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-1"></i> Edit</a>
+                                <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i> Delete</a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<!--/ Bootstrap Dark Table -->
+<!--div class="card mb-4">
+    <div class="table-responsive mb-3">
+        <table class="table datatables-academy-course">
+            <thead class="border-top">
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th>Course Name</th>
+                    <th>Time</th>
+                    <th class="w-25">Progress</th>
+                    <th class="w-25">Status</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div-->
+<!-- Course datatable End -->

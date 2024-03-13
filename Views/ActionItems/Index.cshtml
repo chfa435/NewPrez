@@ -1,0 +1,228 @@
+﻿@model IEnumerable<NewTiceAI.Models.ActionItem>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<!-- Bootstrap CSS -->
+@*<link rel="stylesheet" href="~/template/assets/css/bootstrap.min.css">
+*@<!-- Fontawesome CSS -->
+<link rel="stylesheet" href="~/template/assets/plugins/fontawesome/css/fontawesome.min.css">
+<link rel="stylesheet" href="~/template/assets/plugins/fontawesome/css/all.min.css">
+
+<!-- Lineawesome CSS -->
+<link rel="stylesheet" href="~/template/assets/css/line-awesome.min.css">
+<link rel="stylesheet" href="~/template/assets/css/material.css">
+
+<!-- Fontawesome CSS -->
+<link rel="stylesheet" href="~/template/assets/css/font-awesome.min.css">
+
+<!-- Lineawesome CSS -->
+<link rel="stylesheet" href="~/template/assets/css/line-awesome.min.css">
+
+<!-- Select2 CSS -->
+<link rel="stylesheet" href="~/template/assets/css/select2.min.css">
+
+<!-- Main CSS -->
+<link rel="stylesheet" href="~/template/assets/css/style.css">
+
+
+<div class="block-header">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <ul class="breadcrumb breadcrumb-style ">
+                <li class="breadcrumb-item">
+                    <h4 class="page-title">Dashboard</h4>
+                </li>
+                <li class="breadcrumb-item bcrumb-1">
+                    <a asp-action="Dashboard_new" asp-controller="Home">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                </li>
+                <li class="breadcrumb-item active">Tickets</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- Page Header -->
+<div class="page-header mb-5">
+    <div class="row align-items-center">
+        <div class="col-auto float-end ms-auto">
+            <a asp-action="Create" asp-controller="ActionItems" asp-route-contactId="" class="btn add-btn"><i class="fa fa-plus"></i> Add Ticket</a>
+        </div>
+    </div>
+</div>
+<!-- /Page Header -->
+
+<div id="tableDiv" class="row">
+    <div class="col-md-12 table-responsive pb-3">
+        <table id="contact-table" class="table table-striped custom-table"></table>
+        <table class="table table-striped custom-table" id="action-table">
+            <thead>
+                <tr>
+                    <th>Contact</th>
+                    <th>Holder</th>
+                    <th>Sales Rep</th>
+                    <th>
+                        Action
+                    </th>
+                    <th>
+                        Created
+                    </th>
+                    <th>
+                        Last Updated
+                    </th>
+                    <th>
+                        Priority
+                    </th>
+                    <th>
+                        Type
+                    </th>
+                    <th>
+                        Status
+                    </th>
+                    <th>
+                        Developer
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Contact!.FullName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Contact!.RelationshipHolder!.FullName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Contact!.SalesRepresentative!.FullName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Title)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Created)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Updated)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ItemPriority)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ItemType)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ItemStatus)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Actor!.FullName)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                            @if (User.IsInRole(nameof(BTRoles.Admin)) || User.IsInRole(nameof(BTRoles.ProjectManager)))
+                            {
+                                <span>|</span>
+                                <a asp-action="Archive" asp-route-id="@item.Id">Archive</a>
+
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>Contact</th>
+                    <th>Holder</th>
+                    <th>Sales Rep</th>
+                    <th>
+                        Action
+                    </th>
+                    <th>
+                        Created
+                    </th>
+                    <th>
+                        Last Updated
+                    </th>
+                    <th>
+                        Priority
+                    </th>
+                    <th>
+                        Type
+                    </th>
+                    <th>
+                        Status
+                    </th>
+                    <th>
+                        Developer
+                    </th>
+                    <th></th>
+                </tr>
+            </tfoot>
+        </table>
+
+    </div>
+</div>
+<!-- /Page Content -->
+
+
+@section scripts{
+
+    <!-- Slimscroll JS -->
+    <script src="~/template/assets/js/jquery.slimscroll.min.js"></script>
+
+    <!-- Select2 JS -->
+    <script src="~/template/assets/js/select2.min.js"></script>
+
+    <!-- Theme Settings JS -->
+    <script src="~/template/assets/js/layout.js"></script>
+    <script src="~/template/assets/js/theme-settings.js"></script>
+    <script src="~/template/assets/js/greedynav.js"></script>
+    <!-- Custom JS -->
+    <script src="~/template/assets/js/app.js"></script>
+
+    <!--Sweet Alerts-->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script src="https://kit.fontawesome.com/5f740f3843.js" crossorigin="anonymous"></script>
+
+
+    <script>
+        // $('#contact-table').DataTable();
+        $(document).ready(function () {
+            // Setup - add a text input to each footer cell
+            $('#action-table tfoot th').each(function (i) {
+                var title = $('#action-table  thead th').eq($(this).index()).text();
+                if (title != "") {
+                    $(this).html('<input type="text" placeholder="' + title + '" data-index="' + i + '" />');
+                }
+            });
+
+            // DataTable
+            var table = $('#action-table').DataTable({
+                order: [[1, 'asc']],
+                rowGroup: {
+                    dataSrc: 1
+                }
+            });
+            // Filter event handler
+            $(table.table().container()).on('keyup', 'tfoot input', function () {
+                table
+                    .column($(this).data('index'))
+                    .search(this.value)
+                    .draw();
+            });
+        });
+    </script>
+
+
+
+
+
+}
+

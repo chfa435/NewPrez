@@ -1,0 +1,585 @@
+﻿@model NewTiceAI.Models.Ticket
+@using NewTiceAI.Models.Enums
+@using NewTiceAI.Services.Interfaces
+@using Microsoft.AspNetCore.Identity
+
+
+@inject UserManager<TAUser> UserManager
+@inject IBTProjectService ProjectService
+@inject IBTFileService FileService
+
+
+@{
+    ViewData["Title"] = "Details";
+    TAUser? btUser = await UserManager.GetUserAsync(User);
+    TAUser? projectManager = await ProjectService.GetProjectManagerAsync(Model.ProjectId!.Value);
+}
+
+@*<h1>Ticket Details</h1>*@
+
+@*<header class="page-header">
+    <h2 class="font-weight-bold text-6">Ticket: @Model.Title</h2>
+    <div class="right-wrapper text-end">
+        <ol class="breadcrumbs">
+            <li>
+                <a asp-action="Dashboard" asp-controller="Home">
+                    <i class="bx bx-home-alt"></i>
+                </a>
+            </li>
+            <li><a asp-action="AllTickets" asp-controller="Tickets"><span>Tickets</span></a></li>
+            <li><span>Ticket Details</span></li>
+        </ol>
+
+        <a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fas fa-chevron-left"></i></a>
+    </div>
+</header>*@
+
+<div class="block-header">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <ul class="breadcrumb breadcrumb-style ">
+                <li class="breadcrumb-item">
+                    <h4 class="page-title">Ticket Details</h4>
+                </li>
+                <li class="breadcrumb-item bcrumb-1">
+                    <a asp-action="Dashboard" asp-controller="Home">
+                        <i class="fas fa-home"></i>
+                    </a>
+                </li>
+                <li class="breadcrumb-item active">Tickets</li>
+                <li class="breadcrumb-item active">Ticket Detail</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        <a class="btn btn-sm btn-outline-primary pt-2" asp-action="Edit" asp-controller="Tickets" asp-route-id="@Model.Id">Edit Info</a>
+    </div>
+</div>
+<!-- start: page -->
+@*<form class="order-details action-buttons-fixed" method="post">*@
+@*    <div class="row">
+        <div class="col-xl-4 mb-4 mb-xl-0">
+
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Edit</h2>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Edit" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="ProjectId" />
+            <input type="hidden" asp-for="Created" />
+            <input type="hidden" asp-for="SubmitterUserId" />
+            <input type="hidden" asp-for="DeveloperUserId" />
+            <input type="hidden" asp-for="Archived" />
+
+            <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="TicketTypeId" class="control-label"></label>
+                <select asp-for="TicketTypeId" class="form-control" asp-items="ViewBag.TicketTypeId"></select>
+                <span asp-validation-for="TicketTypeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TicketPriorityId" class="control-label"></label>
+                <select asp-for="TicketPriorityId" class="form-control" asp-items="ViewBag.TicketPriorityId"></select>
+                <span asp-validation-for="TicketPriorityId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TicketStatusId" class="control-label"></label>
+                <select asp-for="TicketStatusId" class="form-control" asp-items="ViewBag.TicketStatusId"></select>
+                <span asp-validation-for="TicketStatusId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+                    <div class="form-row">
+                        <div class="form-group col mb-3">
+                            <label>Status</label>
+                            <select class="form-control form-control-modern" name="orderStatus" required>
+                                <option value="on-hold" selected>On Hold</option>
+                                <option value="pending">Pending Payment</option>
+                                <option value="processing">Processing</option>
+                                <option value="completed">Completed</option>
+                                <option value="cancelled">Cancelled</option>
+                                <option value="refunded">Refunded</option>
+                                <option value="failed">Failed</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col mb-3">
+                            <label>Priority</label>
+                            <select class="form-control form-control-modern" name="orderStatus" required>
+                                <option value="on-hold" selected>On Hold</option>
+                                <option value="pending">Pending Payment</option>
+                                <option value="processing">Processing</option>
+                                <option value="completed">Completed</option>
+                                <option value="cancelled">Cancelled</option>
+                                <option value="refunded">Refunded</option>
+                                <option value="failed">Failed</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col mb-3">
+                            <label>Type</label>
+                            <select class="form-control form-control-modern" name="orderStatus" required>
+                                <option value="on-hold" selected>On Hold</option>
+                                <option value="pending">Pending Payment</option>
+                                <option value="processing">Processing</option>
+                                <option value="completed">Completed</option>
+                                <option value="cancelled">Cancelled</option>
+                                <option value="refunded">Refunded</option>
+                                <option value="failed">Failed</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-xl-8">
+
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Details</h2>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-xl-auto me-xl-5 pe-xl-5 mb-4 mb-xl-0">
+                            <h3 class="text-color-dark font-weight-bold text-4 line-height-1 mt-0 mb-3">BILLING</h3>
+                            <ul class="list list-unstyled list-item-bottom-space-0">
+                                <li>Street Name Example</li>
+                                <li>1234</li>
+                                <li>Detroit</li>
+                                <li>Michigan</li>
+                                <li>93218</li>
+                                <li>USA</li>
+                            </ul>
+                            <strong class="d-block text-color-dark">Email address:</strong>
+                            <a href="mailto:johndoe@domain.com">johndoe@domain.com</a>
+                            <strong class="d-block text-color-dark mt-3">Phone:</strong>
+                            <a href="tel:+5551234" class="text-color-dark">555-1234</a>
+                        </div>
+                        <div class="col-xl-auto ps-xl-5">
+                            <h3 class="font-weight-bold text-color-dark text-4 line-height-1 mt-0 mb-3">SHIPPING</h3>
+                            <ul class="list list-unstyled list-item-bottom-space-0">
+                                <li>Street Name Example</li>
+                                <li>1234</li>
+                                <li>Detroit</li>
+                                <li>Michigan</li>
+                                <li>93218</li>
+                                <li>USA</li>
+                            </ul>
+                            <strong class="d-block text-color-dark">Email address:</strong>
+                            <a href="mailto:johndoe@domain.com">johndoe@domain.com</a>
+                            <strong class="d-block text-color-dark mt-3">Phone:</strong>
+                            <a href="tel:+5551234" class="text-color-dark">555-1234</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Products</h2>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-ecommerce-simple table-ecommerce-simple-border-bottom table-borderless mb-0" style="min-width: 380px;">
+                            <thead>
+                                <tr>
+                                    <th width="8%" class="ps-4">ID</th>
+                                    <th width="65%">Name</th>
+                                    <th width="5%" class="text-end">Cost</th>
+                                    <th width="7%" class="text-end">Qty</th>
+                                    <th width="5%" class="text-end">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="ps-4"><a href="ecommerce-products-form.html"><strong>191</strong></a></td>
+                                    <td><a href="ecommerce-products-form.html"><strong>Product Name Example</strong></a></td>
+                                    <td class="text-end">$99</td>
+                                    <td class="text-end">1</td>
+                                    <td class="text-end">$99</td>
+                                </tr>
+                                <tr>
+                                    <td class="ps-4"><a href="ecommerce-products-form.html"><strong>192</strong></a></td>
+                                    <td><a href="ecommerce-products-form.html"><strong>Product Name Example 2</strong></a></td>
+                                    <td class="text-end">$50</td>
+                                    <td class="text-end">1</td>
+                                    <td class="text-end">$50</td>
+                                </tr>
+                                <tr>
+                                    <td class="ps-4"><a href="ecommerce-products-form.html"><strong>193</strong></a></td>
+                                    <td><a href="ecommerce-products-form.html"><strong>Product Name Example 3</strong></a></td>
+                                    <td class="text-end">$132</td>
+                                    <td class="text-end">1</td>
+                                    <td class="text-end">$132</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="row justify-content-end flex-column flex-lg-row my-3">
+                        <div class="col-auto me-5">
+                            <h3 class="font-weight-bold text-color-dark text-4 mb-3">Items Subtotal</h3>
+                            <span class="d-flex align-items-center">
+                                3 Items
+                                <i class="fas fa-chevron-right text-color-primary px-3"></i>
+                                <b class="text-color-dark text-xxs">$298.00</b>
+                            </span>
+                        </div>
+                        <div class="col-auto me-5">
+                            <h3 class="font-weight-bold text-color-dark text-4 mb-3">Shipping</h3>
+                            <span class="d-flex align-items-center">
+                                Flat Rate
+                                <i class="fas fa-chevron-right text-color-primary px-3"></i>
+                                <b class="text-color-dark text-xxs">$20.00</b>
+                            </span>
+                        </div>
+                        <div class="col-auto">
+                            <h3 class="font-weight-bold text-color-dark text-4 mb-3">Order Total</h3>
+                            <span class="d-flex align-items-center justify-content-lg-end">
+                                <strong class="text-color-dark text-5">$318.00</strong>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+
+            <div class="card card-modern">
+                <div class="card-header">
+                    <h2 class="card-title">Order Notes</h2>
+                </div>
+                <div class="card-body">
+                    <div class="ecommerce-timeline mb-3">
+                        <div class="ecommerce-timeline-items-wrapper">
+                            <div class="ecommerce-timeline-item">
+                                <small>added on June 26, 2020 at 4:01 pm by admin - <a href="#" class="text-color-danger">Delete note</a></small>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas hendrerit augue at leo viverra, aliquam egestas lectus laoreet. Donec vehicula vestibulum ipsum, tincidunt ultrices elit suscipit ac. Sed eget risus laoreet, varius nibh id, luctus ligula. Nulla facilisi</p>
+                            </div>
+                            <div class="ecommerce-timeline-item">
+                                <small>added on June 26, 2020 at 4:01 pm by admin - <a href="#" class="text-color-danger">Delete note</a></small>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas hendrerit augue at leo viverra, aliquam egestas lectus laoreet. Donec vehicula vestibulum ipsum, tincidunt ultrices elit suscipit ac. Sed eget risus laoreet, varius nibh id, luctus ligula. Nulla facilisi</p>
+                            </div>
+                            <div class="ecommerce-timeline-item">
+                                <small>added on June 26, 2020 at 4:01 pm by admin - <a href="#" class="text-color-danger">Delete note</a></small>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas hendrerit augue at leo viverra, aliquam egestas lectus laoreet. Donec vehicula vestibulum ipsum, tincidunt ultrices elit suscipit ac. Sed eget risus laoreet, varius nibh id, luctus ligula. Nulla facilisi</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col pb-1 mb-3">
+                            <label>Add Note</label>
+                            <textarea class="form-control form-control-modern" name="orderAddNote" rows="6"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col">
+                            <a href="#" class="cancel-button btn btn-light btn-px-4 py-3 border font-weight-semibold text-color-dark text-3">Add Note</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>*@
+
+@*    <div class="row action-buttons">
+        <div class="col-12 col-md-auto">
+        <button type="submit" class="submit-button btn btn-primary btn-px-4 py-3 d-flex align-items-center font-weight-semibold line-height-1" data-loading-text="Loading...">
+        <i class="bx bx-save text-4 me-2"></i> Save Order
+        </button>
+        </div>
+        <div class="col-12 col-md-auto px-md-0 mt-3 mt-md-0">
+        <a href="ecommerce-orders-list.html" class="cancel-button btn btn-light btn-px-4 py-3 border font-weight-semibold text-color-dark text-3">Cancel</a>
+        </div>
+        <div class="col-12 col-md-auto ms-md-auto mt-3 mt-md-0 ms-auto">
+        <a href="#" class="delete-button btn btn-danger btn-px-4 py-3 d-flex align-items-center font-weight-semibold line-height-1">
+        <i class="bx bx-trash text-4 me-2"></i> Delete Order
+        </a>
+        </div>
+        </div>*@
+@*</form>*@
+
+<!-- end: page -->
+<div>
+    <div classxfont-weighteighteightgetainer-fluid">
+        <div class="row gy-2">
+            <div class="col-md-12 col">
+                <div class="row col-cols-2 mt-5">
+                    <div class="card col m-1 p-2">
+                        <div class="card-body">
+                            <h5>@Model.Title</h5>
+                            <p>@Model.Description</p>
+                            <div class="progress-container progress-info m-b-25">
+                                <span class="progress-badge" style="font-size:small">Project: @Model.Project!.Name</span>
+                                <div class="progress">
+                                    @{
+                                        var start = Model.Project.StartDate;
+                                        var end = Model.Project.EndDate;
+                                        var today = DateTime.Now;
+                                        var percent = today >= end ? 100 : today < start ? 0 : Math.Round((today.Subtract(start)) / (end.Subtract(start)) * 100);
+                                    }
+                                    <div class="progress-bar" role="progressbar" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" style="width: @percent%;">
+                                        <span class="progress-value">@percent%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card col m-1 p-2">
+                        <div class="card-body">
+                            <ul class="list-unstyled">
+                                <li><strong>Date Entered:</strong> <span class="">  @Model.Created.ToString("MM.dd.yyyy")</</span></li>
+                                <li><strong>Deadline:</strong> <span class=""> @Model.Project.EndDate.ToString("MM.dd.yyyy")</</span></li>
+                                <li><strong>Type:</strong> <span class="">  @Model.TicketType!.Name</span></li>
+                                <li><strong>Priority:</strong> <span class="">  @Model.TicketPriority!.Name</span></li>
+                                <li><strong>Status:</strong> <span class="">  @Model.TicketStatus!.Name</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8 row-cols-2 mt-5 ">
+                <div class="col">
+                    <div class="card m-1 p-2">
+                        <div class="card-header">
+                            <h2>Comments</h2>
+                        </div>
+                        <div class="card-body" style="overflow-y:auto;height:600px;">
+
+                            <form class="form-horizontal form-bordered" asp-action="AddTicketComment" asp-controller="Tickets" method="post">
+                                <input type="hidden" asp-for="Id" name="TicketId" />
+                                @if (Model.DeveloperUserId == btUser?.Id || Model.SubmitterUserId == btUser?.Id || projectManager?.Id == btUser?.Id || User.IsInRole(nameof(BTRoles.Admin)))
+                                {
+                                    <div class="form-group">
+                                        <textarea id="editor" name="Comment" rows="8" class="editor form-control" placeholder="Add comment ..."></textarea>
+                                    </div>
+                                    <input type="submit" class="btn btn-sm btn-primary" value="Submit" />
+                                }
+                                else
+                                {
+                                    <div class="form-group">
+                                        <textarea disabled name="Comment" rows="8" class="form-control" required placeholder="Add comment ..."></textarea>
+                                    </div>
+                                }
+                            </form>
+                            <hr />
+                            <h6>Comments</h6>
+                            <ul class="right_chat list-unstyled mt-5">
+
+                                @foreach (TicketComment comment in Model.Comments)
+                                {
+                                    <li class="online mb-4">
+                                        <div class="media">
+                                            <a href="javascript:void(0);">
+                                                @if (btUser?.AvatarData != null)
+                                                {
+                                                    <img class="media-object " src="data:image/*;base64,@(Convert.ToBase64String(btUser.AvatarData))" alt="">
+                                                }
+                                                else
+                                                {
+                                                    <img class="media-object " src="https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png" alt="" style="width:30px;height:30px">
+                                                }
+                                            </a>
+                                            <div class="media-body">
+                                                <span class="text-muted" style="font-size:x-small;">
+                                                    @@ @comment.User!.FullName
+                                                    <small class="float-right">@comment.Created.ToString("MM.dd.yyyy h:ss tt")</small>:
+                                                </span>
+                                            </div>
+                                            <span class="message text-primary">@Html.Raw(comment.Comment)</span>
+                                        </div>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                        <div class="card-footer">
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card m-1 p-2">
+                        <div class="card-header">
+                            <h2>Attachments</h2>
+                        </div>
+                        <div class="card-body" style="overflow-y:auto;height:300px;">
+
+                            <div class="row clearfix">
+                                <div>
+                                    <form asp-action="AddTicketAttachment" asp-controller="Tickets" enctype="multipart/form-data" method="post">
+                                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                        <input type="hidden" asp-for="Id" name="TicketId">
+
+                                        <div class="media-body ml-3">
+                                            <label>
+                                                Description
+                                                <input name="Description" type="text" class="form-control" />
+                                            </label><br />
+                                            <label class="btn btn-outline-primary btn-sm">
+                                                <input name="FormFile" type="file" class="form-control-file" />
+                                            </label>
+                                            <button type="submit" class="btn btn-outline-secondary btn-sm md-btn-flat">Submit</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <hr />
+                            <h6>Attachments</h6>
+                            <div class="container">
+                                <div class="row">
+                                    @foreach (TicketAttachment item in Model.Attachments)
+                                    {
+                                        <div class="col col-sm-2">
+                                            <a asp-action="ShowFile" asp-controller="Tickets" asp-route-Id="@item.Id">
+                                                <div class="icon">
+                                                    <img src="@FileService.GetFileIcon(item.FileName!)" style="height:50px;width:50px" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="@item.FileName" />
+                                                </div>
+                                            </a>
+                                            <div style="font-size:x-small">
+                                                <div class="file-name">
+                                                    <strong>@item.Description</strong>
+                                                </div>
+                                                <small>Size: @FileService.FormatFileSize(item.FileData!.Length) </small>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col mt-5 ">
+                <div class="bg-dark">
+                    <div class="card m-1 p-2">
+                        <div class="card-header">
+                            <h2>History</h2>
+                            <hr />
+                        </div>
+                        <div class="card-body" style="overflow-y:auto;height:1000px;background-color:antiquewhite">
+                            @foreach (TicketHistory history in Model.History)
+                            {
+                                <div class="">
+
+                                    <span class="date" style="font-weight:bold">@history.Created.ToString("dd MMM yyyy")</span>
+                                    <h6>@history.Description</h6>
+                                    <span>By: <a href="" title="@history.User!.FullName">@history.User.FullName</a></span>
+                                    <div class="">
+                                        @if (history.Description!.Contains("New Ticket Created"))
+                                        {
+                                            <p>A ticket was added.</p>
+                                        }
+                                        else if (history.PropertyName!.Equals("TicketComment") || history.PropertyName.Equals("TicketAttachment"))
+                                        {
+                                            <p>A <b>@history.PropertyName</b>  was added.</p>
+                                        }
+                                        else
+                                        {
+                                            <p>The ticket <b>@history.PropertyName</b>  was edited</p>
+                                            <p>@($"Previous {history.PropertyName}:  ") <span style="color:red">@history.OldValue</span></p>
+                                            <p>@($"Current {history.PropertyName}:  ") <span style="color:green">@history.NewValue</span></p>
+                                        }
+                                    </div>
+                                </div>
+                                <hr />
+
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+    </div>*@
+
+@section scripts{
+    @*     <script src="https://cdn.ckeditor.com/ckeditor5/31.0.0/classic/ckeditor.js"></script>
+ *@    <!-- Ck Editor JS -->
+    <script src="~/template/assets/js/ckeditor.js"></script>
+
+@*     <script>
+        ClassicEditor
+            .create(document.querySelector('#editor'), {
+                toolbar: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote', '|', 'undo', 'redo'],
+                heading: {
+                    options: [
+                        { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
+                        { model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
+                        { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' },
+                        { model: 'heading3', view: 'h3', title: 'Heading 3', class: 'ck-heading_heading3' }
+                    ]
+                }
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
+ *@
+    <script>
+        if ($('.editor').length > 0) {
+            ClassicEditor
+                .create(document.querySelector('.editor'), {
+                    toolbar: {
+                        items: [
+                            'heading', '|',
+                            'fontfamily', 'fontsize', '|',
+                            'alignment', '|',
+                            'fontColor', 'fontBackgroundColor', '|',
+                            'bold', 'italic', 'strikethrough', 'underline', 'subscript', 'superscript', '|',
+                            'link', '|',
+                            'outdent', 'indent', '|',
+                            'bulletedList', 'numberedList', 'todoList', '|',
+                            'code', 'codeBlock', '|',
+                            'insertTable', '|',
+                            'uploadImage', 'blockQuote', '|',
+                            'undo', 'redo'
+                        ],
+                        shouldNotGroupWhenFull: true
+                    }
+                })
+                .then(editor => {
+                    window.editor = editor;
+                })
+                .catch(err => {
+                    console.error(err.stack);
+                });
+        }
+
+    </script>
+    }

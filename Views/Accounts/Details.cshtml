@@ -1,0 +1,109 @@
+﻿@model NewTiceAI.Models.Account
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Account</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            User
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ParentOrganization!.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class="col-sm-2">
+            Address
+        </dt>
+        <dd class="col-sm-10">
+            <ul>
+                <li>@Model.ShippingAddress?.Address1</li>
+                @if (!string.IsNullOrEmpty(Model.ShippingAddress?.Address2))
+                {
+                    <li>@Model.ShippingAddress?.Address2</li>
+                }
+                <li><span>@Model.ShippingAddress?.City, @Model.ShippingAddress?.State @Model.ShippingAddress?.ZipCode</span></li>
+            </ul>
+        </dd>
+
+    </dl>
+</div>
+
+
+<div class="row">
+
+    <div class="col-md-8">
+        <h1>Account Details</h1>
+        <div class="col-12 d-flex justify-content-end mb-2">
+            <a asp-action="AllAccounts" class="mx-2 btn btn-secondary rounded-pill btnlinks">Back</a>
+            <a asp-action="Edit" asp-route-id="@Model?.Id" class="mx-2 btn btn-warning rounded-pill btnlinks">Edit</a>
+            <a asp-action="Delete" asp-route-id="@Model?.Id" class="mx-2 btn btn-danger rounded-pill btnlinks">Delete</a>
+        </div>
+        <div class="p-3 border border-2 shadow-lg bg-light mb-5">
+            <div class="row g-3 p-2">
+                <div class="col-12 col-md-12">
+                    <div class="row">
+                        <div class="col-12 col-lg-6">
+                            <label asp-for="ParentOrganization!.Name" class="control-label"></label>
+                            <span asp-for="FirstName" class="form-control">@Model?.ParentOrganization?.Name</span>
+                            <span asp-validation-for="ParentOrganization!.Name" class="text-danger"></span>
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <label asp-for="Name" class="control-label"></label>
+                            <span asp-for="LastName" class="form-control">@Model?.Name</span>
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                        <div class="col-12 col-lg-6 mt-2">
+                            <label asp-for="Name" class="control-label"></label>
+                            <span asp-for="Email" class="form-control">@Model?.Name</span>
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                        <div class="col-12 mt-2">
+                            <label asp-for="ShippingAddress!.Address1" class="control-label"></label>
+                            <span asp-for="Address!.Address1" class="form-control">@Model?.ShippingAddress?.Address1</span>
+                            <span asp-validation-for="ShippingAddress!.Address1" class="text-danger"></span>
+                        </div>
+                        @if (!string.IsNullOrEmpty(Model?.ShippingAddress?.Address2))
+                        {
+                            <div class="col-12 mt-2">
+                                <label asp-for="ShippingAddress!.Address2" class="control-label"></label>
+                                <span asp-for="Address!.Address2" class="form-control">@Model?.ShippingAddress?.Address2</span>
+                                <span asp-validation-for="ShippingAddress!.Address2" class="text-danger"></span>
+                            </div>
+                        }
+                        <div class="col-12 col-lg-6 mt-2">
+                            <label asp-for="ShippingAddress!.City" class="control-label"></label>
+                            <span asp-for="Address!.City" class="form-control">@Model?.ShippingAddress?.City</span>
+                            <span asp-validation-for="ShippingAddress!.City" class="text-danger"></span>
+                        </div>
+                        <div class="col-12 col-lg-4 mt-2">
+                            <label asp-for="ShippingAddress!.State" class="control-label"></label>
+                            <span asp-for="Address!.State" class="form-select">@Model?.ShippingAddress?.State</span>
+                            <span asp-validation-for="ShippingAddress!.State" class="text-danger"></span>
+                        </div>
+                        <div class="col-12 col-lg-2 mt-2">
+                            <label asp-for="ShippingAddress!.ZipCode" class="control-label"></label>
+                            <span asp-for="Address!.ZipCode" class="form-control">@Model?.ShippingAddress?.ZipCode</span>
+                            <span asp-validation-for="ShippingAddress!.ZipCode" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
