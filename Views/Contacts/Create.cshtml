@@ -9,27 +9,7 @@
     ViewData["Title"] = "Create";
 }
 
-<!-- Bootstrap CSS -->
-@*<link rel="stylesheet" href="~/template/assets/css/bootstrap.min.css">
-*@<!-- Fontawesome CSS -->
-<link rel="stylesheet" href="~/template/assets/plugins/fontawesome/css/fontawesome.min.css">
-<link rel="stylesheet" href="~/template/assets/plugins/fontawesome/css/all.min.css">
 
-<!-- Lineawesome CSS -->
-<link rel="stylesheet" href="~/template/assets/css/line-awesome.min.css">
-<link rel="stylesheet" href="~/template/assets/css/material.css">
-
-<!-- Fontawesome CSS -->
-<link rel="stylesheet" href="~/template/assets/css/font-awesome.min.css">
-
-<!-- Lineawesome CSS -->
-<link rel="stylesheet" href="~/template/assets/css/line-awesome.min.css">
-
-<!-- Select2 CSS -->
-<link rel="stylesheet" href="~/template/assets/css/select2.min.css">
-
-<!-- Main CSS -->
-<link rel="stylesheet" href="~/template/assets/css/style.css">
 
 <div class="block-header">
     <div class="row">
@@ -144,7 +124,7 @@
                             </div>
                             <div class="form-group">
                                 <label asp-for="EmailOptOut" class="control-label"></label>
-                                <input asp-for="EmailOptOut" class="form-control" />
+                                <input asp-for="EmailOptOut" type="checkbox" class="form-check-input" />
                                 <span asp-validation-for="EmailOptOut" class="text-danger"></span>
                             </div>
                             <div class="col-12 col-lg-6 mt-3">
@@ -277,22 +257,5 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 
-    <!-- Slimscroll JS -->
-    <script src="~/template/assets/js/jquery.slimscroll.min.js"></script>
-    <!-- Ck Editor JS -->
-    <script src="~/template/assets/js/ckeditor.js"></script>
-
-    <!-- Select2 JS -->
-    <script src="~/template/assets/js/select2.min.js"></script>
-
-    <!-- Theme Settings JS -->
-    <script src="~/template/assets/js/layout.js"></script>
-    <script src="~/template/assets/js/theme-settings.js"></script>
-    <script src="~/template/assets/js/greedynav.js"></script>
-    <!-- Custom JS -->
-    <script src="~/template/assets/js/app.js"></script>
-
-    <!--Sweet Alerts-->
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 }

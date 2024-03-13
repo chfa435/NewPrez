@@ -449,6 +449,70 @@ namespace NewTiceAI.Controllers
             return View(contact);
         }
 
+
+        // GET: Contacts/Create
+        public async Task<IActionResult> CreateNew()
+        {
+            ViewData["GendersList"] = new SelectList(Enum.GetValues(typeof(Genders)).Cast<Genders>().ToList());
+            ViewData["StatesList"] = new SelectList(Enum.GetValues(typeof(States)).Cast<States>().ToList());
+            ViewData["AccountsList"] = new SelectList((await _accountService.GetAccountsByOrganizationIdAsync(_organizationId)).OrderBy(a => a.Name), "Id", "Name");
+            ViewData["InstitutionsList"] = new SelectList((await _institutionService.GetInstitutionsAsync()).OrderBy(i => i.Name), "Id", "Name");
+            ViewData["ContactsList"] = new SelectList((await _context.Contacts.Where(c => c.OrganizationId == _organizationId).ToListAsync()).OrderBy(c => c.FullName), "Id", "FullName");
+
+            return View(new Contact());
+        }
+
+        // POST: Contacts/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateNew([Bind("Id,OrganizationId,AccountId,AddressId,ContactOwnerId,FirstName,LastName,DateOfBirth,Email,PhoneNumber,Mobile,DateAdded,ImageFile,Title,DoNotCall,EmailOptOut,IsActive,Gender,Specialty,ResidencyId,Residency_GradYear,FellowshipId,Fellowship_GradYear,Fellowship2Id,Fellowship2_GradYear,RelationshipHolderId,CurrentDistributorId,SalesRepresentativeId,PracticeId,MentorId,LastMeetingDate,NextActivityDate,FollowupDate,HandoffConfirmed,ContactNotes,ProfileUrl,ProfileUrl2,PacketSentDate")] Contact contact, Address address)
+        {
+
+            ModelState.Remove("OrganizationId");
+            if (ModelState.IsValid)
+            {
+                contact.OrganizationId = User.Identity!.GetOrganizationId();
+                //contact.DateAdded = DateTime.UtcNow;
+                if (address != null)
+                {
+                    await _context.AddAsync(address);
+                    await _context.SaveChangesAsync();
+                    contact.AddressId = address.Id;
+                }
+
+                if (contact.ImageFile != null)
+                {
+                    //contact.ImageData = await _imageService.ConvertFileToByteArrayAsync(contact.ImageFile);
+                    //contact.ImageType = contact.ImageFile.ContentType;
+                    FileUpload? image = await FileUploader.GetFileUploadAsync(contact.ImageFile);
+                    // Add teh new image to the database
+                    await _context.FileUploads.AddAsync(image);
+                    await _context.SaveChangesAsync();
+
+                    contact.ImageId = image.Id;
+                }
+
+
+                contact.IsActive = true;
+
+                _context.Add(contact);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+
+            ViewData["GendersList"] = new SelectList(Enum.GetValues(typeof(Genders)).Cast<Genders>().ToList());
+            ViewData["StatesList"] = new SelectList(Enum.GetValues(typeof(States)).Cast<States>().ToList());
+            ViewData["AccountsList"] = new SelectList((await _accountService.GetAccountsByOrganizationIdAsync(_organizationId)).OrderBy(a => a.Name), "Id", "Name");
+            ViewData["InstitutionsList"] = new SelectList((await _institutionService.GetInstitutionsAsync()).OrderBy(i => i.Name), "Id", "Name");
+            ViewData["ContactsList"] = new SelectList((await _context.Contacts.Where(c => c.OrganizationId == _organizationId).ToListAsync()).OrderBy(c => c.FullName), "Id", "FullName");
+
+            return View(contact);
+        }
+
+
+
         // GET: Contacts/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {

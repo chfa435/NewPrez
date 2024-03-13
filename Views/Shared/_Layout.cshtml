@@ -41,7 +41,7 @@
 
     <!-- Core CSS -->
     <link rel="stylesheet" href="/assets/vendor/css/rtl/core.css" class="template-customizer-core-css" />
-    <link rel="stylesheet" href="/assets/vendor/css/rtl/theme-default.css" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="/assets/vendor/css/rtl/theme-default.css" class="template-customizer-theme-css" />
     <link rel="stylesheet" href="/assets/css/demo.css" />
 
     <!-- Vendors CSS -->
@@ -232,7 +232,7 @@
                             @if (User.IsInRole(nameof(BTRoles.Admin)) || User.IsInRole(nameof(BTRoles.ProjectManager)))
                             {
                                 <li class="menu-item">
-                                    <a sp-controller="Contacts" asp-action="Create" class="menu-link">
+                                    <a asp-controller="Contacts" asp-action="Create" class="menu-link">
                                         <i class="menu-icon tf-icons bx bxs-user-plus"></i>
                                         <div data-i18n="Add New Contact">Add New Contact</div>
                                     </a>
