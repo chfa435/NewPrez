@@ -43,6 +43,16 @@ namespace NewTiceAI.Controllers
             return View(accounts);
         }
 
+        public async Task<IActionResult> ManageAccounts()
+        {
+            //Org Id
+            IEnumerable<Account> accounts = await _context.Accounts
+                                                          .Where(a => a.ParentOrganizationId == _organizationId)
+                                                          .Include(a => a.ShippingAddress)
+                                                          .Include(a => a.Contacts).ToListAsync();
+
+            return View(accounts);
+        }
 
         // GET: Accounts/Details/5
         public async Task<IActionResult> Details(int? id)
