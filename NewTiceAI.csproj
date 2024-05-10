@@ -19,6 +19,8 @@
 
   <ItemGroup>
     <Compile Remove="Controllers\ContactFieldsController.cs" />
+    <Compile Remove="Data\Migrations\20240308211801_Initial_NewTice_0001.cs" />
+    <Compile Remove="Data\Migrations\20240308211801_Initial_NewTice_0001.Designer.cs" />
     <Compile Remove="Enums\DefaultImage.cs" />
   </ItemGroup>
 
