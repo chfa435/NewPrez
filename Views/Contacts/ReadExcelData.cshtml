@@ -1,10 +1,13 @@
-﻿<link rel="stylesheet" href="/assets/vendor/libs/typeahead-js/typeahead.css" />
-<link rel="stylesheet" href="/assets/vendor/libs/bs-stepper/bs-stepper.css" />
+﻿<link rel="stylesheet" href="/assets/vendor/libs/bs-stepper/bs-stepper.css" />
 <link rel="stylesheet" href="/assets/vendor/libs/bootstrap-select/bootstrap-select.css" />
-<link rel="stylesheet" href="/assets/vendor/libs/select2/select2.css" />
 <link rel="stylesheet" href="/assets/vendor/libs/form-validation/umd/styles/index.min.css" />
+<link rel="stylesheet" href="/assets/vendor/libs/quill/typography.css" />
+<link rel="stylesheet" href="/assets/vendor/libs/quill/katex.css" />
+<link rel="stylesheet" href="/assets/vendor/libs/quill/editor.css" />
+<link rel="stylesheet" href="/assets/vendor/libs/select2/select2.css" />
 <link rel="stylesheet" href="/assets/vendor/libs/dropzone/dropzone.css" />
-
+<link rel="stylesheet" href="/assets/vendor/libs/flatpickr/flatpickr.css" />
+<link rel="stylesheet" href="/assets/vendor/libs/tagify/tagify.css" />
 
 <h4 class="py-3 breadcrumb-wrapper mb-4">
     <span class="text-muted fw-light">Form Wizard/</span> Numbered
@@ -71,33 +74,33 @@
                                        placeholder="Company Name"
                                        aria-label="companyname" />
                             </div>
-@*                             <div class="col-sm-6 form-password-toggle">
-                                <label class="form-label" for="password">Password</label>
-                                <div class="input-group input-group-merge">
-                                    <input type="password"
-                                           id="password"
-                                           class="form-control"
-                                           placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                                           aria-describedby="password2" />
-                                    <span class="input-group-text cursor-pointer" id="password2">
-                                        <i class="bx bx-hide"></i>
-                                    </span>
-                                </div>
+                            @*                             <div class="col-sm-6 form-password-toggle">
+                            <label class="form-label" for="password">Password</label>
+                            <div class="input-group input-group-merge">
+                            <input type="password"
+                            id="password"
+                            class="form-control"
+                            placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                            aria-describedby="password2" />
+                            <span class="input-group-text cursor-pointer" id="password2">
+                            <i class="bx bx-hide"></i>
+                            </span>
+                            </div>
                             </div>
                             <div class="col-sm-6 form-password-toggle">
-                                <label class="form-label" for="confirm-password">Confirm Password</label>
-                                <div class="input-group input-group-merge">
-                                    <input type="password"
-                                           id="confirm-password"
-                                           class="form-control"
-                                           placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                                           aria-describedby="confirm-password2" />
-                                    <span class="input-group-text cursor-pointer" id="confirm-password2">
-                                        <i class="bx bx-hide"></i>
-                                    </span>
-                                </div>
+                            <label class="form-label" for="confirm-password">Confirm Password</label>
+                            <div class="input-group input-group-merge">
+                            <input type="password"
+                            id="confirm-password"
+                            class="form-control"
+                            placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                            aria-describedby="confirm-password2" />
+                            <span class="input-group-text cursor-pointer" id="confirm-password2">
+                            <i class="bx bx-hide"></i>
+                            </span>
                             </div>
- *@                            <div class="col-12 d-flex justify-content-between">
+                            </div>
+                            *@                            <div class="col-12 d-flex justify-content-between">
                                 <button class="btn btn-label-secondary btn-prev" disabled>
                                     <i class="bx bx-chevron-left bx-sm ms-sm-n2"></i>
                                     <span class="d-sm-inline-block d-none">Previous</span>
@@ -110,20 +113,21 @@
                             <!-- Basic  -->
                             <div class="col-12">
                                 <div class="card mb-4">
-                                    <h5 class="card-header">Basic</h5>
+                                    <div class="card-header d-flex justify-content-between align-items-center">
+                                        <h5 class="mb-0 card-title">Media</h5>
+                                        <a href="javascript:void(0);" class="fw-medium">Add media from URL</a>
+                                    </div>
                                     <div class="card-body">
-@*                                         <form action="/upload" class="dropzone needsclick" id="dropzone-basic">
- *@                                            <div class="dz-message needsclick">
-                                                Drop files here or click to upload
-                                                @* <span class="note needsclick">
-                                                    (This is just a demo dropzone. Selected files are
-                                                    <span class="fw-medium">not</span> actually uploaded.)
-                                                </span> *@
+                                        <form action="/upload" class="dropzone needsclick" id="dropzone-basic">
+                                            <div class="dz-message needsclick my-5">
+                                                <p class="fs-4 note needsclick my-2">Drag and drop your image here</p>
+                                                <small class="text-muted d-block fs-6 my-2">or</small>
+                                                <span class="note needsclick btn bg-label-primary d-inline" id="btnBrowse">Browse image</span>
                                             </div>
                                             <div class="fallback">
-                                            <input type="file" name="excelFile" />
+                                                <input name="file" type="file" />
                                             </div>
-                                       @*  </form> *@
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -316,17 +320,23 @@
 </div> *@
 
 @section scripts {
-
+    <script src="/assets/vendor/libs/quill/katex.js"></script>
+    <script src="/assets/vendor/libs/quill/quill.js"></script>
     <script src="/assets/vendor/libs/bs-stepper/bs-stepper.js"></script>
     <script src="/assets/vendor/libs/bootstrap-select/bootstrap-select.js"></script>
     <script src="/assets/vendor/libs/select2/select2.js"></script>
     <script src="/assets/vendor/libs/form-validation/umd/bundle/popular.min.js"></script>
     <script src="/assets/vendor/libs/form-validation/umd/plugin-bootstrap5/index.min.js"></script>
     <script src="/assets/vendor/libs/form-validation/umd/plugin-auto-focus/index.min.js"></script>
+    <script src="/assets/vendor/libs/dropzone/dropzone.js"></script>
+    <script src="/assets/vendor/libs/jquery-repeater/jquery-repeater.js"></script>
+    <script src="/assets/vendor/libs/flatpickr/flatpickr.js"></script>
+    <script src="/assets/vendor/libs/tagify/tagify.js"></script>
 
     <!-- Page JS -->
     <script src="/assets/js/form-wizard-numbered.js"></script>
     <script src="/assets/js/form-wizard-validation.js"></script>
     <script src="/assets/js/forms-file-upload.js"></script>
+    <script src="/assets/js/app-ecommerce-product-add.js"></script>
 
 }

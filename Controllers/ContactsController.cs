@@ -638,6 +638,13 @@ namespace NewTiceAI.Controllers
             return View(contact);
         }
 
+
+        public IActionResult TestDropZone()
+        {
+            return View();
+        }
+
+
         [HttpPost]
         public async Task<JsonResult> EmailOption(int? contactId, string? option)
         {
