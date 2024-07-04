@@ -6,14 +6,18 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CsvHelper;
+using CsvHelper.Configuration;
 using ExcelDataReader;
+using Microsoft.AspNetCore.Http;
+
 
 //using CsvHelper.Configuration;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Razor.TagHelpers;
+
 
 //using Microsoft.CodeAnalysis.Elfie.Serialization;
 using Microsoft.EntityFrameworkCore;
@@ -24,9 +28,12 @@ using NewTiceAI.Helpers;
 using NewTiceAI.Models;
 using NewTiceAI.Models.Enums;
 using NewTiceAI.Models.ViewModels;
-using NewTiceAI.Services;
 using NewTiceAI.Services.Interfaces;
+using Org.BouncyCastle.Utilities;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using static Azure.Core.HttpHeader;
+using static Org.BouncyCastle.Crypto.Engines.SM2Engine;
+
 
 namespace NewTiceAI.Controllers
 {
@@ -342,7 +349,7 @@ namespace NewTiceAI.Controllers
                 //});
 
                 // Skip header line
-                reader.Read();     
+                reader.Read();
                 //reader.Read();
 
                 while (reader.Read())
@@ -387,6 +394,118 @@ namespace NewTiceAI.Controllers
             return View(nameof(Index), contacts);
 
         }
+
+
+        [HttpGet]
+        public async Task<IActionResult> ExportExcelData()
+        {
+
+            List<Contact> contacts = new List<Contact>();
+            //var sb = new StringBuilder();
+            contacts = await _context.Contacts
+                                         .Where(c => c.OrganizationId == _organizationId)
+                                         .Include(c => c.Address)
+                                         .Include(c => c.Account)
+                                         .ToListAsync();
+            // #1
+            //sb.AppendFormat("{0},{1},{2},{3},{4},{5},{6},{7},{8}", "First Name", "Last Name", "Title", "Gender", "Email", "Phone", "Residency Grad Year", "Fellowship Grad Year", Environment.NewLine);
+            //foreach (Contact contact in contacts)
+            //{
+            //    sb.AppendFormat("{0},{1},{2},{3},{4},{5},{6},{7},{8}", contact.FirstName, contact.LastName, contact.Title, contact.Gender, contact.Email, contact.PhoneNumber, contact.Residency_GradYear, contact.Fellowship_GradYear, Environment.NewLine);
+            //}
+            //using (var writer = new StreamWriter($"\\ContactsExport_tice_{DateTime.UtcNow.Ticks}.csv"))
+            //using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+            //{
+            //    csv.WriteRecords(contacts);
+            //}
+
+            // #2
+            //using (var ms = new MemoryStream())
+            //{
+            //    using (var sw = new StreamWriter(stream: ms, encoding: new UTF8Encoding(true)))
+            //    {
+            //        using (var cw = new CsvWriter(sw, CultureInfo.InvariantCulture))
+            //        {
+            //            cw.WriteRecords(contacts);
+            //        }// The stream gets flushed here.
+            //        return File(ms.ToArray(), "text/csv", $"ContactsExport_tice_{DateTime.UtcNow.Ticks}.csv");
+            //    }
+            //}
+
+            // #3
+            //using (var mem = new MemoryStream())
+            //using (var writer = new StreamWriter(mem))
+            //{
+            //    //using (var csvWriter = new CsvWriter(writer,CultureInfo.InvariantCulture))
+            //    //{
+            //    var csvWriter = new CsvWriter(writer, CultureInfo.InvariantCulture);
+            //    //csvWriter.WriteHeader<sb>();
+            //    //csvWriter.WriteRecords(contacts);
+            //    foreach (var record in contacts)
+            //    {
+            //        csvWriter.WriteRecord(record);
+            //        csvWriter.NextRecord();
+            //    }
+
+            //    writer.Flush();
+            //    var result = Encoding.UTF8.GetString(mem.ToArray());
+            //    return File(mem.ToArray(), "text/csv", $"ContactsExport_tice_{DateTime.UtcNow.Ticks}.csv");
+            //}
+
+
+            // #4
+            //StringBuilder sb = new StringBuilder();
+
+            //sb.AppendFormat("{0},{1},{2},{3},{4},{5},{6},{7},{8}", "First Name", "Last Name", "Title", "Gender", "Email", "Phone", "Residency Grad Year", "Fellowship Grad Year", Environment.NewLine);
+            string[] columnNames = new string[] { "First Name", "Last Name", "Title", "Gender", "Email", "Phone", "Residency Grad Year", "Fellowship Grad Year" };
+
+            string csv = string.Join(",", columnNames);
+
+            csv += "\r\n";
+
+            foreach (var contact in contacts)
+            {
+                csv += contact.FirstName?.Replace(",", ";") + ',';
+                csv += contact.LastName?.Replace(",", ";") + ',';
+                csv += contact.Title?.Replace(",", ";") + ',';
+                csv += contact.Gender?.ToString().Replace(",", ";") + ',';
+                csv += contact.Email?.Replace(",", ";") + ',';
+                csv += contact.PhoneNumber?.Replace(",", ";") + ',';
+                csv += contact.Residency_GradYear?.ToString().Replace(",", ";") + ',';
+                csv += contact.Fellowship_GradYear?.ToString().Replace(",", ";") + ',';
+                csv += "\r\n";
+            }
+            byte[] bytes = Encoding.ASCII.GetBytes(csv);
+            return File(bytes, "text/csv", $"ContactExport_TICE{DateTime.Now.ToString("MMddyy")}.csv");
+
+
+
+
+
+            // SAMPLE
+            //var sb = new StringBuilder();
+            //contacts = await _context.Contacts.ToListAsync();
+
+            //sb.AppendFormat("{0},{1},{2},{3},{4},{5},{6}", "First Name", "Last Name", "Address ", "BirdthDate", "City", "Salry", Environment.NewLine);
+            //foreach (Contact contact in contacts)
+            //{
+            //    sb.AppendFormat("{0},{1},{2},{3},{4},{5},{6}", contact.FirstName, contact.LastName, contact.Address, contact.BirthDate.Value.ToShortDateString(), contact.City, contact.salary, contact.ExportedTime, Environment.NewLine);
+            //}
+            ////Get Current Response  
+            //var response = httpContext.Response;
+            //response..BufferOutput = true;
+            //response.Clear();
+            //response.Headers.Clear();
+            //response..ContentEncoding = Encoding.Unicode;
+            //response.AddHeader("content-disposition", "attachment;filename=Employee.CSV ");
+            //response.ContentType = "text/plain";
+            //response.Write(sb.ToString());
+            //response.End();
+            //ViewData["PageTitle"] = "New Contacts Import";
+            //return View(nameof(Index), contacts);
+
+        }
+
 
         // GET: Contacts/Create
         public async Task<IActionResult> Create()
