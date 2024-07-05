@@ -23,40 +23,40 @@
         <small class="text-light fw-medium">Basic</small>
         <div class="bs-stepper wizard-numbered mt-2">
             <div class="bs-stepper-header">
-                <div class="step" data-target="#account-details">
+                <div class="step" data-target="#select-import">
                     <button type="button" class="step-trigger">
                         <span class="bs-stepper-circle">1</span>
                         <span class="bs-stepper-label">
-                            <span class="bs-stepper-title">Account Details</span>
-                            <span class="bs-stepper-subtitle">Setup Account Details</span>
+                            <span class="bs-stepper-title">Select Import</span>
+                            <span class="bs-stepper-subtitle"></span>
                         </span>
                     </button>
                 </div>
                 <div class="line"></div>
-                <div class="step" data-target="#personal-info">
+                <div class="step" data-target="#preview-import">
                     <button type="button" class="step-trigger">
                         <span class="bs-stepper-circle">2</span>
                         <span class="bs-stepper-label">
-                            <span class="bs-stepper-title">Personal Info</span>
-                            <span class="bs-stepper-subtitle">Add personal info</span>
+                            <span class="bs-stepper-title">Preview Import</span>
+                            <span class="bs-stepper-subtitle"></span>
                         </span>
                     </button>
                 </div>
                 <div class="line"></div>
-                <div class="step" data-target="#social-links">
+                <div class="step" data-target="#store-import">
                     <button type="button" class="step-trigger">
                         <span class="bs-stepper-circle">3</span>
                         <span class="bs-stepper-label">
-                            <span class="bs-stepper-title">Social Links</span>
-                            <span class="bs-stepper-subtitle">Add social links</span>
+                            <span class="bs-stepper-title">Store Import</span>
+                            <span class="bs-stepper-subtitle"></span>
                         </span>
                     </button>
                 </div>
             </div>
             <div class="bs-stepper-content">
                 <form asp-action="ReadExcelData" asp-controller="Contacts" enctype="multipart/form-data">
-                    <!-- Account Details -->
-                    <div id="account-details" class="content">
+                    <!-- Select Import -->
+                    <div id="select-import" class="content">
                         <div class="content-header mb-3">
                             <h6 class="mb-0">Account Details</h6>
                             <small>Enter Your Account Details.</small>
@@ -74,33 +74,7 @@
                                        placeholder="Company Name"
                                        aria-label="companyname" />
                             </div>
-                            @*                             <div class="col-sm-6 form-password-toggle">
-                            <label class="form-label" for="password">Password</label>
-                            <div class="input-group input-group-merge">
-                            <input type="password"
-                            id="password"
-                            class="form-control"
-                            placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                            aria-describedby="password2" />
-                            <span class="input-group-text cursor-pointer" id="password2">
-                            <i class="bx bx-hide"></i>
-                            </span>
-                            </div>
-                            </div>
-                            <div class="col-sm-6 form-password-toggle">
-                            <label class="form-label" for="confirm-password">Confirm Password</label>
-                            <div class="input-group input-group-merge">
-                            <input type="password"
-                            id="confirm-password"
-                            class="form-control"
-                            placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                            aria-describedby="confirm-password2" />
-                            <span class="input-group-text cursor-pointer" id="confirm-password2">
-                            <i class="bx bx-hide"></i>
-                            </span>
-                            </div>
-                            </div>
-                            *@                            <div class="col-12 d-flex justify-content-between">
+                            <div class="col-12 d-flex justify-content-between">
                                 <button class="btn btn-label-secondary btn-prev" disabled>
                                     <i class="bx bx-chevron-left bx-sm ms-sm-n2"></i>
                                     <span class="d-sm-inline-block d-none">Previous</span>
@@ -134,8 +108,8 @@
                             <!-- /Basic  -->
                         </div>
                     </div>
-                    <!-- Personal Info -->
-                    <div id="personal-info" class="content">
+                    <!-- Preview Import -->
+                    <div id="preview-import" class="content">
                         <div class="content-header mb-3">
                             <h6 class="mb-0">Personal Info</h6>
                             <small>Enter Your Personal Info.</small>
@@ -186,8 +160,8 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Social Links -->
-                    <div id="social-links" class="content">
+                    <!-- Store Import -->
+                    <div id="store-import" class="content">
                         <div class="content-header mb-3">
                             <h6 class="mb-0">Social Links</h6>
                             <small>Enter Your Social Links.</small>
@@ -237,87 +211,6 @@
     <!-- /Default Wizard -->
 </div>
 
-@*<div class="row page-titles">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item active"><a href="javascript:void(0)">Home</a></li>
-        <li class="breadcrumb-item"><a href="javascript:void(0)">Read Excel File</a></li>
-    </ol>
-</div>
-<!-- row -->
-<div class="row">
-    <div class="col-xl-12 col-xxl-12">
-        <div class="card">
-            <div class="card-header">
-                <h4 class="card-title">Form step</h4>
-            </div>
-            <div class="card-body">
-                <form asp-action="ReadExcelData" asp-controller="Contacts" enctype="multipart/form-data">
-                    <div id="smartwizard" class="form-wizard order-create">
-                        <ul class="nav nav-wizard">
-                            <li>
-                                <a class="nav-link" href="#wizard_Service">
-                                    <span>1</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="nav-link" href="#wizard_Time">
-                                    <span>2</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="nav-link" href="#wizard_Details">
-                                    <span>3</span>
-                                </a>
-                            </li>
-
-                        </ul>
-                        <div class="tab-content">
-                            <div id="wizard_Service" class="tab-pane" role="tabpanel">
-                                <div class="row">
-                                    <div class="col-lg-6 mb-2">
-                                        <div class="mb-3">
-                                            <label class="text-label form-label">Cohort Name*</label>
-                                            <input type="text" name="cohortName" class="form-control" placeholder="cohort name" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 mb-2">
-                                        <div class="mb-3">
-                                            <label class="text-label form-label">Description*</label>
-                                            <input type="text" name="cohortDesc" class="form-control" placeholder="cohort description" required>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="wizard_Time" class="tab-pane" role="tabpanel">
-                                <div class="row">
-                                    <div class="col-lg-6 mb-2">
-                                        <div class="mb-3">
-                                            <div class="input-group mb-3">
-                                                <button class="btn btn-primary btn-sm" type="button">Button</button>
-                                                <div class="form-file">
-                                                    <input type="file" name="excelFile" class="form-file-input form-control">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="wizard_Details" class="tab-pane" role="tabpanel">
-                                <div>
-                                    <button type="submit" class="btn btn-rounded btn-success">
-                                        <span class="btn-icon-start text-success">
-                                            <i class="fa fa-upload color-success"></i>
-                                        </span>Upload
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div> *@
 
 @section scripts {
     <script src="/assets/vendor/libs/quill/katex.js"></script>
