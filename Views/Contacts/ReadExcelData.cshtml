@@ -1,13 +1,10 @@
 ﻿<link rel="stylesheet" href="/assets/vendor/libs/bs-stepper/bs-stepper.css" />
 <link rel="stylesheet" href="/assets/vendor/libs/bootstrap-select/bootstrap-select.css" />
-<link rel="stylesheet" href="/assets/vendor/libs/form-validation/umd/styles/index.min.css" />
-<link rel="stylesheet" href="/assets/vendor/libs/quill/typography.css" />
-<link rel="stylesheet" href="/assets/vendor/libs/quill/katex.css" />
-<link rel="stylesheet" href="/assets/vendor/libs/quill/editor.css" />
 <link rel="stylesheet" href="/assets/vendor/libs/select2/select2.css" />
+<link rel="stylesheet" href="/assets/vendor/libs/form-validation/umd/styles/index.min.css" />
+
+@* File Upload *@
 <link rel="stylesheet" href="/assets/vendor/libs/dropzone/dropzone.css" />
-<link rel="stylesheet" href="/assets/vendor/libs/flatpickr/flatpickr.css" />
-<link rel="stylesheet" href="/assets/vendor/libs/tagify/tagify.css" />
 
 <h4 class="py-3 breadcrumb-wrapper mb-4">
     <span class="text-muted fw-light">Form Wizard/</span> Numbered
@@ -57,10 +54,10 @@
                 <form asp-action="ReadExcelData" asp-controller="Contacts" enctype="multipart/form-data">
                     <!-- Select Import -->
                     <div id="select-import" class="content">
-                        <div class="content-header mb-3">
-                            <h6 class="mb-0">Account Details</h6>
-                            <small>Enter Your Account Details.</small>
-                        </div>
+                        @*                         <div class="content-header mb-3">
+                        <h6 class="mb-0">Account Details</h6>
+                        <small>Enter Your Account Details.</small>
+                        </div> *@
                         <div class="row g-3">
                             <div class="col-sm-6">
                                 <label class="form-label" for="username">Account Name</label>
@@ -92,7 +89,7 @@
                                         <a href="javascript:void(0);" class="fw-medium">Add media from URL</a>
                                     </div>
                                     <div class="card-body">
-                                        <form action="/upload" class="dropzone needsclick" id="dropzone-basic">
+                                        <div class="dropzone needsclick" id="dropzone-basic">
                                             <div class="dz-message needsclick my-5">
                                                 <p class="fs-4 note needsclick my-2">Drag and drop your image here</p>
                                                 <small class="text-muted d-block fs-6 my-2">or</small>
@@ -101,7 +98,7 @@
                                             <div class="fallback">
                                                 <input name="file" type="file" />
                                             </div>
-                                        </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -213,7 +210,7 @@
 
 
 @section scripts {
-    <script src="/assets/vendor/libs/quill/katex.js"></script>
+    @*     <script src="/assets/vendor/libs/quill/katex.js"></script>
     <script src="/assets/vendor/libs/quill/quill.js"></script>
     <script src="/assets/vendor/libs/bs-stepper/bs-stepper.js"></script>
     <script src="/assets/vendor/libs/bootstrap-select/bootstrap-select.js"></script>
@@ -224,12 +221,36 @@
     <script src="/assets/vendor/libs/dropzone/dropzone.js"></script>
     <script src="/assets/vendor/libs/jquery-repeater/jquery-repeater.js"></script>
     <script src="/assets/vendor/libs/flatpickr/flatpickr.js"></script>
-    <script src="/assets/vendor/libs/tagify/tagify.js"></script>
+    <script src="/assets/vendor/libs/tagify/tagify.js"></script> *@
+
+    <script src="/assets/vendor/libs/bs-stepper/bs-stepper.js"></script>
+    <script src="/assets/vendor/libs/bootstrap-select/bootstrap-select.js"></script>
+    <script src="/assets/vendor/libs/select2/select2.js"></script>
+    <script src="/assets/vendor/libs/form-validation/umd/bundle/popular.min.js"></script>
+    <script src="/assets/vendor/libs/form-validation/umd/plugin-bootstrap5/index.min.js"></script>
+    <script src="/assets/vendor/libs/form-validation/umd/plugin-auto-focus/index.min.js"></script>
+
 
     <!-- Page JS -->
     <script src="/assets/js/form-wizard-numbered.js"></script>
     <script src="/assets/js/form-wizard-validation.js"></script>
-    <script src="/assets/js/forms-file-upload.js"></script>
-    <script src="/assets/js/app-ecommerce-product-add.js"></script>
 
+
+    <script src="/assets/js/forms-file-upload.js"></script>
+    <script src="/assets/js/forms-file-upload.js"></script>
+    @*     <script src="/assets/js/app-ecommerce-product-add.js"></script>
+ *@
+
+    <script type=”text/javascript”>
+        $(document).ready(function ()
+        {
+            Dropzone.autoDiscover = false;
+            $(“#file-upload-form”).dropzone(
+                {
+                    // Set any desired options for dropzone
+                    // For example, you can set upload URL and max file size
+                    url: '@Url.Action("Upload", "Contacts")', maxFilesize: 3, maxFiles: 2
+                });
+        });
+    </script>
 }
