@@ -44,6 +44,16 @@ namespace NewTiceAI.Controllers
             return View(accounts);
         }
 
+        public async Task<IActionResult> Opportunities(int? orgId)
+        {
+            List<Account> accounts = (await _context.Organizations
+                                      .Include(o => o.Accounts)
+                                      .FirstOrDefaultAsync(o => o.Id == orgId))!
+                                      .Accounts.ToList();
+            return View();
+        }
+
+
         // GET: Organizations/Details/5
         public async Task<IActionResult> Details(int? id)
         {

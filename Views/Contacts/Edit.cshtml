@@ -9,27 +9,6 @@
     ViewData["Title"] = "Edit";
 }
 
-<!-- Bootstrap CSS -->
-@*<link rel="stylesheet" href="~/template/assets/css/bootstrap.min.css">
-*@<!-- Fontawesome CSS -->
-<link rel="stylesheet" href="~/template/assets/plugins/fontawesome/css/fontawesome.min.css">
-<link rel="stylesheet" href="~/template/assets/plugins/fontawesome/css/all.min.css">
-
-<!-- Lineawesome CSS -->
-<link rel="stylesheet" href="~/template/assets/css/line-awesome.min.css">
-<link rel="stylesheet" href="~/template/assets/css/material.css">
-
-<!-- Fontawesome CSS -->
-<link rel="stylesheet" href="~/template/assets/css/font-awesome.min.css">
-
-<!-- Lineawesome CSS -->
-<link rel="stylesheet" href="~/template/assets/css/line-awesome.min.css">
-
-<!-- Select2 CSS -->
-<link rel="stylesheet" href="~/template/assets/css/select2.min.css">
-
-<!-- Main CSS -->
-<link rel="stylesheet" href="~/template/assets/css/style.css">
 
 <div class="block-header">
     <div class="row">
@@ -278,68 +257,6 @@
                             </div>
                         </div>
 
-                        @*                         <div class="row">
-                        <div class="col-12 col-lg-6">
-                        <label asp-for="FirstName" class="control-label"></label>
-                        <input asp-for="FirstName" class="form-control" />
-                        <span asp-validation-for="FirstName" class="text-danger"></span>
-                        </div>
-                        <div class="col-12 col-lg-6">
-                        <label asp-for="LastName" class="control-label"></label>
-                        <input asp-for="LastName" class="form-control" />
-                        <span asp-validation-for="LastName" class="text-danger"></span>
-                        </div>
-                        <div class="col-12 col-lg-6 mt-2">
-                        <label asp-for="Email" class="control-label"></label>
-                        <input asp-for="Email" class="form-control" />
-                        <span asp-validation-for="Email" class="text-danger"></span>
-                        </div>
-                        <div class="col-12 col-lg-6 mt-2">
-                        <label asp-for="PhoneNumber" class="control-label"></label>
-                        <input asp-for="PhoneNumber" class="form-control" />
-                        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
-                        </div>
-                        <div class="col-12 mt-2">
-                        <label asp-for="Address!.Address1" class="control-label"></label>
-                        <input asp-for="Address!.Address1" class="form-control" />
-                        <span asp-validation-for="Address!.Address1" class="text-danger"></span>
-                        </div>
-                        <div class="col-12 mt-2">
-                        <label asp-for="Address!.Address2" class="control-label"></label>
-                        <input asp-for="Address!.Address2" class="form-control" />
-                        <span asp-validation-for="Address!.Address2" class="text-danger"></span>
-                        </div>
-                        <div class="col-12 col-lg-6 mt-2">
-                        <label asp-for="Address!.City" class="control-label"></label>
-                        <input asp-for="Address!.City" class="form-control" />
-                        <span asp-validation-for="Address!.City" class="text-danger"></span>
-                        </div>
-                        <div class="col-12 col-lg-4 mt-2">
-                        <label asp-for="Address!.State" class="control-label"></label>
-                        <select asp-for="Address!.State" class="form-control" asp-items="ViewBag.StatesList"></select>
-                        <span asp-validation-for="Address!.State" class="text-danger"></span>
-                        </div>
-                        <div class="col-12 col-lg-2 mt-2">
-                        <label asp-for="Address!.ZipCode" class="control-label"></label>
-                        <input asp-for="Address!.ZipCode" class="form-control" />
-                        <span asp-validation-for="Address!.ZipCode" class="text-danger"></span>
-                        </div>
-                        <div class="col-12 col-lg-6 mt-3">
-                        <label asp-for="AccountId" class="control-label"></label>
-                        <select asp-for="AccountId" class="form-control" asp-items="ViewBag.AccountsList">
-                        <option></option>
-                        </select>
-                        </div>
-                        <div class="col-12 col-lg-6 mt-3">
-                        <label asp-for="DateOfBirth" class="control-label"></label>
-                        <input asp-for="DateOfBirth" class="form-control" />
-                        <span asp-validation-for="DateOfBirth" class="text-danger"></span>
-                        </div>
-                        <div class="col-12 d-flex justify-content-end mt-2">
-                        <button type="submit" class="btn btn-lg btn-primary rounded-pill">Save</button>
-                        </div>
-                        </div>
-                        *@
                     </div>
                 </div>
             </form>
@@ -355,21 +272,6 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-
-    <!-- Slimscroll JS -->
-    <script src="~/template/assets/js/jquery.slimscroll.min.js"></script>
-    <!-- Ck Editor JS -->
-    <script src="~/template/assets/js/ckeditor.js"></script>
-
-    <!-- Select2 JS -->
-    <script src="~/template/assets/js/select2.min.js"></script>
-
-    <!-- Theme Settings JS -->
-    <script src="~/template/assets/js/layout.js"></script>
-    <script src="~/template/assets/js/theme-settings.js"></script>
-    <script src="~/template/assets/js/greedynav.js"></script>
-    <!-- Custom JS -->
-    <script src="~/template/assets/js/app.js"></script>
 
     <!--Sweet Alerts-->
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>

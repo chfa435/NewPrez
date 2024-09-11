@@ -101,6 +101,78 @@
             </div>
         </div>
     </div>
+@*     @if (Model?.ActionItems.Count > 0 || Model?.ActionItems.Count > 0)
+    {
+        <div class="col-md-3">
+            @if (Model?.ActionItems.Count > 0)
+            {
+                if (TiceAI.Name == "Sittadel")
+                {
+                    <h3>ACTION ITEMS</h3>
+                }
+                else
+                {
+                    <h3>OPPORTUNITES </h3>
+                }
+                <div class="faq-card">
+                    @foreach (ActionItem item in Model.ActionItems)
+                    {
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">
+                                    <a class="collapsed" data-bs-toggle="collapse" href="#collapse-@item.Id">@item.Title</a>
+                                </h4>
+                            </div>
+                            <div id="collapse-@item.Id" class="card-collapse collapse">
+                                <div class="card-body">
+                                    <p>@item.Description</p>
+                                    <p>@item.Note</p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+
+            @if (Model?.ActionItems.Count > 0)
+            {
+                <div style="padding-top:80px">
+                    <h3>Attached Files</h3>
+                    <div class="faq-card">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">
+                                    <a class="collapsed" data-bs-toggle="collapse" href="#collapse-contattch"></a>
+                                </h4>
+                            </div>
+                            <div id="collapse-contattch" class="card-collapse collapse show">
+                                <div class="card-body">
+                                    @foreach (ContactAttachment item in Model.Attachments)
+                                    {
+                                        <div class="col col-sm-2">
+                                            <a asp-action="ShowFile" asp-controller="Contacts" asp-route-Id="@item.Id">
+                                                <div class="icon">
+                                                    <img src="@_FileService.GetFileIcon(item.FileName!)" style="height:50px;width:50px" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="@item.FileName" />
+                                                </div>
+                                            </a>
+                                            <div style="font-size:x-small">
+                                                <div class="file-name">
+                                                    <strong>@item.Description</strong>
+                                                </div>
+                                                <small>Size: @_FileService.FormatFileSize(item.FileData!.Length) </small>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+    }
+ *@
 </div>
 
 <div>

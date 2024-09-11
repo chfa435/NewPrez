@@ -3,51 +3,15 @@
 @inject IImageService _ImageService
 @inject UserManager<TAUser> _UserManager
 @inject IBTFileService _FileService
+@inject IOrganizationService _OrgService
 
 @{
     ViewData["Title"] = "Details";
     ActionItem ActionItem = new ActionItem() { ContactId = Model.Id, SubmitterId = _UserManager.GetUserId(User) };
+    int orgId = User.Identity!.GetOrganizationId();
+
+    Organization? TiceAI = await _OrgService.GetOrgInfoById(orgId);
 }
-
-<!-- Bootstrap CSS -->
-@*<link rel="stylesheet" href="~/template/assets/css/bootstrap.min.css">
-*@<!-- Fontawesome CSS -->
-@* <link rel="stylesheet" href="~/template/assets/plugins/fontawesome/css/fontawesome.min.css">
-<link rel="stylesheet" href="~/template/assets/plugins/fontawesome/css/all.min.css">
-
-<!-- Lineawesome CSS -->
-<link rel="stylesheet" href="~/template/assets/css/line-awesome.min.css">
-<link rel="stylesheet" href="~/template/assets/css/material.css">
-
-<!-- Fontawesome CSS -->
-<link rel="stylesheet" href="~/template/assets/css/font-awesome.min.css">
-
-<!-- Lineawesome CSS -->
-<link rel="stylesheet" href="~/template/assets/css/line-awesome.min.css">
-
-<!-- Select2 CSS -->
-<link rel="stylesheet" href="~/template/assets/css/select2.min.css">
-
-<!-- Main CSS -->
-<link rel="stylesheet" href="~/template/assets/css/style.css"> *@
-
-@* <div class="block-header">
-    <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <ul class="breadcrumb breadcrumb-style ">
-                <li class="breadcrumb-item">
-                    <h4 class="page-title">Dashboard</h4>
-                </li>
-                <li class="breadcrumb-item bcrumb-1">
-                    <a asp-action="Dashboard_new" asp-controller="Home">
-                        <i class="fas fa-home"></i> Home
-                    </a>
-                </li>
-                <li class="breadcrumb-item active">Contact Detail</li>
-            </ul>
-        </div>
-    </div>
-</div> *@
 
 <div class="page-header">
     <div class="row">
@@ -72,7 +36,14 @@
             <a asp-action="Index" class="mx-2 btn btn-secondary rounded-pill btnlinks">Back</a>
             <a asp-action="Edit" asp-route-id="@Model?.Id" class="mx-2 btn btn-warning rounded-pill btnlinks">Edit</a>
             <a asp-action="Delete" asp-route-id="@Model?.Id" class="mx-2 btn btn-danger rounded-pill btnlinks">Delete</a>
-            <a data-bs-toggle="modal" data-bs-target="#add_actionitem" class="mx-2 btn btn-primary rounded-pill btnlinks">+ Activity</a>
+            @if (TiceAI.Name == "Sittadel")
+            {
+                <a data-bs-toggle="modal" data-bs-target="#add_actionitem" class="mx-2 btn btn-primary rounded-pill btnlinks">+ Opportunity</a>
+            }
+            else
+            {
+            <a data-bs-toggle="modal" data-bs-target="#add_actionitem" class="mx-2 btn btn-primary rounded-pill btnlinks">+ Activity</a>                
+            }
             <a data-bs-toggle="modal" data-bs-target="#add_attachment" class="mx-2 btn btn-dark rounded-pill btnlinks">+ Attachment</a>
         </div>
         <div class="p-3 border border-2 shadow-lg bg-light mb-5">
@@ -278,7 +249,14 @@
         <div class="col-md-3">
             @if (Model?.ActionItems.Count > 0)
             {
+                if(TiceAI.Name == "Sittadel")
+                {
                 <h3>ACTION ITEMS</h3>
+                }
+                else
+                {
+                    <h3>OPPORTUNITES </h3>
+                }
                 <div class="faq-card">
                     @foreach (ActionItem item in Model.ActionItems)
                     {
@@ -291,7 +269,7 @@
                             <div id="collapse-@item.Id" class="card-collapse collapse">
                                 <div class="card-body">
                                     <p>@item.Description</p>
-                                    <p>@item.Note</p>
+                                    <p>@item.Notes</p>
                                 </div>
                             </div>
                         </div>
@@ -307,7 +285,7 @@
                         <div class="card">
                             <div class="card-header">
                                 <h4 class="card-title">
-                                    <a class="collapsed" data-bs-toggle="collapse" href="#collapse-contattch">Anim pariatur cliche reprehenderit?</a>
+                                    <a class="collapsed" data-bs-toggle="collapse" href="#collapse-contattch"></a>
                                 </h4>
                             </div>
                             <div id="collapse-contattch" class="card-collapse collapse show">
@@ -345,7 +323,14 @@
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
+                @if(TiceAI.Name == "Sittadel")
+                {
+                    <h5 class="modal-title">New Opportunity</h5>
+                }
+                else
+                {                   
                 <h5 class="modal-title">New Action Item</h5>
+                }
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -355,6 +340,62 @@
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <input type="hidden" asp-for="@ActionItem.ContactId" />
                     <input type="hidden" asp-for="@ActionItem.SubmitterId" />
+                    @if(TiceAI.Name == "Sittadel")
+                    {
+                        <div class="form-group">
+                            <label asp-for="@ActionItem.AccountId" class="control-label"></label>
+                            <select asp-for="@ActionItem.AccountId" class="form-select" asp-items="ViewBag.AccountId">
+                                <option></option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Name</label>
+                            <input asp-for="@ActionItem.Title" class="form-control" />
+                            <span asp-validation-for="@ActionItem.Title" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="@ActionItem.ClosedDate" class="control-label"></label>
+                            <input asp-for="@ActionItem.ClosedDate" class="form-control" />
+                            <span asp-validation-for="@ActionItem.ClosedDate" class="text-danger"></span>
+                        </div>
+
+@*                         <div class="form-group">
+                            <label asp-for="@ActionItem.ActorId" class="control-label"></label>
+                            <select asp-for="@ActionItem.ActorId" class="form-select" asp-items="ViewBag.ActorId">
+                                <option></option>
+                            </select>
+                        </div> *@
+                        <div class="form-group">
+                            <label class="control-label">Stage</label>
+                            <select asp-for="@ActionItem.OpportunityStage" class="form-select" asp-items="@Html.GetEnumSelectList<OpportunityStage>()">
+                                <option></option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Forecast</label>
+                            <select asp-for="@ActionItem.OpportunityForecastCategory" class="form-select" asp-items="@Html.GetEnumSelectList<OpportunityForecastCategory>()">
+                                <option></option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Type</label>
+                            <select asp-for="@ActionItem.OpportunityType" class="form-select" asp-items="@Html.GetEnumSelectList<OpportunityType>()">
+                                <option></option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="@ActionItem.Amount" class="control-label"></label>
+                            <input asp-for="@ActionItem.Amount" class="form-control" />
+                            <span asp-validation-for="@ActionItem.Amount" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="@ActionItem.Notes" class="control-label"></label>
+                            <textarea asp-for="@ActionItem.Notes" class="form-control" id="editor" rows="7"></textarea>
+                            <span asp-validation-for="@ActionItem.Notes" class="text-danger"></span>
+                        </div>
+                    }
+                    else
+                    {
                     <div class="form-group">
                         <label asp-for="@ActionItem.ActorId" class="control-label"></label>
                         <select asp-for="@ActionItem.ActorId" class="form-select" asp-items="ViewBag.ActorId">
@@ -390,10 +431,11 @@
                         <span asp-validation-for="@ActionItem.Description" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="@ActionItem.Note" class="control-label"></label>
-                        <textarea asp-for="@ActionItem.Note" class="form-control" id="editor"></textarea>
-                        <span asp-validation-for="@ActionItem.Note" class="text-danger"></span>
-                    </div>
+                        <label asp-for="@ActionItem.Notes" class="control-label"></label>
+                        <textarea asp-for="@ActionItem.Notes" class="form-control" id="editor"></textarea>
+                        <span asp-validation-for="@ActionItem.Notes" class="text-danger"></span>
+                    </div>                        
+                    }
                     <div class="form-group">
                         <input type="submit" value="Create" class="btn btn-primary" />
                     </div>
@@ -449,20 +491,6 @@
 </div>
 <!-- /Add Attachment Modal -->
 @section Scripts {
-    <!-- Slimscroll JS -->
-    <script src="~/template/assets/js/jquery.slimscroll.min.js"></script>
-    <!-- Ck Editor JS -->
-    <script src="~/template/assets/js/ckeditor.js"></script>
-
-    <!-- Select2 JS -->
-    <script src="~/template/assets/js/select2.min.js"></script>
-
-    <!-- Theme Settings JS -->
-    <script src="~/template/assets/js/layout.js"></script>
-    <script src="~/template/assets/js/theme-settings.js"></script>
-    <script src="~/template/assets/js/greedynav.js"></script>
-    <!-- Custom JS -->
-    <script src="~/template/assets/js/app.js"></script>
 
     <!--Sweet Alerts-->
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>

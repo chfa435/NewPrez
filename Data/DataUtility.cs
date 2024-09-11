@@ -11,12 +11,18 @@ namespace NewTiceAI.Data
     {
         private static int organization1Id;
         private static int organization2Id;
+        private static int sittadelId;
+        private static int magnareignId;
+        private static int hoosierId;
 
         private static int account1Id;
         private static int account2Id;
         private static int account3Id;
         private static int account4Id;
         private static int account5Id;
+        private static int sittadelaccountId;
+        private static int magnareignaccountId;
+        private static int hoosieraccountId;
 
         private static int portfolioId;
         private static int blogId;
@@ -27,8 +33,8 @@ namespace NewTiceAI.Data
 
         public static string GetConnectionString(IConfiguration configuration)
         {
-            var connectionString = configuration.GetConnectionString("DevConnection");
-            //var connectionString = configuration.GetConnectionString("LiveConnection");
+            //var connectionString = configuration.GetConnectionString("DevConnection");
+            var connectionString = configuration.GetConnectionString("LiveConnection");
             var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
             return string.IsNullOrEmpty(databaseUrl) ? connectionString! : BuildConnectionString(databaseUrl)!;
         }
@@ -66,6 +72,7 @@ namespace NewTiceAI.Data
 
             await SeedRolesAsync(roleManagerSvc);
             await SeedDefaultOrganizationsAsync(dbContextSvc);
+            await SeedNewOrganizationsAsync(dbContextSvc);
             await SeedDefaultAccountsAsync(dbContextSvc);
             await SeedDefaultUsersAsync(userManagerSvc);
             await SeedDemoUsersAsync(userManagerSvc);
@@ -123,6 +130,39 @@ namespace NewTiceAI.Data
 
         }
 
+        private static async Task SeedNewOrganizationsAsync(ApplicationDbContext context)
+        {
+            try
+            {
+                //Set up new company names and descriptions
+                IList<Organization> defaultorganizations = new List<Organization>() {
+                    new Organization() { Name = "Sittadel", Description="This is Sittadel" },
+                    new Organization() { Name = "MagnaReign", Description="This is MagnaReign" },
+                    new Organization() { Name = "Hoosier", Description="Hoosier Equipment Service, Inc." }
+                };
+
+                //Add them to the database if they do not already exist according to company name
+                var dbOrganizations = context.Organizations.Select(c => c.Name).ToList();
+                await context.Organizations.AddRangeAsync(defaultorganizations.Where(c => !dbOrganizations.Contains(c.Name)));
+                await context.SaveChangesAsync();
+
+                //Get company Ids
+                sittadelId = context.Organizations.FirstOrDefault(p => p.Name == "Sittadel")!.Id;
+                magnareignId = context.Organizations.FirstOrDefault(p => p.Name == "MagnaReign")!.Id;
+                hoosierId = context.Organizations.FirstOrDefault(p => p.Name == "Hoosier")!.Id;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("*************  ERROR  *************");
+                Console.WriteLine("Error Seeding New Oranizations.");
+                Console.WriteLine(ex.Message);
+                Console.WriteLine("***********************************");
+                throw;
+            }
+
+        }
+
+
         private static async Task SeedDefaultAccountsAsync(ApplicationDbContext context)
         {
             try
@@ -132,7 +172,10 @@ namespace NewTiceAI.Data
                     new Account() { Name = "Account2", Description="This is default Account 2", ParentOrganizationId = organization1Id },
                     new Account() { Name = "Account3", Description="This is default Account 3", ParentOrganizationId = organization1Id },
                     new Account() { Name = "Account4", Description="This is default Account 4", ParentOrganizationId = organization2Id },
-                    new Account() { Name = "Account5", Description="This is default Account 5", ParentOrganizationId = organization2Id }
+                    new Account() { Name = "Account5", Description="This is default Account 5", ParentOrganizationId = organization2Id },
+                    new Account() { Name = "SittadelTestAccount", Description="This is a default Account for Sittadel", ParentOrganizationId = organization1Id },
+                    new Account() { Name = "MagnaReignTestAccount", Description="This is a default Account for MagnaReign", ParentOrganizationId = organization2Id },
+                    new Account() { Name = "HoosierTestAccount", Description="This is a default Account for Hoosier", ParentOrganizationId = organization2Id }
                 };
 
                 var dbAccounts = context.Accounts.Select(c => c.Name).ToList();
@@ -145,6 +188,9 @@ namespace NewTiceAI.Data
                 account3Id = context.Accounts.FirstOrDefault(p => p.Name == "Account3")!.Id;
                 account4Id = context.Accounts.FirstOrDefault(p => p.Name == "Account4")!.Id;
                 account5Id = context.Accounts.FirstOrDefault(p => p.Name == "Account5")!.Id;
+                sittadelaccountId = context.Accounts.FirstOrDefault(p => p.Name == "SittadelTestAccount")!.Id;
+                magnareignaccountId = context.Accounts.FirstOrDefault(p => p.Name == "MagnaReignTestAccount")!.Id;
+                hoosieraccountId = context.Accounts.FirstOrDefault(p => p.Name == "HoosierTestAccount")!.Id;
             }
             catch (Exception ex)
             {
@@ -159,8 +205,220 @@ namespace NewTiceAI.Data
 
         private static async Task SeedDefaultUsersAsync(UserManager<TAUser> userManager)
         {
-            //Seed Default Admin User
+
+            #region Sittadel Users
+            //Seed Sittadel Admin User
             var defaultUser = new TAUser
+            {
+                UserName = "joshua@sittadel.com",
+                Email = "joshua@sittadel.com",
+                FirstName = "Joshua",
+                LastName = "Appuser",
+                EmailConfirmed = true,
+                OrganizationId = sittadelId
+            };
+            try
+            {
+                var user = await userManager.FindByEmailAsync(defaultUser.Email);
+                if (user == null)
+                {
+                    await userManager.CreateAsync(defaultUser, "Abc&123!");
+                    await userManager.AddToRoleAsync(defaultUser, nameof(BTRoles.Admin));
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("*************  ERROR  *************");
+                Console.WriteLine("Error Seeding Sittadel Admin User.");
+                Console.WriteLine(ex.Message);
+                Console.WriteLine("***********************************");
+                throw;
+            }
+
+            //Seed Sittadel Admin User
+            defaultUser = new TAUser
+            {
+                UserName = "trafenia.flynnsalzman@sittadel.com",
+                Email = "trafenia.flynnsalzman@sittadel.com",
+                FirstName = "Trafenia",
+                LastName = "Flynnsalzman",
+                EmailConfirmed = true,
+                OrganizationId = sittadelId
+            };
+            try
+            {
+                var user = await userManager.FindByEmailAsync(defaultUser.Email);
+                if (user == null)
+                {
+                    await userManager.CreateAsync(defaultUser, "Abc&123!");
+                    await userManager.AddToRoleAsync(defaultUser, nameof(BTRoles.Admin));
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("*************  ERROR  *************");
+                Console.WriteLine("Error Seeding Sittadel Admin User.");
+                Console.WriteLine(ex.Message);
+                Console.WriteLine("***********************************");
+                throw;
+            }
+
+            //Seed Sittadel Admin User
+            defaultUser = new TAUser
+            {
+                UserName = "alex.delfino@sittadel.com",
+                Email = "alex.delfino@sittadel.com",
+                FirstName = "Alex",
+                LastName = "Delfino",
+                EmailConfirmed = true,
+                OrganizationId = sittadelId
+            };
+            try
+            {
+                var user = await userManager.FindByEmailAsync(defaultUser.Email);
+                if (user == null)
+                {
+                    await userManager.CreateAsync(defaultUser, "Abc&123!");
+                    await userManager.AddToRoleAsync(defaultUser, nameof(BTRoles.Admin));
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("*************  ERROR  *************");
+                Console.WriteLine("Error Seeding Sittadel Admin User.");
+                Console.WriteLine(ex.Message);
+                Console.WriteLine("***********************************");
+                throw;
+            }
+            #endregion
+
+
+
+            #region MagnaReign Users
+            //Seed MagnaReign Admin User
+            defaultUser = new TAUser
+            {
+                UserName = "anthony@magnareign.com",
+                Email = "anthony@magnareign.com",
+                FirstName = "Anthony",
+                LastName = "Appuser",
+                EmailConfirmed = true,
+                OrganizationId = magnareignId
+            };
+            try
+            {
+                var user = await userManager.FindByEmailAsync(defaultUser.Email);
+                if (user == null)
+                {
+                    await userManager.CreateAsync(defaultUser, "Abc&123!");
+                    await userManager.AddToRoleAsync(defaultUser, nameof(BTRoles.Admin));
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("*************  ERROR  *************");
+                Console.WriteLine("Error Seeding MagnaReign Admin User.");
+                Console.WriteLine(ex.Message);
+                Console.WriteLine("***********************************");
+                throw;
+            }
+            #endregion
+
+
+
+            #region Hoosier Users
+            //Seed Hoosier Admin User
+            defaultUser = new TAUser
+            {
+                UserName = "hbrumback@hoosierequipment.com",
+                Email = "hbrumback@hoosierequipment.com",
+                FirstName = "Heidi",
+                LastName = "Brumback",
+                EmailConfirmed = true,
+                OrganizationId = hoosierId
+            };
+            try
+            {
+                var user = await userManager.FindByEmailAsync(defaultUser.Email);
+                if (user == null)
+                {
+                    await userManager.CreateAsync(defaultUser, "Abc&123!");
+                    await userManager.AddToRoleAsync(defaultUser, nameof(BTRoles.Admin));
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("*************  ERROR  *************");
+                Console.WriteLine("Error Seeding Hoosier Admin User.");
+                Console.WriteLine(ex.Message);
+                Console.WriteLine("***********************************");
+                throw;
+            }
+
+            //Seed Hoosier Admin User
+            defaultUser = new TAUser
+            {
+                UserName = "ADaVega@hoosierequipment.com",
+                Email = "ADaVega@hoosierequipment.com",
+                FirstName = "Anne",
+                LastName = "DaVega",
+                EmailConfirmed = true,
+                OrganizationId = hoosierId
+            };
+            try
+            {
+                var user = await userManager.FindByEmailAsync(defaultUser.Email);
+                if (user == null)
+                {
+                    await userManager.CreateAsync(defaultUser, "Abc&123!");
+                    await userManager.AddToRoleAsync(defaultUser, nameof(BTRoles.Admin));
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("*************  ERROR  *************");
+                Console.WriteLine("Error Seeding Hoosier Admin User.");
+                Console.WriteLine(ex.Message);
+                Console.WriteLine("***********************************");
+                throw;
+            }
+            #endregion
+
+
+
+            #region Medartis Users
+            //Seed Medartis Admin User
+            defaultUser = new TAUser
+            {
+                UserName = "Kelli.Farmer@medartis.com",
+                Email = "Kelli.Farmer@medartis.com",
+                FirstName = "Kelli",
+                LastName = "Farmer",
+                EmailConfirmed = true,
+                OrganizationId = organization1Id
+            };
+            try
+            {
+                var user = await userManager.FindByEmailAsync(defaultUser.Email);
+                if (user == null)
+                {
+                    await userManager.CreateAsync(defaultUser, "Abc&123!");
+                    await userManager.AddToRoleAsync(defaultUser, nameof(BTRoles.Admin));
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("*************  ERROR  *************");
+                Console.WriteLine("Error Seeding Medartis Admin User.");
+                Console.WriteLine(ex.Message);
+                Console.WriteLine("***********************************");
+                throw;
+            }
+            #endregion
+
+
+            //Seed Default Admin User
+            defaultUser = new TAUser
             {
                 UserName = "btadmin1@bugtracker.com",
                 Email = "btadmin1@bugtracker.com",

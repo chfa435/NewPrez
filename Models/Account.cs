@@ -47,6 +47,8 @@ namespace NewTiceAI.Models
         public virtual Address? BillingAddress { get; set; }
         public virtual Address? ShippingAddress { get; set; }
 
+        public virtual ICollection<ActionItem> Opportunities { get; set; } = new HashSet<ActionItem>();
+
         //TODO: Knowledge Articles//
         //public virtual ICollection<Blog> Blogs { get; set; } = new HashSet<Blog>();
     }
