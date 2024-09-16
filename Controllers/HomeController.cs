@@ -130,6 +130,7 @@ namespace NewTiceAI.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
+
         [HttpPost]
         public async Task<JsonResult> GglProjectTickets()
         {

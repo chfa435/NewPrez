@@ -42,7 +42,7 @@
             }
             else
             {
-            <a data-bs-toggle="modal" data-bs-target="#add_actionitem" class="mx-2 btn btn-primary rounded-pill btnlinks">+ Activity</a>                
+                <a data-bs-toggle="modal" data-bs-target="#add_actionitem" class="mx-2 btn btn-primary rounded-pill btnlinks">+ Activity</a>
             }
             <a data-bs-toggle="modal" data-bs-target="#add_attachment" class="mx-2 btn btn-dark rounded-pill btnlinks">+ Attachment</a>
         </div>
@@ -249,13 +249,13 @@
         <div class="col-md-3">
             @if (Model?.ActionItems.Count > 0)
             {
-                if(TiceAI.Name == "Sittadel")
+                if (TiceAI.Name == "Sittadel")
                 {
-                <h3>ACTION ITEMS</h3>
+                    <h3>OPPORTUNITES </h3>
                 }
                 else
                 {
-                    <h3>OPPORTUNITES </h3>
+                    <h3>ACTION ITEMS</h3>
                 }
                 <div class="faq-card">
                     @foreach (ActionItem item in Model.ActionItems)
@@ -323,13 +323,13 @@
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                @if(TiceAI.Name == "Sittadel")
+                @if (TiceAI.Name == "Sittadel")
                 {
                     <h5 class="modal-title">New Opportunity</h5>
                 }
                 else
-                {                   
-                <h5 class="modal-title">New Action Item</h5>
+                {
+                    <h5 class="modal-title">New Action Item</h5>
                 }
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -340,7 +340,7 @@
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <input type="hidden" asp-for="@ActionItem.ContactId" />
                     <input type="hidden" asp-for="@ActionItem.SubmitterId" />
-                    @if(TiceAI.Name == "Sittadel")
+                    @if (TiceAI.Name == "Sittadel")
                     {
                         <div class="form-group">
                             <label asp-for="@ActionItem.AccountId" class="control-label"></label>
@@ -359,12 +359,12 @@
                             <span asp-validation-for="@ActionItem.ClosedDate" class="text-danger"></span>
                         </div>
 
-@*                         <div class="form-group">
-                            <label asp-for="@ActionItem.ActorId" class="control-label"></label>
-                            <select asp-for="@ActionItem.ActorId" class="form-select" asp-items="ViewBag.ActorId">
-                                <option></option>
-                            </select>
-                        </div> *@
+                        @*                         <div class="form-group">
+                    <label asp-for="@ActionItem.ActorId" class="control-label"></label>
+                    <select asp-for="@ActionItem.ActorId" class="form-select" asp-items="ViewBag.ActorId">
+                    <option></option>
+                    </select>
+                    </div> *@
                         <div class="form-group">
                             <label class="control-label">Stage</label>
                             <select asp-for="@ActionItem.OpportunityStage" class="form-select" asp-items="@Html.GetEnumSelectList<OpportunityStage>()">
@@ -396,45 +396,45 @@
                     }
                     else
                     {
-                    <div class="form-group">
-                        <label asp-for="@ActionItem.ActorId" class="control-label"></label>
-                        <select asp-for="@ActionItem.ActorId" class="form-select" asp-items="ViewBag.ActorId">
-                            <option></option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="@ActionItem.AccountId" class="control-label"></label>
-                        <select asp-for="@ActionItem.AccountId" class="form-select" asp-items="ViewBag.AccountId">
-                            <option></option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="@ActionItem.ItemType" class="control-label"></label>
-                        <select asp-for="@ActionItem.ItemType" class="form-select" asp-items="ViewBag.ItemType">
-                            <option></option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="@ActionItem.ItemPriority" class="control-label"></label>
-                        <select asp-for="@ActionItem.ItemPriority" class="form-select" asp-items="ViewBag.ItemPriority">
-                            <option></option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="@ActionItem.Title" class="control-label"></label>
-                        <input asp-for="@ActionItem.Title" class="form-control" />
-                        <span asp-validation-for="@ActionItem.Title" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="@ActionItem.Description" class="control-label"></label>
-                        <input asp-for="@ActionItem.Description" class="form-control" />
-                        <span asp-validation-for="@ActionItem.Description" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="@ActionItem.Notes" class="control-label"></label>
-                        <textarea asp-for="@ActionItem.Notes" class="form-control" id="editor"></textarea>
-                        <span asp-validation-for="@ActionItem.Notes" class="text-danger"></span>
-                    </div>                        
+                        <div class="form-group">
+                            <label asp-for="@ActionItem.ActorId" class="control-label"></label>
+                            <select asp-for="@ActionItem.ActorId" class="form-select" asp-items="ViewBag.ActorId">
+                                <option></option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="@ActionItem.AccountId" class="control-label"></label>
+                            <select asp-for="@ActionItem.AccountId" class="form-select" asp-items="ViewBag.AccountId">
+                                <option></option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="@ActionItem.ItemType" class="control-label"></label>
+                            <select asp-for="@ActionItem.ItemType" class="form-select" asp-items="ViewBag.ItemType">
+                                <option></option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="@ActionItem.ItemPriority" class="control-label"></label>
+                            <select asp-for="@ActionItem.ItemPriority" class="form-select" asp-items="ViewBag.ItemPriority">
+                                <option></option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="@ActionItem.Title" class="control-label"></label>
+                            <input asp-for="@ActionItem.Title" class="form-control" />
+                            <span asp-validation-for="@ActionItem.Title" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="@ActionItem.Description" class="control-label"></label>
+                            <input asp-for="@ActionItem.Description" class="form-control" />
+                            <span asp-validation-for="@ActionItem.Description" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="@ActionItem.Notes" class="control-label"></label>
+                            <textarea asp-for="@ActionItem.Notes" class="form-control" id="editor"></textarea>
+                            <span asp-validation-for="@ActionItem.Notes" class="text-danger"></span>
+                        </div>
                     }
                     <div class="form-group">
                         <input type="submit" value="Create" class="btn btn-primary" />

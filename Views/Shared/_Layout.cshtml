@@ -50,7 +50,7 @@
     <link rel="stylesheet" href="/assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css" />
     <link rel="stylesheet" href="/assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css" />
     <link rel="stylesheet" href="/assets/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.css" />
-    <link rel="stylesheet" href="/assets/vendor/libs/apex-charts/apex-charts.css" />
+    @* <link rel="stylesheet" href="/assets/vendor/libs/apex-charts/apex-charts.css" /> *@
 
 
     <link rel="stylesheet" href="~/css/contact.css" />
@@ -180,11 +180,11 @@
                                     <div data-i18n="Accounts">Accounts</div>
                                 </a>
                             </li>
-                            <li class="menu-item">
+@*                             <li class="menu-item">
                                 <a asp-action="Opportunities" asp-controller="Organizations" asp-route-orgId="@orgId" class="menu-link">
                                     <div data-i18n="Opportunities">Opportunities</div>
                                 </a>
-                            </li>
+                            </li> *@
                             @if (User.IsInRole(nameof(BTRoles.Admin)))
                             {
                                 <li class="menu-item">
@@ -292,7 +292,14 @@
                     <li class="menu-item">
                         <a asp-controller="ActionItems" asp-action="Index" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-bookmarks"></i>
-                            <div data-i18n="Tickets">Tickets</div>
+                            @if(TiceAI.Name == "Sittadel")
+                            {
+                                <div data-i18n="Opportunities">Opportunities</div>
+                            }
+                            else
+                            {
+                            <div data-i18n="Tickets">Tickets</div>                               
+                            }
                         </a>
                     </li>
                     <li class="menu-item">
@@ -844,7 +851,7 @@
     <!-- Vendors JS -->
     <script src="/assets/vendor/libs/moment/moment.js"></script>
     <script src="/assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js"></script>
-    <script src="/assets/vendor/libs/apex-charts/apexcharts.js"></script>
+    @* <script src="/assets/vendor/libs/apex-charts/apexcharts.js"></script> *@
 
     <!-- Main JS -->
     <script src="/assets/js/main.js"></script>

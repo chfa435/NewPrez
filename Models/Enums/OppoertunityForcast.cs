@@ -8,7 +8,7 @@ namespace NewTiceAI.Models.Enums
         Pipeline,
         [Display(Name = "Best Case")]
         BestCase,
-        [Display(Name = "COmmit")]
+        [Display(Name = "Commit")]
         Commit
     }
 }

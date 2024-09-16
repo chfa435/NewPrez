@@ -9,7 +9,10 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using NewTiceAI.Data;
 using NewTiceAI.Models;
+using NewTiceAI.Models.ChartModels;
+using NewTiceAI.Models.DTOs;
 using NewTiceAI.Models.Enums;
+using NewTiceAI.Models.Enums.Extensions;
 using NewTiceAI.Services;
 using NewTiceAI.Services.Interfaces;
 
@@ -48,6 +51,9 @@ namespace NewTiceAI.Controllers
         // GET: ActionItems
         public async Task<IActionResult> Index()
         {
+            ViewData["AccountId"] = new SelectList(_context.Accounts.Where(a => a.ParentOrganizationId == _organizationId).OrderBy(a => a.Name), "Id", "Name");
+            ViewData["ContactId"] = new SelectList(_context.Contacts.Where(c => c.OrganizationId == _organizationId).OrderBy(c => c.LastName).ThenBy(c => c.FirstName), "Id", "FullName");
+
             List<ActionItem> model = (await _actionItemService.GetItemsByOrgIdAsync(_organizationId))
                                           .OrderByDescending(p => p.Updated).ThenByDescending(p => p.Created).ToList();
             return View(model);
@@ -140,13 +146,12 @@ namespace NewTiceAI.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,ContactId,SubmitterId,ActorId,AccountId,ItemType,ItemPriority,Title,Description,Note")] ActionItem actionItem)
+        public async Task<IActionResult> Create([Bind("Id,ContactId,SubmitterId,AccountId,Amount,OpportunityType,OpportunityForecastCategory,OpportunityStage,ClosedDate,Title,Notes")] ActionItem actionItem)
         {
             string? userId = _userManager.GetUserId(User);
             TAUser? btUser = await _userManager.GetUserAsync(User);
 
-            //ModelState.ClearValidationState("SubmitterId");
-            ModelState.Remove("SubmitterId");
+            ModelState.Remove("actionItem.SubmitterId");
             if (ModelState.IsValid)
             {
                 try
@@ -158,41 +163,7 @@ namespace NewTiceAI.Controllers
 
                     actionItem.ItemStatus = EnumActionItemStatuses.New;
 
-                    //await _ticketService.AddNewTicketAsync(actionItem);
-
-                    //_context.Add(actionItem);
-                    //await _context.SaveChangesAsync();
-
                     await _actionItemService.AddAsync(actionItem);  
-
-                    //TODO:  Ticket History
-                    //Ticket newTicket = await _ticketService.GetTicketAsNoTrackingAsync(ticket.Id);
-                    //await _ticketHistoryService.AddHistoryAsync(null!, newTicket, userId);
-
-                    //TODO: Ticket Notification
-                    //TAUser projectManager = await _projectService.GetProjectManagerAsync(ticket.ProjectId!.Value);
-
-                    //Notification notification = new()
-                    //{
-                    //    NotificationTypeId = (await _lookupService.LookupNotificationTypeIdAsync(nameof(BTNotificationType.Ticket))).Value,
-                    //    TicketId = ticket.Id,
-                    //    Title = "New Ticket Added",
-                    //    Message = $"New Ticket: {ticket.Title}, was created by {btUser.FullName}",
-                    //    Created = DateTime.UtcNow,
-                    //    SenderId = userId,
-                    //    RecipientId = projectManager?.Id
-                    //};
-
-
-                    //await _notificationService.AddNotificationAsync(notification);
-                    //if (projectManager != null)
-                    //{
-                    //    await _notificationService.SendEmailNotificationAsync(notification, $"New Ticket Added For Project: {ticket.Project!.Name}");
-                    //}
-                    //else
-                    //{
-                    //    await _notificationService.SendEmailNotificationsByRoleAsync(notification, _organizationId, nameof(BTRoles.Admin));
-                    //}
                 }
                 catch (Exception)
                 {
@@ -200,7 +171,9 @@ namespace NewTiceAI.Controllers
                     throw;
                 }
 
-                return RedirectToAction("Details", "Contacts", new { id = actionItem.ContactId });
+                //return RedirectToAction("Details", "Contacts", new { id = actionItem.ContactId });
+                return RedirectToAction("Index", "ActionItems");
+
             }
 
 
@@ -325,6 +298,43 @@ namespace NewTiceAI.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+
+        [HttpPost]
+        public async Task<JsonResult> GetTableData()
+        {
+            IEnumerable<ActionItem> actionItems = new List<ActionItem>();
+            List<SittadelDTO> tableData = new();
+
+            actionItems = (await _actionItemService.GetItemsByOrgIdAsync(_organizationId))
+                                          .OrderByDescending(p => p.Updated).ThenByDescending(p => p.Created).ToList();
+
+
+            foreach(ActionItem actionItem in actionItems)
+            {
+                SittadelDTO dtoItem = new()
+                {
+
+                    ContactId = actionItem.ContactId,
+                    ContactName = actionItem.Contact?.FullName,
+                    ContactEmail = actionItem.Contact?.Email,
+                    Comments = actionItem.Comments,
+                    AccountId = actionItem.AccountId,
+                    AccountName = actionItem.Account?.Name,
+                    Amount = actionItem.Amount,
+                    Title = actionItem.Title,
+                    Notes = actionItem.Notes,
+                    ClosedDate = actionItem.ClosedDate != null ? actionItem.ClosedDate.Value.ToString("MM-dd-yyyy") : string.Empty,
+                    OpportunityForecastCategory = actionItem.OpportunityForecastCategory?.GetDisplayName(),
+                    OpportunityStage = actionItem.OpportunityStage?.GetDisplayName(),
+                    OpportunityType = actionItem.OpportunityType?.GetDisplayName(),
+                    Avatar = string.Empty
+                };
+
+                tableData.Add(dtoItem);
+            }
+
+            return Json(tableData.ToArray());
+        }
         private bool ActionItemExists(int id)
         {
             return (_context.ActionItems?.Any(e => e.Id == id)).GetValueOrDefault();

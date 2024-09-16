@@ -29,22 +29,25 @@ namespace NewTiceAI.Models
         [DisplayName("Project Name")]
         public int? ActionProjectId { get; set; }
 
-        public decimal Amount { get; set; }
+        public decimal Amount { get; set; } = 0.0M;
 
         [DisplayName("Type")]
-        public EnumActionItemTypes ItemType { get; set; }
+        public EnumActionItemTypes? ItemType { get; set; }
 
         [DisplayName("Status")]
-        public EnumActionItemStatuses ItemStatus { get; set; }
+        public EnumActionItemStatuses? ItemStatus { get; set; }
 
         [DisplayName("Priority")]
-        public EnumActionItemPriorities ItemPriority { get; set; }
+        public EnumActionItemPriorities? ItemPriority { get; set; }
 
-        public OpportunityType OpportunityType { get; set; }
+        [DisplayName("Type")]
+        public OpportunityType? OpportunityType { get; set; }
 
-        public OpportunityForecastCategory OpportunityForecastCategory { get; set; }
+        [DisplayName("Forecast")]
+        public OpportunityForecastCategory? OpportunityForecastCategory { get; set; }
 
-        public OpportunityStage OpportunityStage { get; set; }
+        [DisplayName("Stage")]
+        public OpportunityStage? OpportunityStage { get; set; }
 
         [Required]
         [StringLength(50)]
