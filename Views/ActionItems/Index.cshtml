@@ -102,77 +102,78 @@
         </div>
     </div>
     <div class="card">
-@*         <div class="card-header border-bottom">
-            <h5 class="card-title">Search Filter</h5>
-            <div class="d-flex justify-content-between align-items-center row py-3 gap-3 gap-md-0">
-                <div class="col-md-4 user_role"><select id="UserRole" class="form-select text-capitalize"><option value=""> Select Role </option><option value="Admin">Admin</option><option value="Author">Author</option><option value="Editor">Editor</option><option value="Maintainer">Maintainer</option><option value="Subscriber">Subscriber</option></select></div>
-                <div class="col-md-4 user_plan"><select id="UserPlan" class="form-select text-capitalize"><option value=""> Select Plan </option><option value="Basic">Basic</option><option value="Company">Company</option><option value="Enterprise">Enterprise</option><option value="Team">Team</option></select></div>
-                <div class="col-md-4 user_status"><select id="FilterTransaction" class="form-select text-capitalize"><option value=""> Select Status </option><option value="Pending" class="text-capitalize">Pending</option><option value="Active" class="text-capitalize">Active</option><option value="Inactive" class="text-capitalize">Inactive</option></select></div>
-            </div>
-        </div>
-        <div class="card-datatable table-responsive">
-            <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
-                <div class="row mx-2"><div class="col-md-2"><div class="me-3"><div class="dataTables_length" id="DataTables_Table_0_length"><label><select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="form-select"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select></label></div></div></div><div class="col-md-10"><div class="dt-action-buttons text-xl-end text-lg-start text-md-end text-start d-flex align-items-center justify-content-end flex-md-row flex-column mb-3 mb-md-0"><div id="DataTables_Table_0_filter" class="dataTables_filter"><label><input type="search" class="form-control" placeholder="Search.." aria-controls="DataTables_Table_0"></label></div><div class="dt-buttons"> <button class="dt-button buttons-collection dropdown-toggle btn btn-label-secondary mx-3" tabindex="0" aria-controls="DataTables_Table_0" type="button" aria-haspopup="dialog" aria-expanded="false"><span><i class="bx bx-export me-1"></i>Export</span><span class="dt-down-arrow">▼</span></button> <button class="dt-button add-new btn btn-primary ms-n1" tabindex="0" aria-controls="DataTables_Table_0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasAddUser"><span><i class="bx bx-plus me-0 me-lg-2"></i><span class="d-none d-lg-inline-block">Add Opportunity</span></span></button> </div></div></div></div><table class="datatables-users table dataTable no-footer dtr-column collapsed" id="DataTables_Table_0" aria-describedby="DataTables_Table_0_info" style="width: 918px;">
-                    <thead class="border-top">
-                        <tr>
-                            <th class="control sorting_disabled" rowspan="1" colspan="1" style="width: 1px;" aria-label=""></th>
-                            <th class="sorting sorting_desc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 230px;" aria-label="User: activate to sort column ascending" aria-sort="descending">User</th>
-                            <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 110px;" aria-label="Role: activate to sort column ascending">Role</th>
-                            <th class="sorting dtr-hidden" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 71px; display: none;" aria-label="Plan: activate to sort column ascending">Plan</th>
-                            <th class="sorting dtr-hidden" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 138px; display: none;" aria-label="Billing: activate to sort column ascending">Billing</th>
-                            <th class="sorting dtr-hidden" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 74px; display: none;" aria-label="Status: activate to sort column ascending">Status</th>
-                            <th class="sorting_disabled dtr-hidden" rowspan="1" colspan="1" style="width: 0px; display: none;" aria-label="Actions">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="odd">
-                            <td class="control" tabindex="0" style=""></td>
-                            <td class="sorting_1" style="">
-                                <div class="d-flex justify-content-start align-items-center user-name">
-                                    <div class="avatar-wrapper">
-                                        <div class="avatar avatar-sm me-3">
-                                            <img src="/assets/img/avatars/2.png" alt="Avatar" class="rounded-circle">
-                                        </div>
-                                    </div>
-                                    <div class="d-flex flex-column">
-                                        <a href="app-user-view-account.html" class="text-body text-truncate">
-                                            <span class="fw-medium">Zsazsa McCleverty</span>
-                                        </a>
-                                        <small class="text-muted">zmcclevertye@soundcloud.com</small>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="" style="">
-                                <span class="text-truncate d-flex align-items-center">
-                                    <span class="badge badge-center rounded-pill bg-label-primary w-px-30 h-px-30 me-2">
-                                        <i class="bx bx-pie-chart-alt bx-xs"></i>
-                                    </span>Maintainer
-                                </span>
-                            </td>
-                            <td class="dtr-hidden" style="display: none;"><span class="fw-medium">Enterprise</span></td>
-                            <td class="dtr-hidden" style="display: none;">Auto Debit</td>
-                            <td class="dtr-hidden" style="display: none;"><span class="badge bg-label-success">Active</span></td>
-                            <td class="dtr-hidden" style="display: none;"><div class="d-inline-block text-nowrap"><button class="btn btn-sm btn-icon"><i class="bx bx-edit"></i></button><button class="btn btn-sm btn-icon delete-record"><i class="bx bx-trash"></i></button><button class="btn btn-sm btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded me-2"></i></button><div class="dropdown-menu dropdown-menu-end m-0"><a href="app-user-view-account.html" class="dropdown-item">View</a><a href="javascript:;" class="dropdown-item">Suspend</a></div></div></td>
-                        </tr>
-                        <tr class="even"><td class="control" tabindex="0" style=""></td><td class="sorting_1" style=""><div class="d-flex justify-content-start align-items-center user-name"><div class="avatar-wrapper"><div class="avatar avatar-sm me-3"><img src="/assets/img/avatars/7.png" alt="Avatar" class="rounded-circle"></div></div><div class="d-flex flex-column"><a href="app-user-view-account.html" class="text-body text-truncate"><span class="fw-medium">Yoko Pottie</span></a><small class="text-muted">ypottiec@privacy.gov.au</small></div></div></td><td class="" style=""><span class="text-truncate d-flex align-items-center"><span class="badge badge-center rounded-pill bg-label-warning w-px-30 h-px-30 me-2"><i class="bx bx-user bx-xs"></i></span>Subscriber</span></td><td class="dtr-hidden" style="display: none;"><span class="fw-medium">Basic</span></td><td class="dtr-hidden" style="display: none;">Auto Debit</td><td class="dtr-hidden" style="display: none;"><span class="badge bg-label-secondary">Inactive</span></td><td class="dtr-hidden" style="display: none;"><div class="d-inline-block text-nowrap"><button class="btn btn-sm btn-icon"><i class="bx bx-edit"></i></button><button class="btn btn-sm btn-icon delete-record"><i class="bx bx-trash"></i></button><button class="btn btn-sm btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded me-2"></i></button><div class="dropdown-menu dropdown-menu-end m-0"><a href="app-user-view-account.html" class="dropdown-item">View</a><a href="javascript:;" class="dropdown-item">Suspend</a></div></div></td></tr>
-                        <tr class="odd"><td class="control" tabindex="0" style=""></td><td class="sorting_1" style=""><div class="d-flex justify-content-start align-items-center user-name"><div class="avatar-wrapper"><div class="avatar avatar-sm me-3"><img src="/assets/img/avatars/6.png" alt="Avatar" class="rounded-circle"></div></div><div class="d-flex flex-column"><a href="app-user-view-account.html" class="text-body text-truncate"><span class="fw-medium">Wesley Burland</span></a><small class="text-muted">wburlandj@uiuc.edu</small></div></div></td><td class="" style=""><span class="text-truncate d-flex align-items-center"><span class="badge badge-center rounded-pill bg-label-info w-px-30 h-px-30 me-2"><i class="bx bx-edit bx-xs"></i></span>Editor</span></td><td class="dtr-hidden" style="display: none;"><span class="fw-medium">Team</span></td><td class="dtr-hidden" style="display: none;">Auto Debit</td><td class="dtr-hidden" style="display: none;"><span class="badge bg-label-secondary">Inactive</span></td><td class="dtr-hidden" style="display: none;"><div class="d-inline-block text-nowrap"><button class="btn btn-sm btn-icon"><i class="bx bx-edit"></i></button><button class="btn btn-sm btn-icon delete-record"><i class="bx bx-trash"></i></button><button class="btn btn-sm btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded me-2"></i></button><div class="dropdown-menu dropdown-menu-end m-0"><a href="app-user-view-account.html" class="dropdown-item">View</a><a href="javascript:;" class="dropdown-item">Suspend</a></div></div></td></tr>
-                        <tr class="even"><td class="control" tabindex="0" style=""></td><td class="sorting_1" style=""><div class="d-flex justify-content-start align-items-center user-name"><div class="avatar-wrapper"><div class="avatar avatar-sm me-3"><span class="avatar-initial rounded-circle bg-label-dark">VK</span></div></div><div class="d-flex flex-column"><a href="app-user-view-account.html" class="text-body text-truncate"><span class="fw-medium">Vladamir Koschek</span></a><small class="text-muted">vkoschek17@abc.net.au</small></div></div></td><td class="" style=""><span class="text-truncate d-flex align-items-center"><span class="badge badge-center rounded-pill bg-label-success w-px-30 h-px-30 me-2"><i class="bx bx-cog bx-xs"></i></span>Author</span></td><td class="dtr-hidden" style="display: none;"><span class="fw-medium">Team</span></td><td class="dtr-hidden" style="display: none;">Manual - Paypal</td><td class="dtr-hidden" style="display: none;"><span class="badge bg-label-success">Active</span></td><td class="dtr-hidden" style="display: none;"><div class="d-inline-block text-nowrap"><button class="btn btn-sm btn-icon"><i class="bx bx-edit"></i></button><button class="btn btn-sm btn-icon delete-record"><i class="bx bx-trash"></i></button><button class="btn btn-sm btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded me-2"></i></button><div class="dropdown-menu dropdown-menu-end m-0"><a href="app-user-view-account.html" class="dropdown-item">View</a><a href="javascript:;" class="dropdown-item">Suspend</a></div></div></td></tr>
-                        <tr class="odd"><td class="control" tabindex="0" style=""></td><td class="sorting_1" style=""><div class="d-flex justify-content-start align-items-center user-name"><div class="avatar-wrapper"><div class="avatar avatar-sm me-3"><span class="avatar-initial rounded-circle bg-label-danger">TW</span></div></div><div class="d-flex flex-column"><a href="app-user-view-account.html" class="text-body text-truncate"><span class="fw-medium">Tyne Widmore</span></a><small class="text-muted">twidmore12@bravesites.com</small></div></div></td><td class="" style=""><span class="text-truncate d-flex align-items-center"><span class="badge badge-center rounded-pill bg-label-warning w-px-30 h-px-30 me-2"><i class="bx bx-user bx-xs"></i></span>Subscriber</span></td><td class="dtr-hidden" style="display: none;"><span class="fw-medium">Team</span></td><td class="dtr-hidden" style="display: none;">Manual - Cash</td><td class="dtr-hidden" style="display: none;"><span class="badge bg-label-warning">Pending</span></td><td class="dtr-hidden" style="display: none;"><div class="d-inline-block text-nowrap"><button class="btn btn-sm btn-icon"><i class="bx bx-edit"></i></button><button class="btn btn-sm btn-icon delete-record"><i class="bx bx-trash"></i></button><button class="btn btn-sm btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded me-2"></i></button><div class="dropdown-menu dropdown-menu-end m-0"><a href="app-user-view-account.html" class="dropdown-item">View</a><a href="javascript:;" class="dropdown-item">Suspend</a></div></div></td></tr>
-                        <tr class="even"><td class="control" tabindex="0" style=""></td><td class="sorting_1" style=""><div class="d-flex justify-content-start align-items-center user-name"><div class="avatar-wrapper"><div class="avatar avatar-sm me-3"><span class="avatar-initial rounded-circle bg-label-warning">TB</span></div></div><div class="d-flex flex-column"><a href="app-user-view-account.html" class="text-body text-truncate"><span class="fw-medium">Travus Bruntjen</span></a><small class="text-muted">tbruntjeni@sitemeter.com</small></div></div></td><td class="" style=""><span class="text-truncate d-flex align-items-center"><span class="badge badge-center rounded-pill bg-label-secondary w-px-30 h-px-30 me-2"><i class="bx bx-mobile-alt bx-xs"></i></span>Admin</span></td><td class="dtr-hidden" style="display: none;"><span class="fw-medium">Enterprise</span></td><td class="dtr-hidden" style="display: none;">Manual - Cash</td><td class="dtr-hidden" style="display: none;"><span class="badge bg-label-success">Active</span></td><td class="dtr-hidden" style="display: none;"><div class="d-inline-block text-nowrap"><button class="btn btn-sm btn-icon"><i class="bx bx-edit"></i></button><button class="btn btn-sm btn-icon delete-record"><i class="bx bx-trash"></i></button><button class="btn btn-sm btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded me-2"></i></button><div class="dropdown-menu dropdown-menu-end m-0"><a href="app-user-view-account.html" class="dropdown-item">View</a><a href="javascript:;" class="dropdown-item">Suspend</a></div></div></td></tr>
-                        <tr class="odd"><td class="control" tabindex="0" style=""></td><td class="sorting_1" style=""><div class="d-flex justify-content-start align-items-center user-name"><div class="avatar-wrapper"><div class="avatar avatar-sm me-3"><img src="/assets/img/avatars/1.png" alt="Avatar" class="rounded-circle"></div></div><div class="d-flex flex-column"><a href="app-user-view-account.html" class="text-body text-truncate"><span class="fw-medium">Stu Delamaine</span></a><small class="text-muted">sdelamainek@who.int</small></div></div></td><td class="" style=""><span class="text-truncate d-flex align-items-center"><span class="badge badge-center rounded-pill bg-label-success w-px-30 h-px-30 me-2"><i class="bx bx-cog bx-xs"></i></span>Author</span></td><td class="dtr-hidden" style="display: none;"><span class="fw-medium">Basic</span></td><td class="dtr-hidden" style="display: none;">Auto Debit</td><td class="dtr-hidden" style="display: none;"><span class="badge bg-label-warning">Pending</span></td><td class="dtr-hidden" style="display: none;"><div class="d-inline-block text-nowrap"><button class="btn btn-sm btn-icon"><i class="bx bx-edit"></i></button><button class="btn btn-sm btn-icon delete-record"><i class="bx bx-trash"></i></button><button class="btn btn-sm btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded me-2"></i></button><div class="dropdown-menu dropdown-menu-end m-0"><a href="app-user-view-account.html" class="dropdown-item">View</a><a href="javascript:;" class="dropdown-item">Suspend</a></div></div></td></tr>
-                        <tr class="even"><td class="control" tabindex="0" style=""></td><td class="sorting_1" style=""><div class="d-flex justify-content-start align-items-center user-name"><div class="avatar-wrapper"><div class="avatar avatar-sm me-3"><span class="avatar-initial rounded-circle bg-label-warning">SO</span></div></div><div class="d-flex flex-column"><a href="app-user-view-account.html" class="text-body text-truncate"><span class="fw-medium">Saunder Offner</span></a><small class="text-muted">soffner19@mac.com</small></div></div></td><td class="" style=""><span class="text-truncate d-flex align-items-center"><span class="badge badge-center rounded-pill bg-label-primary w-px-30 h-px-30 me-2"><i class="bx bx-pie-chart-alt bx-xs"></i></span>Maintainer</span></td><td class="dtr-hidden" style="display: none;"><span class="fw-medium">Enterprise</span></td><td class="dtr-hidden" style="display: none;">Auto Debit</td><td class="dtr-hidden" style="display: none;"><span class="badge bg-label-warning">Pending</span></td><td class="dtr-hidden" style="display: none;"><div class="d-inline-block text-nowrap"><button class="btn btn-sm btn-icon"><i class="bx bx-edit"></i></button><button class="btn btn-sm btn-icon delete-record"><i class="bx bx-trash"></i></button><button class="btn btn-sm btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded me-2"></i></button><div class="dropdown-menu dropdown-menu-end m-0"><a href="app-user-view-account.html" class="dropdown-item">View</a><a href="javascript:;" class="dropdown-item">Suspend</a></div></div></td></tr>
-                        <tr class="odd"><td class="control" tabindex="0" style=""></td><td class="sorting_1" style=""><div class="d-flex justify-content-start align-items-center user-name"><div class="avatar-wrapper"><div class="avatar avatar-sm me-3"><span class="avatar-initial rounded-circle bg-label-danger">SM</span></div></div><div class="d-flex flex-column"><a href="app-user-view-account.html" class="text-body text-truncate"><span class="fw-medium">Stephen MacGilfoyle</span></a><small class="text-muted">smacgilfoyley@bigcartel.com</small></div></div></td><td class="" style=""><span class="text-truncate d-flex align-items-center"><span class="badge badge-center rounded-pill bg-label-primary w-px-30 h-px-30 me-2"><i class="bx bx-pie-chart-alt bx-xs"></i></span>Maintainer</span></td><td class="dtr-hidden" style="display: none;"><span class="fw-medium">Company</span></td><td class="dtr-hidden" style="display: none;">Manual - Paypal</td><td class="dtr-hidden" style="display: none;"><span class="badge bg-label-warning">Pending</span></td><td class="dtr-hidden" style="display: none;"><div class="d-inline-block text-nowrap"><button class="btn btn-sm btn-icon"><i class="bx bx-edit"></i></button><button class="btn btn-sm btn-icon delete-record"><i class="bx bx-trash"></i></button><button class="btn btn-sm btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded me-2"></i></button><div class="dropdown-menu dropdown-menu-end m-0"><a href="app-user-view-account.html" class="dropdown-item">View</a><a href="javascript:;" class="dropdown-item">Suspend</a></div></div></td></tr>
-                        <tr class="even"><td class="control" tabindex="0" style=""></td><td class="sorting_1" style=""><div class="d-flex justify-content-start align-items-center user-name"><div class="avatar-wrapper"><div class="avatar avatar-sm me-3"><img src="/assets/img/avatars/9.png" alt="Avatar" class="rounded-circle"></div></div><div class="d-flex flex-column"><a href="app-user-view-account.html" class="text-body text-truncate"><span class="fw-medium">Skip Hebblethwaite</span></a><small class="text-muted">shebblethwaite10@arizona.edu</small></div></div></td><td class="" style=""><span class="text-truncate d-flex align-items-center"><span class="badge badge-center rounded-pill bg-label-secondary w-px-30 h-px-30 me-2"><i class="bx bx-mobile-alt bx-xs"></i></span>Admin</span></td><td class="dtr-hidden" style="display: none;"><span class="fw-medium">Company</span></td><td class="dtr-hidden" style="display: none;">Manual - Cash</td><td class="dtr-hidden" style="display: none;"><span class="badge bg-label-secondary">Inactive</span></td><td class="dtr-hidden" style="display: none;"><div class="d-inline-block text-nowrap"><button class="btn btn-sm btn-icon"><i class="bx bx-edit"></i></button><button class="btn btn-sm btn-icon delete-record"><i class="bx bx-trash"></i></button><button class="btn btn-sm btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded me-2"></i></button><div class="dropdown-menu dropdown-menu-end m-0"><a href="app-user-view-account.html" class="dropdown-item">View</a><a href="javascript:;" class="dropdown-item">Suspend</a></div></div></td></tr>
-                    </tbody>
-                </table><div class="row mx-2"><div class="col-sm-12 col-md-6"><div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">Showing 1 to 10 of 50 entries</div></div><div class="col-sm-12 col-md-6"><div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate"><ul class="pagination"><li class="paginate_button page-item previous disabled" id="DataTables_Table_0_previous"><a aria-controls="DataTables_Table_0" aria-disabled="true" role="link" data-dt-idx="previous" tabindex="-1" class="page-link">Previous</a></li><li class="paginate_button page-item active"><a href="#" aria-controls="DataTables_Table_0" role="link" aria-current="page" data-dt-idx="0" tabindex="0" class="page-link">1</a></li><li class="paginate_button page-item "><a href="#" aria-controls="DataTables_Table_0" role="link" data-dt-idx="1" tabindex="0" class="page-link">2</a></li><li class="paginate_button page-item "><a href="#" aria-controls="DataTables_Table_0" role="link" data-dt-idx="2" tabindex="0" class="page-link">3</a></li><li class="paginate_button page-item "><a href="#" aria-controls="DataTables_Table_0" role="link" data-dt-idx="3" tabindex="0" class="page-link">4</a></li><li class="paginate_button page-item "><a href="#" aria-controls="DataTables_Table_0" role="link" data-dt-idx="4" tabindex="0" class="page-link">5</a></li><li class="paginate_button page-item next" id="DataTables_Table_0_next"><a href="#" aria-controls="DataTables_Table_0" role="link" data-dt-idx="next" tabindex="0" class="page-link">Next</a></li></ul></div></div></div>
-            </div>
-        </div> *@
+        @*         <div class="card-header border-bottom">
+    <h5 class="card-title">Search Filter</h5>
+    <div class="d-flex justify-content-between align-items-center row py-3 gap-3 gap-md-0">
+    <div class="col-md-4 user_role"><select id="UserRole" class="form-select text-capitalize"><option value=""> Select Role </option><option value="Admin">Admin</option><option value="Author">Author</option><option value="Editor">Editor</option><option value="Maintainer">Maintainer</option><option value="Subscriber">Subscriber</option></select></div>
+    <div class="col-md-4 user_plan"><select id="UserPlan" class="form-select text-capitalize"><option value=""> Select Plan </option><option value="Basic">Basic</option><option value="Company">Company</option><option value="Enterprise">Enterprise</option><option value="Team">Team</option></select></div>
+    <div class="col-md-4 user_status"><select id="FilterTransaction" class="form-select text-capitalize"><option value=""> Select Status </option><option value="Pending" class="text-capitalize">Pending</option><option value="Active" class="text-capitalize">Active</option><option value="Inactive" class="text-capitalize">Inactive</option></select></div>
+    </div>
+    </div>
+    <div class="card-datatable table-responsive">
+    <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+    <div class="row mx-2"><div class="col-md-2"><div class="me-3"><div class="dataTables_length" id="DataTables_Table_0_length"><label><select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="form-select"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select></label></div></div></div><div class="col-md-10"><div class="dt-action-buttons text-xl-end text-lg-start text-md-end text-start d-flex align-items-center justify-content-end flex-md-row flex-column mb-3 mb-md-0"><div id="DataTables_Table_0_filter" class="dataTables_filter"><label><input type="search" class="form-control" placeholder="Search.." aria-controls="DataTables_Table_0"></label></div><div class="dt-buttons"> <button class="dt-button buttons-collection dropdown-toggle btn btn-label-secondary mx-3" tabindex="0" aria-controls="DataTables_Table_0" type="button" aria-haspopup="dialog" aria-expanded="false"><span><i class="bx bx-export me-1"></i>Export</span><span class="dt-down-arrow">▼</span></button> <button class="dt-button add-new btn btn-primary ms-n1" tabindex="0" aria-controls="DataTables_Table_0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasAddUser"><span><i class="bx bx-plus me-0 me-lg-2"></i><span class="d-none d-lg-inline-block">Add Opportunity</span></span></button> </div></div></div></div><table class="datatables-users table dataTable no-footer dtr-column collapsed" id="DataTables_Table_0" aria-describedby="DataTables_Table_0_info" style="width: 918px;">
+    <thead class="border-top">
+    <tr>
+    <th class="control sorting_disabled" rowspan="1" colspan="1" style="width: 1px;" aria-label=""></th>
+    <th class="sorting sorting_desc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 230px;" aria-label="User: activate to sort column ascending" aria-sort="descending">User</th>
+    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 110px;" aria-label="Role: activate to sort column ascending">Role</th>
+    <th class="sorting dtr-hidden" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 71px; display: none;" aria-label="Plan: activate to sort column ascending">Plan</th>
+    <th class="sorting dtr-hidden" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 138px; display: none;" aria-label="Billing: activate to sort column ascending">Billing</th>
+    <th class="sorting dtr-hidden" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" style="width: 74px; display: none;" aria-label="Status: activate to sort column ascending">Status</th>
+    <th class="sorting_disabled dtr-hidden" rowspan="1" colspan="1" style="width: 0px; display: none;" aria-label="Actions">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr class="odd">
+    <td class="control" tabindex="0" style=""></td>
+    <td class="sorting_1" style="">
+    <div class="d-flex justify-content-start align-items-center user-name">
+    <div class="avatar-wrapper">
+    <div class="avatar avatar-sm me-3">
+    <img src="/assets/img/avatars/2.png" alt="Avatar" class="rounded-circle">
+    </div>
+    </div>
+    <div class="d-flex flex-column">
+    <a href="app-user-view-account.html" class="text-body text-truncate">
+    <span class="fw-medium">Zsazsa McCleverty</span>
+    </a>
+    <small class="text-muted">zmcclevertye@soundcloud.com</small>
+    </div>
+    </div>
+    </td>
+    <td class="" style="">
+    <span class="text-truncate d-flex align-items-center">
+    <span class="badge badge-center rounded-pill bg-label-primary w-px-30 h-px-30 me-2">
+    <i class="bx bx-pie-chart-alt bx-xs"></i>
+    </span>Maintainer
+    </span>
+    </td>
+    <td class="dtr-hidden" style="display: none;"><span class="fw-medium">Enterprise</span></td>
+    <td class="dtr-hidden" style="display: none;">Auto Debit</td>
+    <td class="dtr-hidden" style="display: none;"><span class="badge bg-label-success">Active</span></td>
+    <td class="dtr-hidden" style="display: none;"><div class="d-inline-block text-nowrap"><button class="btn btn-sm btn-icon"><i class="bx bx-edit"></i></button><button class="btn btn-sm btn-icon delete-record"><i class="bx bx-trash"></i></button><button class="btn btn-sm btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded me-2"></i></button><div class="dropdown-menu dropdown-menu-end m-0"><a href="app-user-view-account.html" class="dropdown-item">View</a><a href="javascript:;" class="dropdown-item">Suspend</a></div></div></td>
+    </tr>
+    <tr class="even"><td class="control" tabindex="0" style=""></td><td class="sorting_1" style=""><div class="d-flex justify-content-start align-items-center user-name"><div class="avatar-wrapper"><div class="avatar avatar-sm me-3"><img src="/assets/img/avatars/7.png" alt="Avatar" class="rounded-circle"></div></div><div class="d-flex flex-column"><a href="app-user-view-account.html" class="text-body text-truncate"><span class="fw-medium">Yoko Pottie</span></a><small class="text-muted">ypottiec@privacy.gov.au</small></div></div></td><td class="" style=""><span class="text-truncate d-flex align-items-center"><span class="badge badge-center rounded-pill bg-label-warning w-px-30 h-px-30 me-2"><i class="bx bx-user bx-xs"></i></span>Subscriber</span></td><td class="dtr-hidden" style="display: none;"><span class="fw-medium">Basic</span></td><td class="dtr-hidden" style="display: none;">Auto Debit</td><td class="dtr-hidden" style="display: none;"><span class="badge bg-label-secondary">Inactive</span></td><td class="dtr-hidden" style="display: none;"><div class="d-inline-block text-nowrap"><button class="btn btn-sm btn-icon"><i class="bx bx-edit"></i></button><button class="btn btn-sm btn-icon delete-record"><i class="bx bx-trash"></i></button><button class="btn btn-sm btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded me-2"></i></button><div class="dropdown-menu dropdown-menu-end m-0"><a href="app-user-view-account.html" class="dropdown-item">View</a><a href="javascript:;" class="dropdown-item">Suspend</a></div></div></td></tr>
+    <tr class="odd"><td class="control" tabindex="0" style=""></td><td class="sorting_1" style=""><div class="d-flex justify-content-start align-items-center user-name"><div class="avatar-wrapper"><div class="avatar avatar-sm me-3"><img src="/assets/img/avatars/6.png" alt="Avatar" class="rounded-circle"></div></div><div class="d-flex flex-column"><a href="app-user-view-account.html" class="text-body text-truncate"><span class="fw-medium">Wesley Burland</span></a><small class="text-muted">wburlandj@uiuc.edu</small></div></div></td><td class="" style=""><span class="text-truncate d-flex align-items-center"><span class="badge badge-center rounded-pill bg-label-info w-px-30 h-px-30 me-2"><i class="bx bx-edit bx-xs"></i></span>Editor</span></td><td class="dtr-hidden" style="display: none;"><span class="fw-medium">Team</span></td><td class="dtr-hidden" style="display: none;">Auto Debit</td><td class="dtr-hidden" style="display: none;"><span class="badge bg-label-secondary">Inactive</span></td><td class="dtr-hidden" style="display: none;"><div class="d-inline-block text-nowrap"><button class="btn btn-sm btn-icon"><i class="bx bx-edit"></i></button><button class="btn btn-sm btn-icon delete-record"><i class="bx bx-trash"></i></button><button class="btn btn-sm btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded me-2"></i></button><div class="dropdown-menu dropdown-menu-end m-0"><a href="app-user-view-account.html" class="dropdown-item">View</a><a href="javascript:;" class="dropdown-item">Suspend</a></div></div></td></tr>
+    <tr class="even"><td class="control" tabindex="0" style=""></td><td class="sorting_1" style=""><div class="d-flex justify-content-start align-items-center user-name"><div class="avatar-wrapper"><div class="avatar avatar-sm me-3"><span class="avatar-initial rounded-circle bg-label-dark">VK</span></div></div><div class="d-flex flex-column"><a href="app-user-view-account.html" class="text-body text-truncate"><span class="fw-medium">Vladamir Koschek</span></a><small class="text-muted">vkoschek17@abc.net.au</small></div></div></td><td class="" style=""><span class="text-truncate d-flex align-items-center"><span class="badge badge-center rounded-pill bg-label-success w-px-30 h-px-30 me-2"><i class="bx bx-cog bx-xs"></i></span>Author</span></td><td class="dtr-hidden" style="display: none;"><span class="fw-medium">Team</span></td><td class="dtr-hidden" style="display: none;">Manual - Paypal</td><td class="dtr-hidden" style="display: none;"><span class="badge bg-label-success">Active</span></td><td class="dtr-hidden" style="display: none;"><div class="d-inline-block text-nowrap"><button class="btn btn-sm btn-icon"><i class="bx bx-edit"></i></button><button class="btn btn-sm btn-icon delete-record"><i class="bx bx-trash"></i></button><button class="btn btn-sm btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded me-2"></i></button><div class="dropdown-menu dropdown-menu-end m-0"><a href="app-user-view-account.html" class="dropdown-item">View</a><a href="javascript:;" class="dropdown-item">Suspend</a></div></div></td></tr>
+    <tr class="odd"><td class="control" tabindex="0" style=""></td><td class="sorting_1" style=""><div class="d-flex justify-content-start align-items-center user-name"><div class="avatar-wrapper"><div class="avatar avatar-sm me-3"><span class="avatar-initial rounded-circle bg-label-danger">TW</span></div></div><div class="d-flex flex-column"><a href="app-user-view-account.html" class="text-body text-truncate"><span class="fw-medium">Tyne Widmore</span></a><small class="text-muted">twidmore12@bravesites.com</small></div></div></td><td class="" style=""><span class="text-truncate d-flex align-items-center"><span class="badge badge-center rounded-pill bg-label-warning w-px-30 h-px-30 me-2"><i class="bx bx-user bx-xs"></i></span>Subscriber</span></td><td class="dtr-hidden" style="display: none;"><span class="fw-medium">Team</span></td><td class="dtr-hidden" style="display: none;">Manual - Cash</td><td class="dtr-hidden" style="display: none;"><span class="badge bg-label-warning">Pending</span></td><td class="dtr-hidden" style="display: none;"><div class="d-inline-block text-nowrap"><button class="btn btn-sm btn-icon"><i class="bx bx-edit"></i></button><button class="btn btn-sm btn-icon delete-record"><i class="bx bx-trash"></i></button><button class="btn btn-sm btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded me-2"></i></button><div class="dropdown-menu dropdown-menu-end m-0"><a href="app-user-view-account.html" class="dropdown-item">View</a><a href="javascript:;" class="dropdown-item">Suspend</a></div></div></td></tr>
+    <tr class="even"><td class="control" tabindex="0" style=""></td><td class="sorting_1" style=""><div class="d-flex justify-content-start align-items-center user-name"><div class="avatar-wrapper"><div class="avatar avatar-sm me-3"><span class="avatar-initial rounded-circle bg-label-warning">TB</span></div></div><div class="d-flex flex-column"><a href="app-user-view-account.html" class="text-body text-truncate"><span class="fw-medium">Travus Bruntjen</span></a><small class="text-muted">tbruntjeni@sitemeter.com</small></div></div></td><td class="" style=""><span class="text-truncate d-flex align-items-center"><span class="badge badge-center rounded-pill bg-label-secondary w-px-30 h-px-30 me-2"><i class="bx bx-mobile-alt bx-xs"></i></span>Admin</span></td><td class="dtr-hidden" style="display: none;"><span class="fw-medium">Enterprise</span></td><td class="dtr-hidden" style="display: none;">Manual - Cash</td><td class="dtr-hidden" style="display: none;"><span class="badge bg-label-success">Active</span></td><td class="dtr-hidden" style="display: none;"><div class="d-inline-block text-nowrap"><button class="btn btn-sm btn-icon"><i class="bx bx-edit"></i></button><button class="btn btn-sm btn-icon delete-record"><i class="bx bx-trash"></i></button><button class="btn btn-sm btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded me-2"></i></button><div class="dropdown-menu dropdown-menu-end m-0"><a href="app-user-view-account.html" class="dropdown-item">View</a><a href="javascript:;" class="dropdown-item">Suspend</a></div></div></td></tr>
+    <tr class="odd"><td class="control" tabindex="0" style=""></td><td class="sorting_1" style=""><div class="d-flex justify-content-start align-items-center user-name"><div class="avatar-wrapper"><div class="avatar avatar-sm me-3"><img src="/assets/img/avatars/1.png" alt="Avatar" class="rounded-circle"></div></div><div class="d-flex flex-column"><a href="app-user-view-account.html" class="text-body text-truncate"><span class="fw-medium">Stu Delamaine</span></a><small class="text-muted">sdelamainek@who.int</small></div></div></td><td class="" style=""><span class="text-truncate d-flex align-items-center"><span class="badge badge-center rounded-pill bg-label-success w-px-30 h-px-30 me-2"><i class="bx bx-cog bx-xs"></i></span>Author</span></td><td class="dtr-hidden" style="display: none;"><span class="fw-medium">Basic</span></td><td class="dtr-hidden" style="display: none;">Auto Debit</td><td class="dtr-hidden" style="display: none;"><span class="badge bg-label-warning">Pending</span></td><td class="dtr-hidden" style="display: none;"><div class="d-inline-block text-nowrap"><button class="btn btn-sm btn-icon"><i class="bx bx-edit"></i></button><button class="btn btn-sm btn-icon delete-record"><i class="bx bx-trash"></i></button><button class="btn btn-sm btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded me-2"></i></button><div class="dropdown-menu dropdown-menu-end m-0"><a href="app-user-view-account.html" class="dropdown-item">View</a><a href="javascript:;" class="dropdown-item">Suspend</a></div></div></td></tr>
+    <tr class="even"><td class="control" tabindex="0" style=""></td><td class="sorting_1" style=""><div class="d-flex justify-content-start align-items-center user-name"><div class="avatar-wrapper"><div class="avatar avatar-sm me-3"><span class="avatar-initial rounded-circle bg-label-warning">SO</span></div></div><div class="d-flex flex-column"><a href="app-user-view-account.html" class="text-body text-truncate"><span class="fw-medium">Saunder Offner</span></a><small class="text-muted">soffner19@mac.com</small></div></div></td><td class="" style=""><span class="text-truncate d-flex align-items-center"><span class="badge badge-center rounded-pill bg-label-primary w-px-30 h-px-30 me-2"><i class="bx bx-pie-chart-alt bx-xs"></i></span>Maintainer</span></td><td class="dtr-hidden" style="display: none;"><span class="fw-medium">Enterprise</span></td><td class="dtr-hidden" style="display: none;">Auto Debit</td><td class="dtr-hidden" style="display: none;"><span class="badge bg-label-warning">Pending</span></td><td class="dtr-hidden" style="display: none;"><div class="d-inline-block text-nowrap"><button class="btn btn-sm btn-icon"><i class="bx bx-edit"></i></button><button class="btn btn-sm btn-icon delete-record"><i class="bx bx-trash"></i></button><button class="btn btn-sm btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded me-2"></i></button><div class="dropdown-menu dropdown-menu-end m-0"><a href="app-user-view-account.html" class="dropdown-item">View</a><a href="javascript:;" class="dropdown-item">Suspend</a></div></div></td></tr>
+    <tr class="odd"><td class="control" tabindex="0" style=""></td><td class="sorting_1" style=""><div class="d-flex justify-content-start align-items-center user-name"><div class="avatar-wrapper"><div class="avatar avatar-sm me-3"><span class="avatar-initial rounded-circle bg-label-danger">SM</span></div></div><div class="d-flex flex-column"><a href="app-user-view-account.html" class="text-body text-truncate"><span class="fw-medium">Stephen MacGilfoyle</span></a><small class="text-muted">smacgilfoyley@bigcartel.com</small></div></div></td><td class="" style=""><span class="text-truncate d-flex align-items-center"><span class="badge badge-center rounded-pill bg-label-primary w-px-30 h-px-30 me-2"><i class="bx bx-pie-chart-alt bx-xs"></i></span>Maintainer</span></td><td class="dtr-hidden" style="display: none;"><span class="fw-medium">Company</span></td><td class="dtr-hidden" style="display: none;">Manual - Paypal</td><td class="dtr-hidden" style="display: none;"><span class="badge bg-label-warning">Pending</span></td><td class="dtr-hidden" style="display: none;"><div class="d-inline-block text-nowrap"><button class="btn btn-sm btn-icon"><i class="bx bx-edit"></i></button><button class="btn btn-sm btn-icon delete-record"><i class="bx bx-trash"></i></button><button class="btn btn-sm btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded me-2"></i></button><div class="dropdown-menu dropdown-menu-end m-0"><a href="app-user-view-account.html" class="dropdown-item">View</a><a href="javascript:;" class="dropdown-item">Suspend</a></div></div></td></tr>
+    <tr class="even"><td class="control" tabindex="0" style=""></td><td class="sorting_1" style=""><div class="d-flex justify-content-start align-items-center user-name"><div class="avatar-wrapper"><div class="avatar avatar-sm me-3"><img src="/assets/img/avatars/9.png" alt="Avatar" class="rounded-circle"></div></div><div class="d-flex flex-column"><a href="app-user-view-account.html" class="text-body text-truncate"><span class="fw-medium">Skip Hebblethwaite</span></a><small class="text-muted">shebblethwaite10@arizona.edu</small></div></div></td><td class="" style=""><span class="text-truncate d-flex align-items-center"><span class="badge badge-center rounded-pill bg-label-secondary w-px-30 h-px-30 me-2"><i class="bx bx-mobile-alt bx-xs"></i></span>Admin</span></td><td class="dtr-hidden" style="display: none;"><span class="fw-medium">Company</span></td><td class="dtr-hidden" style="display: none;">Manual - Cash</td><td class="dtr-hidden" style="display: none;"><span class="badge bg-label-secondary">Inactive</span></td><td class="dtr-hidden" style="display: none;"><div class="d-inline-block text-nowrap"><button class="btn btn-sm btn-icon"><i class="bx bx-edit"></i></button><button class="btn btn-sm btn-icon delete-record"><i class="bx bx-trash"></i></button><button class="btn btn-sm btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded me-2"></i></button><div class="dropdown-menu dropdown-menu-end m-0"><a href="app-user-view-account.html" class="dropdown-item">View</a><a href="javascript:;" class="dropdown-item">Suspend</a></div></div></td></tr>
+    </tbody>
+    </table><div class="row mx-2"><div class="col-sm-12 col-md-6"><div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">Showing 1 to 10 of 50 entries</div></div><div class="col-sm-12 col-md-6"><div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate"><ul class="pagination"><li class="paginate_button page-item previous disabled" id="DataTables_Table_0_previous"><a aria-controls="DataTables_Table_0" aria-disabled="true" role="link" data-dt-idx="previous" tabindex="-1" class="page-link">Previous</a></li><li class="paginate_button page-item active"><a href="#" aria-controls="DataTables_Table_0" role="link" aria-current="page" data-dt-idx="0" tabindex="0" class="page-link">1</a></li><li class="paginate_button page-item "><a href="#" aria-controls="DataTables_Table_0" role="link" data-dt-idx="1" tabindex="0" class="page-link">2</a></li><li class="paginate_button page-item "><a href="#" aria-controls="DataTables_Table_0" role="link" data-dt-idx="2" tabindex="0" class="page-link">3</a></li><li class="paginate_button page-item "><a href="#" aria-controls="DataTables_Table_0" role="link" data-dt-idx="3" tabindex="0" class="page-link">4</a></li><li class="paginate_button page-item "><a href="#" aria-controls="DataTables_Table_0" role="link" data-dt-idx="4" tabindex="0" class="page-link">5</a></li><li class="paginate_button page-item next" id="DataTables_Table_0_next"><a href="#" aria-controls="DataTables_Table_0" role="link" data-dt-idx="next" tabindex="0" class="page-link">Next</a></li></ul></div></div></div>
+    </div>
+    </div> *@
         <div class="card-header border-bottom">
             <h5 class="card-title">Search Filter</h5>
             <div class="d-flex justify-content-between align-items-center row py-3 gap-3 gap-md-0">
-                <div class="col-md-4 user_role"></div>
-                <div class="col-md-4 user_plan"></div>
-                <div class="col-md-4 user_status"></div>
+                <div class="col-md-3 user_role"></div>
+                <div class="col-md-3 user_plan"></div>
+                <div class="col-md-3 user_status"></div>
+                <div class="col-md-3 user_stage"></div>
             </div>
         </div>
         <div class="card-datatable table-responsive">
@@ -264,6 +265,44 @@
                             <span class="message-actions input-group-text">
                                 <i class="bx bx-microphone cursor-pointer speech-to-text"></i>
                             </span>
+                            @*                         <div class="card m-0">
+                        <div class="card-body">
+                        <div id="notes-toolbar">
+                        <span class="ql-formats">
+                        <select class="ql-font"></select>
+                        <select class="ql-size"></select>
+                        </span>
+                        <span class="ql-formats">
+                        <button class="ql-bold"></button>
+                        <button class="ql-italic"></button>
+                        <button class="ql-underline"></button>
+                        <button class="ql-strike"></button>
+                        </span>
+                        <span class="ql-formats">
+                        <select class="ql-color"></select>
+                        <select class="ql-background"></select>
+                        </span>
+                        <span class="ql-formats">
+                        <button class="ql-script" value="sub"></button>
+                        <button class="ql-script" value="super"></button>
+                        </span>
+                        <span class="ql-formats">
+                        <button class="ql-header" value="1"></button>
+                        <button class="ql-header" value="2"></button>
+                        <button class="ql-blockquote"></button>
+                        <button class="ql-code-block"></button>
+                        </span>
+                        </div>
+                        <div id="notes-editor" for="@ActionItem.Notes">
+                        <h6>Quill Rich Text Editor</h6>
+                        <p>
+                        Cupcake ipsum dolor sit amet. Halvah cheesecake chocolate bar gummi bears cupcake. Pie
+                        macaroon bear claw. Soufflé I love candy canes I love cotton candy I love.
+                        </p>
+                        </div>
+                        <textarea asp-for="@ActionItem.Notes" name="Notes" class="form-control message-input" placeholder="Say it" rows="5" hidden></textarea>
+                        </div>
+                        </div>*@
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary me-sm-3 me-1 data-submit">Submit</button>
@@ -446,6 +485,29 @@ else
     <script src="~/assets/js/form-input-group.js"></script>
 
     <script>
+        (function () {
+            // Snow Theme
+            // --------------------------------------------------------------------
+            const snowEditor = new Quill('#notes-editor', {
+                bounds: '#notes-editor',
+                modules: {
+                    formula: true,
+                    toolbar: '#notes-toolbar'
+                },
+                theme: 'snow'
+            });
+
+            var form = document.querySelector('form');
+            form.onsubmit = function () {
+                // Populate hidden form on submit
+                var notes = document.querySelector('input[name=actionItem.Notes]');
+                notes.value = snowEditor.getContents();
+            };
+        })();
+
+    </script>
+
+    <script>
         'use strict';
 
         // Datatable (jquery)
@@ -465,7 +527,7 @@ else
             // Variable declaration for table
             var dt_user_table = $('.datatables-users'),
                 select2 = $('.select2'),
-                userView = 'app-user-view-account.html',
+                userView = '/frest/app-user-view-account.html',
                 statusObj = {
                     1: { title: 'Pending', class: 'bg-label-warning' },
                     2: { title: 'Active', class: 'bg-label-success' },
@@ -540,15 +602,15 @@ else
                             render: function (data, type, full, meta) {
                                 var $name = full['contact'],
                                     $email = full['email'];
-                                    // For Avatar badge
-                                    var stateNum = Math.floor(Math.random() * 6);
-                                    var states = ['success', 'danger', 'warning', 'info', 'dark', 'primary', 'secondary'];
-                                    var $state = states[stateNum],
-                                        $name = full['contact'],
-                                        $initials = $name.match(/\b\w/g) || [];
-                                    $initials = (($initials.shift() || '') + ($initials.pop() || '')).toUpperCase();
-                                    var $output = '<span class="avatar-initial rounded-circle bg-label-' + $state + '">' + $initials + '</span>';
-                                
+                                // For Avatar badge
+                                var stateNum = Math.floor(Math.random() * 6);
+                                var states = ['success', 'danger', 'warning', 'info', 'dark', 'primary', 'secondary'];
+                                var $state = states[stateNum],
+                                    $name = full['contact'],
+                                    $initials = $name.match(/\b\w/g) || [];
+                                $initials = (($initials.shift() || '') + ($initials.pop() || '')).toUpperCase();
+                                var $output = '<span class="avatar-initial rounded-circle bg-label-' + $state + '">' + $initials + '</span>';
+                                userView = '/Contacts/Details/' + full['contact_id'];
                                 // Creates full output for row
                                 var $row_output =
                                     '<div class="d-flex justify-content-start align-items-center user-name">' +
@@ -618,7 +680,7 @@ else
                             render: function (data, type, full, meta) {
                                 return (
                                     '<div class="d-inline-block text-nowrap">' +
-                                    '<button class="btn btn-sm btn-icon"><i class="bx bx-edit"></i></button>' +
+                                    '<a href="/Contacts/Edit/'+ full['contact_id'] + '" class="btn btn-sm btn-icon"><i class="bx bx-edit"></i></a>' +
                                     '<button class="btn btn-sm btn-icon delete-record"><i class="bx bx-trash"></i></button>' +
                                     '<button class="btn btn-sm btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded me-2"></i></button>' +
                                     '<div class="dropdown-menu dropdown-menu-end m-0">' +
@@ -885,6 +947,27 @@ else
                                     '<select id="FilterTransaction" class="form-select text-capitalize"><option value=""> Select Forecast </option></select>'
                                 )
                                     .appendTo('.user_status')
+                                    .on('change', function () {
+                                        var val = $.fn.dataTable.util.escapeRegex($(this).val());
+                                        column.search(val ? '^' + val + '$' : '', true, false).draw();
+                                    });
+
+                                column
+                                    .data()
+                                    .unique()
+                                    .sort()
+                                    .each(function (d, j) {
+                                        select.append('<option value="' + d + '">' + d + '</option>');
+                                    });
+                            });
+                        this.api()
+                            .columns(9)
+                            .every(function () {
+                                var column = this;
+                                var select = $(
+                                    '<select id="OpportunityStage" class="form-select text-capitalize"><option value=""> Select Stage </option></select>'
+                                )
+                                    .appendTo('.user_stage')
                                     .on('change', function () {
                                         var val = $.fn.dataTable.util.escapeRegex($(this).val());
                                         column.search(val ? '^' + val + '$' : '', true, false).draw();

@@ -28,14 +28,20 @@ namespace NewTiceAI.Models
         [DataType(DataType.Upload)]
         public IFormFile? AvatarFormFile { get; set; }
 
+        // Depricated Image Properties  <<<<<<<<<<<<<<<<<<
         [DisplayName("Avatar")]
         public string? AvatarName { get; set; }
         public byte[]? AvatarData { get; set; }
 
         [DisplayName("File Extension")]
         public string? AvatarContentType { get; set; }
+        // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 
+        // New Image Properties>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+        public Guid? AvatarId { get; set; }
+        public FileUpload? Avatar { get; set; }
+        // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
         // Navigation Properties
         public virtual Organization? Organization { get; set; }

@@ -1,4 +1,5 @@
-﻿@inject UserManager<TAUser> _UserManager
+﻿@using NewTiceAI.Helpers
+@inject UserManager<TAUser> _UserManager
 @inject IBTRolesService _RolesService
 @inject IBTFileService _FileService
 @inject IConfiguration _Configuration
@@ -50,6 +51,10 @@
     <link rel="stylesheet" href="/assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css" />
     <link rel="stylesheet" href="/assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css" />
     <link rel="stylesheet" href="/assets/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.css" />
+    <link rel="stylesheet" href="~/assets/vendor/libs/quill/typography.css" />
+    <link rel="stylesheet" href="~/assets/vendor/libs/quill/katex.css" />
+    <link rel="stylesheet" href="~/assets/vendor/libs/quill/editor.css" />
+
     @* <link rel="stylesheet" href="/assets/vendor/libs/apex-charts/apex-charts.css" /> *@
 
 
@@ -73,11 +78,11 @@
 
             <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
                 <div class="app-brand demo">
-                    <a href="index.html" class="app-brand-link">
+                    <a href="/Home/Index" class="app-brand-link">
                         <span class="app-brand-logo demo">
                             @if (TiceAI.Name == "Sittadel")
                             {
-                                <img src="~/img/orglogos/Sittadel-Logo.png" class="image-reponsive" style="height:60px;width:60px;"/>
+                                <img src="~/img/orglogos/Sittadel-Logo.png" class="image-reponsive p-4" style="height:80px;width:80px;"/>
                             }
                             else if (TiceAI.Name == "MagnaReign")
                             {
@@ -746,6 +751,7 @@
                                                     <div class="flex-shrink-0 me-3">
                                                         <div class="avatar avatar-online">
                                                             <img src="/assets/img/avatars/1.png" alt="" class="rounded-circle" />
+                                                            <img src="@(taUser?.AvatarData == null ? FileUploader.DefaultUserImage : $"/api/uploads/{taUser.AvatarId}")" alt="" class="rounded-circle" />
                                                         </div>
                                                     </div>
                                                     <div class="flex-grow-1">
@@ -851,7 +857,11 @@
     <!-- Vendors JS -->
     <script src="/assets/vendor/libs/moment/moment.js"></script>
     <script src="/assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js"></script>
-    @* <script src="/assets/vendor/libs/apex-charts/apexcharts.js"></script> *@
+    @* <script src="/assets/vendor/libs/apex-charts/apexcharts.js"></script> *@\
+    <!-- Vendors JS -->
+    <script src="~/assets/vendor/libs/quill/katex.js"></script>
+    <script src="~/assets/vendor/libs/quill/quill.js"></script>
+
 
     <!-- Main JS -->
     <script src="/assets/js/main.js"></script>

@@ -8,7 +8,7 @@ namespace NewTiceAI.Models.Enums
     {
         [Display(Name="New Business")]
         NewBusiness,
-        [Display(Name = "Exansion")]
+        [Display(Name = "Expansion")]
         Expansion,
         [Display(Name = "Renewal")]
         Renewal,
