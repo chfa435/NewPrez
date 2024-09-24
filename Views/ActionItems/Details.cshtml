@@ -1,4 +1,5 @@
-﻿@model ActionItem
+﻿@using NewTiceAI.Helpers
+@model ActionItem
 
 @inject UserManager<TAUser> _UserManager
 @inject IActionProjectService _ActionProjectService
@@ -7,547 +8,452 @@
 
 @{
     ViewData["Title"] = "Details";
-    TAUser? btUser = await _UserManager.GetUserAsync(User);
-    int? projectId = Model.ActionProjectId == null ? null : Model.ActionProjectId!.Value;
-    TAUser? projectManager = await _ActionProjectService.GetActionProjectManagerAsync(projectId);
+    //TAUser? btUser = await _UserManager.GetUserAsync(User);
 }
 
-@*<h1>Ticket Details</h1>*@
+<h4 class="py-3 breadcrumb-wrapper mb-4">
+    <span class="text-muted fw-light">eCommerce / Customer Details /</span> Overview
+</h4>
+<div class="mb-3">
+    <label for="ecommerce-product-tags" class="form-label mb-1"> <span class="text-danger">(development & design testing)</span></label>
+</div>
+<div class="d-flex flex-column flex-sm-row align-items-center justify-content-sm-between mb-4 text-center text-sm-start gap-2">
+    <div class="mb-2 mb-sm-0">
+        <h4 class="mb-1">Customer ID #634759</h4>
+        <p class="mb-0">Aug 17, 2020, 5:48 (ET)</p>
+    </div>
+    <button type="button" class="btn btn-label-danger delete-customer">Delete Customer</button>
+</div>
 
-@*<header class="page-header">
-    <h2 class="font-weight-bold text-6">Ticket: @Model.Title</h2>
-    <div class="right-wrapper text-end">
-        <ol class="breadcrumbs">
-            <li>
-                <a asp-action="Dashboard" asp-controller="Home">
-                    <i class="bx bx-home-alt"></i>
-                </a>
+<div class="row">
+    <!-- Customer-detail Sidebar -->
+    <div class="col-xl-4 col-lg-5 col-md-5 order-1 order-md-0">
+        <!-- Customer-detail Card -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="customer-avatar-section">
+                    <div class="d-flex align-items-center flex-column">
+                        <img class="img-fluid rounded my-3"
+                             src="@(Model.Contact?.ImageId == null ? FileUploader.DefaultUserImage : $"/api/uploads/{Model.Contact.ImageId}")"
+                             height="110"
+                             width="110"
+                             alt="User avatar" />
+                        <div class="customer-info text-center">
+                            <h4 class="mb-1">@Model.Contact?.FullName</h4>
+                            <small>Customer ID #634759</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-around flex-wrap mt-4 py-3">
+                    <div class="d-flex align-items-center gap-2">
+                        <div class="avatar">
+                            <div class="avatar-initial rounded bg-label-primary">
+                                <i class="bx bx-cart-alt bx-sm"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <h5 class="mb-0">184</h5>
+                            <span>Orders</span>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center gap-2">
+                        <div class="avatar">
+                            <div class="avatar-initial rounded bg-label-primary">
+                                <i class="bx bx-dollar bx-sm"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <h5 class="mb-0">$12,378</h5>
+                            <span>Spent</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-container">
+                    <small class="d-block pt-4 border-top fw-normal text-uppercase text-muted my-3">DETAILS</small>
+                    <ul class="list-unstyled">
+                        <li class="mb-3">
+                            <span class="fw-medium me-2">Username:</span>
+                            <span>lorine.hischke</span>
+                        </li>
+                        <li class="mb-3">
+                            <span class="fw-medium me-2">Email:</span>
+                            <span>vafgot@vultukir.org</span>
+                        </li>
+                        <li class="mb-3">
+                            <span class="fw-medium me-2">Status:</span>
+                            <span class="badge bg-label-success">Active</span>
+                        </li>
+                        <li class="mb-3">
+                            <span class="fw-medium me-2">Contact:</span>
+                            <span>(123) 456-7890</span>
+                        </li>
+
+                        <li class="mb-3">
+                            <span class="fw-medium me-2">Country:</span>
+                            <span>USA</span>
+                        </li>
+                    </ul>
+                    <div class="d-flex justify-content-center">
+                        <a href="javascript:;"
+                           class="btn btn-primary me-3"
+                           data-bs-target="#editUser"
+                           data-bs-toggle="modal">Edit Details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Customer-detail Card -->
+        <!-- Plan Card -->
+
+        <div class="card mb-4 bg-gradient-primary">
+            <div class="card-body">
+                <div class="row justify-content-between mb-3">
+                    <div class="col-md-12 col-lg-7 col-xl-12 col-xxl-7 text-center text-lg-start text-xl-center text-xxl-start order-1 order-lg-0 order-xl-1 order-xxl-0">
+                        <h4 class="card-title text-white text-nowrap">Upgrade to premium</h4>
+                        <p class="card-text text-white">
+                            Upgrade customer to premium membership to access pro features.
+                        </p>
+                    </div>
+                    <span class="col-md-12 col-lg-5 col-xl-12 col-xxl-5 text-center mx-auto mx-md-0 mb-2">
+                        <img src="../../assets/img/illustrations/rocket.png" class="w-px-75 m-2" alt="3dRocket" />
+                    </span>
+                </div>
+                <button class="btn btn-white text-primary w-100 fw-medium shadow-sm"
+                        data-bs-target="#upgradePlanModal"
+                        data-bs-toggle="modal">
+                    Upgrade to premium
+                </button>
+            </div>
+        </div>
+
+        <!-- /Plan Card -->
+    </div>
+    <!--/ Customer Sidebar -->
+    <!-- Customer Content -->
+    <div class="col-xl-8 col-lg-7 col-md-7 order-0 order-md-1">
+        <!-- Customer Pills -->
+        <ul class="nav nav-pills flex-column flex-md-row mb-3">
+            <li class="nav-item">
+                <a class="nav-link active" href="javascript:void(0);"><i class="bx bx-user me-1"></i>Overview</a>
             </li>
-            <li><a asp-action="AllTickets" asp-controller="Tickets"><span>Tickets</span></a></li>
-            <li><span>Ticket Details</span></li>
-        </ol>
+            <li class="nav-item">
+                <a class="nav-link" href="app-ecommerce-customer-details-security.html"><i class="bx bx-lock-alt me-1"></i>Security</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="app-ecommerce-customer-details-billing.html"><i class="bx bx-detail me-1"></i>Address & Billing</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="app-ecommerce-customer-details-notifications.html"><i class="bx bx-bell me-1"></i>Notifications</a>
+            </li>
+        </ul>
+        <!--/ Customer Pills -->
+        <!-- / Customer cards -->
+        <div class="row text-nowrap">
+            <div class="col-md-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="card-icon mb-3">
+                            <div class="avatar">
+                                <div class="avatar-initial rounded bg-label-primary">
+                                    <i class="bx bx-dollar bx-sm"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-info">
+                            <h4 class="card-title mb-3">Amount</h4>
+                            <div class="d-flex align-items-end mb-1 gap-1">
+                                <h4 class="text-primary mb-0">@* @(Model.Amount.ToString("C")) *@$2000.00</h4>
+                                <p class="mb-0"></p>
+                            </div>
+                            <p class="text-muted mb-0 text-truncate">Account balance for next purchase</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-icon mb-3">
+                            <div class="avatar">
+                                <div class="avatar-initial rounded bg-label-success">
+                                    <i class="bx bx-category-alt bx-sm"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-info">
+                            <h4 class="card-title mb-3">Type </h4>
+                            <span class="badge bg-label-success mb-1">Platinum member</span>
+                            <p class="text-muted mb-0">3000 points to next tier</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-icon mb-3">
+                            <div class="avatar">
+                                <div class="avatar-initial rounded bg-label-warning">
+                                    <i class="bx bx-line-chart bx-sm"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-info">
+                            <h4 class="card-title mb-3">Forecast</h4>
+                            <div class="d-flex align-items-end mb-1 gap-1">
+                                <h4 class="text-warning mb-0">15</h4>
+                                <p class="mb-0">Items in wishlist</p>
+                            </div>
+                            <p class="text-muted mb-0 text-truncate">Receive notification when items go on sale</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-icon mb-3">
+                            <div class="avatar">
+                                <div class="avatar-initial rounded bg-label-info">
+                                    <i class="bx bx-tachometer bx-sm"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-info">
+                            <h4 class="card-title mb-3">Stage</h4>
+                            <div class="d-flex align-items-end mb-1 gap-1">
+                                <h4 class="text-info mb-0">21</h4>
+                                <p class="mb-0">Coupons you win</p>
+                            </div>
 
-        <a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fas fa-chevron-left"></i></a>
+                            <p class="text-muted mb-0 text-truncate">Use coupon on next purchase</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- / customer cards -->
+        <!-- Invoice table -->
+        <div class="card mb-4">
+            <div class="table-responsive mb-3">
+                <table class="table datatables-customer-order">
+                    <thead>
+                        <tr>
+                            <th>Notes</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th class="text-md-center"></th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+        <!-- /Invoice table -->
     </div>
-</header>*@
+    <!--/ Customer Content -->
+</div>
 
-<div class="block-header">
-    <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <ul class="breadcrumb breadcrumb-style ">
-                <li class="breadcrumb-item">
-                    <h4 class="page-title">Ticket Details</h4>
-                </li>
-                <li class="breadcrumb-item bcrumb-1">
-                    <a asp-action="Dashboard" asp-controller="Home">
-                        <i class="fas fa-home"></i>
-                    </a>
-                </li>
-                <li class="breadcrumb-item active">Tickets</li>
-                <li class="breadcrumb-item active">Ticket Dteail</li>
-            </ul>
+<!-- Modal -->
+<!-- Edit User Modal -->
+<div class="modal fade" id="editUser" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-simple modal-edit-user">
+        <div class="modal-content p-3 p-md-5">
+            <div class="modal-body">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="text-center mb-4">
+                    <h3>Edit User Information</h3>
+                    <p>Updating user details will receive a privacy audit.</p>
+                </div>
+                <form id="editUserForm" class="row g-3" onsubmit="return false">
+                    <div class="col-12 col-md-6">
+                        <label class="form-label" for="modalEditUserFirstName">First Name</label>
+                        <input type="text"
+                               id="modalEditUserFirstName"
+                               name="modalEditUserFirstName"
+                               class="form-control"
+                               placeholder="John" />
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <label class="form-label" for="modalEditUserLastName">Last Name</label>
+                        <input type="text"
+                               id="modalEditUserLastName"
+                               name="modalEditUserLastName"
+                               class="form-control"
+                               placeholder="Doe" />
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label" for="modalEditUserName">Username</label>
+                        <input type="text"
+                               id="modalEditUserName"
+                               name="modalEditUserName"
+                               class="form-control"
+                               placeholder="john.doe.007" />
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <label class="form-label" for="modalEditUserEmail">Email</label>
+                        <input type="text"
+                               id="modalEditUserEmail"
+                               name="modalEditUserEmail"
+                               class="form-control"
+                               placeholder="example@domain.com" />
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <label class="form-label" for="modalEditUserStatus">Status</label>
+                        <select id="modalEditUserStatus"
+                                name="modalEditUserStatus"
+                                class="form-select"
+                                aria-label="Default select example">
+                            <option selected>Status</option>
+                            <option value="1">Active</option>
+                            <option value="2">Inactive</option>
+                            <option value="3">Suspended</option>
+                        </select>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <label class="form-label" for="modalEditTaxID">Tax ID</label>
+                        <input type="text"
+                               id="modalEditTaxID"
+                               name="modalEditTaxID"
+                               class="form-control modal-edit-tax-id"
+                               placeholder="123 456 7890" />
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <label class="form-label" for="modalEditUserPhone">Phone Number</label>
+                        <div class="input-group input-group-merge">
+                            <span class="input-group-text">+1</span>
+                            <input type="text"
+                                   id="modalEditUserPhone"
+                                   name="modalEditUserPhone"
+                                   class="form-control phone-number-mask"
+                                   placeholder="202 555 0111" />
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <label class="form-label" for="modalEditUserLanguage">Language</label>
+                        <select id="modalEditUserLanguage"
+                                name="modalEditUserLanguage"
+                                class="select2 form-select"
+                                multiple>
+                            <option value="">Select</option>
+                            <option value="english" selected>English</option>
+                            <option value="spanish">Spanish</option>
+                            <option value="french">French</option>
+                            <option value="german">German</option>
+                            <option value="dutch">Dutch</option>
+                            <option value="hebrew">Hebrew</option>
+                            <option value="sanskrit">Sanskrit</option>
+                            <option value="hindi">Hindi</option>
+                        </select>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <label class="form-label" for="modalEditUserCountry">Country</label>
+                        <select id="modalEditUserCountry"
+                                name="modalEditUserCountry"
+                                class="select2 form-select"
+                                data-allow-clear="true">
+                            <option value="">Select</option>
+                            <option value="Australia">Australia</option>
+                            <option value="Bangladesh">Bangladesh</option>
+                            <option value="Belarus">Belarus</option>
+                            <option value="Brazil">Brazil</option>
+                            <option value="Canada">Canada</option>
+                            <option value="China">China</option>
+                            <option value="France">France</option>
+                            <option value="Germany">Germany</option>
+                            <option value="India">India</option>
+                            <option value="Indonesia">Indonesia</option>
+                            <option value="Israel">Israel</option>
+                            <option value="Italy">Italy</option>
+                            <option value="Japan">Japan</option>
+                            <option value="Korea">Korea, Republic of</option>
+                            <option value="Mexico">Mexico</option>
+                            <option value="Philippines">Philippines</option>
+                            <option value="Russia">Russian Federation</option>
+                            <option value="South Africa">South Africa</option>
+                            <option value="Thailand">Thailand</option>
+                            <option value="Turkey">Turkey</option>
+                            <option value="Ukraine">Ukraine</option>
+                            <option value="United Arab Emirates">United Arab Emirates</option>
+                            <option value="United Kingdom">United Kingdom</option>
+                            <option value="United States">United States</option>
+                        </select>
+                    </div>
+                    <div class="col-12">
+                        <label class="switch">
+                            <input type="checkbox" class="switch-input" />
+                            <span class="switch-toggle-slider">
+                                <span class="switch-on"></span>
+                                <span class="switch-off"></span>
+                            </span>
+                            <span class="switch-label">Use as a billing address?</span>
+                        </label>
+                    </div>
+                    <div class="col-12 text-center mt-4">
+                        <button type="submit" class="btn btn-primary me-sm-3 me-1">Submit</button>
+                        <button type="reset"
+                                class="btn btn-label-secondary"
+                                data-bs-dismiss="modal"
+                                aria-label="Close">
+                            Cancel
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>
-
-<!-- start: page -->
-@*<form class="order-details action-buttons-fixed" method="post">*@
-@*    <div class="row">
-        <div class="col-xl-4 mb-4 mb-xl-0">
-
-            <div class="card">
-                <div class="card-header">
-                    <h2 class="card-title">Edit</h2>
+<!--/ Edit User Modal -->
+<!-- Add New Credit Card Modal -->
+<div class="modal fade" id="upgradePlanModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-simple modal-upgrade-plan">
+        <div class="modal-content p-3 p-md-5">
+            <div class="modal-body">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="text-center mb-4">
+                    <h3>Upgrade Plan</h3>
+                    <p>Choose the best plan for user.</p>
                 </div>
-                <div class="card-body">
-                    <form asp-action="Edit" method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <input type="hidden" asp-for="ProjectId" />
-            <input type="hidden" asp-for="Created" />
-            <input type="hidden" asp-for="SubmitterUserId" />
-            <input type="hidden" asp-for="DeveloperUserId" />
-            <input type="hidden" asp-for="Archived" />
-
-            <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger"></span>
+                <form id="upgradePlanForm" class="row g-3" onsubmit="return false">
+                    <div class="col-sm-9">
+                        <label class="form-label" for="choosePlan">Choose Plan</label>
+                        <select id="choosePlan" name="choosePlan" class="form-select" aria-label="Choose Plan">
+                            <option selected>Choose Plan</option>
+                            <option value="standard">Standard - $99/month</option>
+                            <option value="exclusive">Exclusive - $249/month</option>
+                            <option value="Enterprise">Enterprise - $499/month</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-3 d-flex align-items-end">
+                        <button type="submit" class="btn btn-primary">Upgrade</button>
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="TicketTypeId" class="control-label"></label>
-                <select asp-for="TicketTypeId" class="form-control" asp-items="ViewBag.TicketTypeId"></select>
-                <span asp-validation-for="TicketTypeId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="TicketPriorityId" class="control-label"></label>
-                <select asp-for="TicketPriorityId" class="form-control" asp-items="ViewBag.TicketPriorityId"></select>
-                <span asp-validation-for="TicketPriorityId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="TicketStatusId" class="control-label"></label>
-                <select asp-for="TicketStatusId" class="form-control" asp-items="ViewBag.TicketStatusId"></select>
-                <span asp-validation-for="TicketStatusId" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
-                    <div class="form-row">
-                        <div class="form-group col mb-3">
-                            <label>Status</label>
-                            <select class="form-control form-control-modern" name="orderStatus" required>
-                                <option value="on-hold" selected>On Hold</option>
-                                <option value="pending">Pending Payment</option>
-                                <option value="processing">Processing</option>
-                                <option value="completed">Completed</option>
-                                <option value="cancelled">Cancelled</option>
-                                <option value="refunded">Refunded</option>
-                                <option value="failed">Failed</option>
-                            </select>
-                        </div>
+            <hr class="mx-md-n5 mx-n3" />
+            <div class="modal-body">
+                <h6 class="mb-0">User current plan is standard plan</h6>
+                <div class="d-flex justify-content-between align-items-center flex-wrap">
+                    <div class="d-flex justify-content-center me-2 mt-3">
+                        <sup class="h5 pricing-currency pt-1 mt-3 mb-0 me-1 text-primary">$</sup>
+                        <h1 class="display-3 mb-0 text-primary">99</h1>
+                        <sub class="h5 pricing-duration mt-auto mb-2">/month</sub>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group col mb-3">
-                            <label>Priority</label>
-                            <select class="form-control form-control-modern" name="orderStatus" required>
-                                <option value="on-hold" selected>On Hold</option>
-                                <option value="pending">Pending Payment</option>
-                                <option value="processing">Processing</option>
-                                <option value="completed">Completed</option>
-                                <option value="cancelled">Cancelled</option>
-                                <option value="refunded">Refunded</option>
-                                <option value="failed">Failed</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col mb-3">
-                            <label>Type</label>
-                            <select class="form-control form-control-modern" name="orderStatus" required>
-                                <option value="on-hold" selected>On Hold</option>
-                                <option value="pending">Pending Payment</option>
-                                <option value="processing">Processing</option>
-                                <option value="completed">Completed</option>
-                                <option value="cancelled">Cancelled</option>
-                                <option value="refunded">Refunded</option>
-                                <option value="failed">Failed</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-        <div class="col-xl-8">
-
-            <div class="card">
-                <div class="card-header">
-                    <h2 class="card-title">Details</h2>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-xl-auto me-xl-5 pe-xl-5 mb-4 mb-xl-0">
-                            <h3 class="text-color-dark font-weight-bold text-4 line-height-1 mt-0 mb-3">BILLING</h3>
-                            <ul class="list list-unstyled list-item-bottom-space-0">
-                                <li>Street Name Example</li>
-                                <li>1234</li>
-                                <li>Detroit</li>
-                                <li>Michigan</li>
-                                <li>93218</li>
-                                <li>USA</li>
-                            </ul>
-                            <strong class="d-block text-color-dark">Email address:</strong>
-                            <a href="mailto:johndoe@domain.com">johndoe@domain.com</a>
-                            <strong class="d-block text-color-dark mt-3">Phone:</strong>
-                            <a href="tel:+5551234" class="text-color-dark">555-1234</a>
-                        </div>
-                        <div class="col-xl-auto ps-xl-5">
-                            <h3 class="font-weight-bold text-color-dark text-4 line-height-1 mt-0 mb-3">SHIPPING</h3>
-                            <ul class="list list-unstyled list-item-bottom-space-0">
-                                <li>Street Name Example</li>
-                                <li>1234</li>
-                                <li>Detroit</li>
-                                <li>Michigan</li>
-                                <li>93218</li>
-                                <li>USA</li>
-                            </ul>
-                            <strong class="d-block text-color-dark">Email address:</strong>
-                            <a href="mailto:johndoe@domain.com">johndoe@domain.com</a>
-                            <strong class="d-block text-color-dark mt-3">Phone:</strong>
-                            <a href="tel:+5551234" class="text-color-dark">555-1234</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-
-            <div class="card">
-                <div class="card-header">
-                    <h2 class="card-title">Products</h2>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-ecommerce-simple table-ecommerce-simple-border-bottom table-borderless mb-0" style="min-width: 380px;">
-                            <thead>
-                                <tr>
-                                    <th width="8%" class="ps-4">ID</th>
-                                    <th width="65%">Name</th>
-                                    <th width="5%" class="text-end">Cost</th>
-                                    <th width="7%" class="text-end">Qty</th>
-                                    <th width="5%" class="text-end">Total</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="ps-4"><a href="ecommerce-products-form.html"><strong>191</strong></a></td>
-                                    <td><a href="ecommerce-products-form.html"><strong>Product Name Example</strong></a></td>
-                                    <td class="text-end">$99</td>
-                                    <td class="text-end">1</td>
-                                    <td class="text-end">$99</td>
-                                </tr>
-                                <tr>
-                                    <td class="ps-4"><a href="ecommerce-products-form.html"><strong>192</strong></a></td>
-                                    <td><a href="ecommerce-products-form.html"><strong>Product Name Example 2</strong></a></td>
-                                    <td class="text-end">$50</td>
-                                    <td class="text-end">1</td>
-                                    <td class="text-end">$50</td>
-                                </tr>
-                                <tr>
-                                    <td class="ps-4"><a href="ecommerce-products-form.html"><strong>193</strong></a></td>
-                                    <td><a href="ecommerce-products-form.html"><strong>Product Name Example 3</strong></a></td>
-                                    <td class="text-end">$132</td>
-                                    <td class="text-end">1</td>
-                                    <td class="text-end">$132</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="row justify-content-end flex-column flex-lg-row my-3">
-                        <div class="col-auto me-5">
-                            <h3 class="font-weight-bold text-color-dark text-4 mb-3">Items Subtotal</h3>
-                            <span class="d-flex align-items-center">
-                                3 Items
-                                <i class="fas fa-chevron-right text-color-primary px-3"></i>
-                                <b class="text-color-dark text-xxs">$298.00</b>
-                            </span>
-                        </div>
-                        <div class="col-auto me-5">
-                            <h3 class="font-weight-bold text-color-dark text-4 mb-3">Shipping</h3>
-                            <span class="d-flex align-items-center">
-                                Flat Rate
-                                <i class="fas fa-chevron-right text-color-primary px-3"></i>
-                                <b class="text-color-dark text-xxs">$20.00</b>
-                            </span>
-                        </div>
-                        <div class="col-auto">
-                            <h3 class="font-weight-bold text-color-dark text-4 mb-3">Order Total</h3>
-                            <span class="d-flex align-items-center justify-content-lg-end">
-                                <strong class="text-color-dark text-5">$318.00</strong>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-
-            <div class="card card-modern">
-                <div class="card-header">
-                    <h2 class="card-title">Order Notes</h2>
-                </div>
-                <div class="card-body">
-                    <div class="ecommerce-timeline mb-3">
-                        <div class="ecommerce-timeline-items-wrapper">
-                            <div class="ecommerce-timeline-item">
-                                <small>added on June 26, 2020 at 4:01 pm by admin - <a href="#" class="text-color-danger">Delete note</a></small>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas hendrerit augue at leo viverra, aliquam egestas lectus laoreet. Donec vehicula vestibulum ipsum, tincidunt ultrices elit suscipit ac. Sed eget risus laoreet, varius nibh id, luctus ligula. Nulla facilisi</p>
-                            </div>
-                            <div class="ecommerce-timeline-item">
-                                <small>added on June 26, 2020 at 4:01 pm by admin - <a href="#" class="text-color-danger">Delete note</a></small>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas hendrerit augue at leo viverra, aliquam egestas lectus laoreet. Donec vehicula vestibulum ipsum, tincidunt ultrices elit suscipit ac. Sed eget risus laoreet, varius nibh id, luctus ligula. Nulla facilisi</p>
-                            </div>
-                            <div class="ecommerce-timeline-item">
-                                <small>added on June 26, 2020 at 4:01 pm by admin - <a href="#" class="text-color-danger">Delete note</a></small>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas hendrerit augue at leo viverra, aliquam egestas lectus laoreet. Donec vehicula vestibulum ipsum, tincidunt ultrices elit suscipit ac. Sed eget risus laoreet, varius nibh id, luctus ligula. Nulla facilisi</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col pb-1 mb-3">
-                            <label>Add Note</label>
-                            <textarea class="form-control form-control-modern" name="orderAddNote" rows="6"></textarea>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col">
-                            <a href="#" class="cancel-button btn btn-light btn-px-4 py-3 border font-weight-semibold text-color-dark text-3">Add Note</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>*@
-
-@*    <div class="row action-buttons">
-        <div class="col-12 col-md-auto">
-        <button type="submit" class="submit-button btn btn-primary btn-px-4 py-3 d-flex align-items-center font-weight-semibold line-height-1" data-loading-text="Loading...">
-        <i class="bx bx-save text-4 me-2"></i> Save Order
-        </button>
-        </div>
-        <div class="col-12 col-md-auto px-md-0 mt-3 mt-md-0">
-        <a href="ecommerce-orders-list.html" class="cancel-button btn btn-light btn-px-4 py-3 border font-weight-semibold text-color-dark text-3">Cancel</a>
-        </div>
-        <div class="col-12 col-md-auto ms-md-auto mt-3 mt-md-0 ms-auto">
-        <a href="#" class="delete-button btn btn-danger btn-px-4 py-3 d-flex align-items-center font-weight-semibold line-height-1">
-        <i class="bx bx-trash text-4 me-2"></i> Delete Order
-        </a>
-        </div>
-        </div>*@
-@*</form>*@
-
-<!-- end: page -->
-<div>
-    <div classxfont-weighteighteightgetainer-fluid">
-        <div class="row gy-2">
-            <div class="col-md-12 col">
-                <div class="row col-cols-2 mt-5">
-                    <div class="card col m-1 p-2">
-                        <div class="card-body">
-                            <h5>@Model.Title</h5>
-                            <p>@Model.Description</p>
-                            @if (Model.ActionProject != null)
-                            {
-                                <div class="progress-container progress-info m-b-25">
-                                    <span class="progress-badge" style="font-size:small">Project: @Model.ActionProject?.Name</span>
-                                    <div class="progress">
-                                        @{
-                                            var start = (Model.ActionProject?.StartDate)!.Value;
-                                            var end = (Model.ActionProject?.EndDate)!.Value;
-                                            var today = DateTime.Now;
-                                            var percent = today >= end ? 100 : today < start ? 0 : Math.Round((today.Subtract(start)) / (end.Subtract(start)) * 100);
-                                        }
-                                        <div class="progress-bar" role="progressbar" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" style="width: @percent%;">
-                                            <span class="progress-value">@percent%</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            }
-                        </div>
-                    </div>
-                    <div class="card col m-1 p-2">
-                        <div class="card-body">
-                            @if (Model.ActionProject != null)
-                            {
-                                <ul class="list-unstyled">
-                                    <li><strong>Date Entered:</strong> <span class="">  @Model.Created.ToString("MM.dd.yyyy")</span></li>
-                                    <li><strong>Deadline:</strong> <span class=""> @Model.ActionProject.EndDate.ToString("MM.dd.yyyy")</span></li>
-                                    <li><strong>Type:</strong> <span class="">  @nameof(Model.ItemType)</span></li>
-                                    <li><strong>Priority:</strong> <span class="">  @nameof(Model.ItemPriority)</span></li>
-                                    <li><strong>Status:</strong> <span class="">  @nameof(Model.ItemStatus)</span></li>
-                                </ul>
-                            }
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-12 row-cols-2 mt-5 ">
-                <div class="col-md-8 col">
-                    <div class="card m-1 p-2">
-                        <div class="card-header">
-                            <h2>Comments</h2>
-                        </div>
-                        <div class="card-body" style="overflow-y:auto;height:600px;">
-
-                            <form class="form-horizontal form-bordered" asp-action="AddTicketComment" asp-controller="Tickets" method="post">
-                                <input type="hidden" asp-for="Id" name="TicketId" />
-                                @if (Model.ActorId == btUser?.Id || Model.SubmitterId == btUser?.Id || projectManager?.Id == btUser?.Id || User.IsInRole(nameof(BTRoles.Admin)))
-                                {
-                                    <div class="form-group">
-                                        <textarea id="editor" name="Comment" rows="8" class="editor form-control" placeholder="Add comment ..."></textarea>
-                                    </div>
-                                    <input type="submit" class="btn btn-sm btn-primary" value="Submit" />
-                                }
-                                else
-                                {
-                                    <div class="form-group">
-                                        <textarea disabled name="Comment" rows="8" class="form-control" required placeholder="Add comment ..."></textarea>
-                                    </div>
-                                }
-                            </form>
-                            <hr />
-                            <h6>Comments</h6>
-                            <ul class="right_chat list-unstyled mt-5">
-
-                                @foreach (ActionItemComment comment in Model.Comments)
-                                {
-                                    <li class="online mb-4">
-                                        <div class="media">
-                                            <a href="javascript:void(0);">
-                                                @if (btUser?.AvatarData != null)
-                                                {
-                                                    <img class="media-object " src="data:image/*;base64,@(Convert.ToBase64String(btUser.AvatarData))" alt="">
-                                                }
-                                                else
-                                                {
-                                                    <img class="media-object " src="https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png" alt="" style="width:30px;height:30px">
-                                                }
-                                            </a>
-                                            <div class="media-body">
-                                                <span class="text-muted" style="font-size:x-small;">
-                                                    @@ @comment.Submitter!.FullName
-                                                    <small class="float-right">@comment.Created.ToString("MM.dd.yyyy h:ss tt")</small>:
-                                                </span>
-                                            </div>
-                                            <span class="message text-primary">@Html.Raw(comment.Comment)</span>
-                                        </div>
-                                    </li>
-                                }
-                            </ul>
-                        </div>
-                        <div class="card-footer">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 col">
-                    <div class="card m-1 p-2">
-                        <div class="card-header">
-                            <h2>Attachments</h2>
-                        </div>
-                        <div class="card-body" style="overflow-y:auto;height:600px;">
-
-                            <div class="row clearfix">
-                                <div>
-                                    <form asp-action="AddTicketAttachment" asp-controller="Tickets" enctype="multipart/form-data" method="post">
-                                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                                        <input type="hidden" asp-for="Id" name="TicketId">
-
-                                        <div class="media-body ml-3">
-                                            <label>
-                                                Description
-                                                <input asp-for="@(new TicketAttachment().Description)" type="text" class="form-control" />
-                                            </label><br />
-                                            <label class="btn btn-outline-primary btn-sm">
-                                                <input asp-for="@(new TicketAttachment().FormFile)" type="file" class="form-control-file" />
-                                            </label>
-                                            <button type="submit" class="btn btn-outline-secondary btn-sm md-btn-flat">Submit</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                            <hr />
-                            <h6>Attachments</h6>
-                            <div class="container">
-                                <div class="row">
-                                    @foreach (ActionItemAttachment item in Model.Attachments)
-                                    {
-                                        <div class="col col-sm-2">
-                                            <a asp-action="ShowFile" asp-controller="Tickets" asp-route-Id="@item.Id">
-                                                <div class="icon">
-                                                    <img src="@FileService.GetFileIcon(item.FileName!)" style="height:50px;width:50px" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="@item.FileName" />
-                                                </div>
-                                            </a>
-                                            <div style="font-size:x-small">
-                                                <div class="file-name">
-                                                    <strong>@item.Description</strong>
-                                                </div>
-                                                <small>Size: @FileService.FormatFileSize(item.FileData!.Length) </small>
-                                            </div>
-                                        </div>
-                                    }
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-footer">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-12 col my-5">
-                <div class="card m-1 p-2">
-                    <div class="card-header">
-                        <h2>History</h2>
-                        <hr />
-                    </div>
-                    <div class="card-body" style="overflow-y:auto;height:500px;background-color:antiquewhite">
-                        @foreach (ActionItemHistory history in Model.History)
-                        {
-                            <div class="">
-
-                                <span class="date" style="font-weight:bold">@history.Created.ToString("dd MMM yyyy")</span>
-                                <h6>@history.Description</h6>
-                                <span>By: <a href="" title="@history.Submitter!.FullName">@history.Submitter.FullName</a></span>
-                                <div class="">
-                                    @if (history.Description!.Contains("New Ticket Created"))
-                                    {
-                                        <p>A ticket was added.</p>
-                                    }
-                                    else if (history.PropertyName!.Equals("TicketComment") || history.PropertyName.Equals("TicketAttachment"))
-                                    {
-                                        <p>A <b>@history.PropertyName</b>  was added.</p>
-                                    }
-                                    else
-                                    {
-                                        <p>The ticket <b>@history.PropertyName</b>  was edited</p>
-                                        <p>@($"Previous {history.PropertyName}:  ") <span style="color:red">@history.OldValue</span></p>
-                                        <p>@($"Current {history.PropertyName}:  ") <span style="color:green">@history.NewValue</span></p>
-                                    }
-                                </div>
-                            </div>
-                            <hr />
-
-                        }
-                    </div>
+                    <button class="btn btn-label-danger cancel-subscription mt-3">Cancel Subscription</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<!--/ Add New Credit Card Modal -->
+<!-- /Modal -->
 
-@*<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-    </div>*@
 
-@section scripts{
-    @*     <script src="https://cdn.ckeditor.com/ckeditor5/31.0.0/classic/ckeditor.js"></script>
- *@    <!-- Ck Editor JS -->
-    <script src="~/template/assets/js/ckeditor.js"></script>
-
-    @*     <script>
-        ClassicEditor
-            .create(document.querySelector('#editor'), {
-                toolbar: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote', '|', 'undo', 'redo'],
-                heading: {
-                    options: [
-                        { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
-                        { model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
-                        { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' },
-                        { model: 'heading3', view: 'h3', title: 'Heading 3', class: 'ck-heading_heading3' }
-                    ]
-                }
-            })
-            .catch(error => {
-                console.error(error);
-            });
-    </script>
- *@
+@section scripts {
+    <script src="https://cdn.ckeditor.com/ckeditor5/31.0.0/classic/ckeditor.js"></script>
     <script>
         if ($('.editor').length > 0) {
             ClassicEditor
@@ -579,4 +485,4 @@
         }
 
     </script>
-    }
+}

@@ -5,7 +5,7 @@ namespace NewTiceAI.Helpers
     public static class FileUploader
     {
         //public static readonly string DefaultProfilePictureUrl = "/img/DefaultUserImage.png";
-        public static readonly string DefaultUserImage = "/img/DefaultContactImage.png";
+        public static readonly string DefaultUserImage = "/img/pngUser.png";
         public static readonly string DefaultBlogImage = "/img/DefaultBlogImage.jpg";
         public static readonly string DefaultCategoryImage = "/img/DefaultCategoryImage.png";
 

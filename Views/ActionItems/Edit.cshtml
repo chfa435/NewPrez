@@ -4,97 +4,209 @@
     ViewData["Title"] = "Edit";
 }
 
-<style>
-    .ck-editor__editable_inline {
-        min-height: 300px;
-    }
-</style>
 
-<h1>Edit</h1>
+<link rel="stylesheet" href="~/assets/vendor/libs/sweetalert2/sweetalert2.css" />
+<link rel="stylesheet" href="~/assets/vendor/libs/select2/select2.css" />
+<link rel="stylesheet" href="~/assets/vendor/libs/form-validation/umd/styles/index.min.css" />
 
-<h4>ActionItem</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <input type="hidden" asp-for="SubmitterId" />
-            <input type="hidden" asp-for="ContactId" />
-            <input type="hidden" asp-for="Created" />
 
-            <div class="form-group">
-                <label asp-for="ActorId" class="control-label"></label>
-                <select asp-for="ActorId" class="form-control" asp-items="ViewBag.ActorId"></select>
-                <span asp-validation-for="ActorId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="AccountId" class="control-label"></label>
-                <select asp-for="AccountId" class="form-control" asp-items="ViewBag.AccountId"></select>
-                <span asp-validation-for="AccountId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ItemType" class="control-label"></label>
-                <select asp-for="ItemType" class="form-control" asp-items="@Html.GetEnumSelectList<EnumActionItemTypes>()"></select>
-                <span asp-validation-for="ItemType" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ItemStatus" class="control-label"></label>
-                <select asp-for="ItemStatus" class="form-control" asp-items="@Html.GetEnumSelectList<EnumActionItemStatuses>()"></select>
-                <span asp-validation-for="ItemStatus" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ItemPriority" class="control-label"></label>
-                <select asp-for="ItemPriority" class="form-control" asp-items="@Html.GetEnumSelectList<EnumActionItemPriorities>()"></select>
-                <span asp-validation-for="ItemPriority" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Notes" class="control-label"></label>
-                <textarea asp-for="Notes" class="form-control" id="editor" rows="4"></textarea>
-                <span asp-validation-for="Notes" class="text-danger"></span>
-            </div>
+<h4 class="py-3 breadcrumb-wrapper mb-4">
+    <span class="text-muted fw-light">Home /</span><span> Add Opportunity</span>
+</h4>
 
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Archived" /> @Html.DisplayNameFor(model => model.Archived)
-                </label>
+<div class="app-ecommerce">
+    <!-- Add Product -->
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-3">
+        <div class="d-flex flex-column justify-content-center">
+            <h4 class="mb-1 mt-3">Add a new Opportunity</h4>
+            <p class="text-muted"> </p>
+        </div>
+        <div class="d-flex align-content-center flex-wrap gap-2">
+            <div class="px-0">
+                <button class="btn btn-label-secondary me-2">Discard</button>
+                <button class="btn btn-label-primary">Save draft</button>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+            <button type="submit" class="btn btn-primary">Publish product</button>
+        </div>
     </div>
-</div>
+    <form asp-action="Create" asp-controller="ActionItems">
+        <div class="row">
+            <!-- First column-->
+            <div class="col-12 col-lg-8">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="card-tile mb-0">Opportunity Information</h5>
+                    </div>
+                    <div class="card-body">
 
-<div>
-    <a asp-action="Index">Back to List</a>
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="mb-3">
+                            <label class="form-label" for="name">Opportunity Name</label>
+                            <input asp-for="Title" class="form-control" placeholder="Opportunity Name" aria-label="Opportunity Name" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="contact">Contact</label>
+                            <select asp-for="ContactId" class=" form-control" asp-items="ViewBag.ContactId">
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="account">Account</label>
+                            <select asp-for="AccountId" class=" form-control" asp-items="ViewBag.AccountId">
+                            </select>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Variants -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Dates</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label class="form-label" for="closedDate">Closed Date</label>
+                            <input class="form-control"
+                                   asp-for="ClosedDate"
+                                   placeholder="Closed Date" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="card-tile mb-0">Notes</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-4">
+                            <div class="input-group input-group-merge form-send-message">
+                                <textarea asp-for="Notes" class="form-control message-input" placeholder="Speech To Text" rows="5"></textarea>
+                                <span class="message-actions input-group-text">
+                                    <i class="bx bx-microphone cursor-pointer speech-to-text"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="form-label">Description <span class="text-danger">(developmental design testing)</span></label>
+                            <div class="form-control p-0 pt-1">
+                                <div class="comment-toolbar border-0 border-bottom">
+                                    <div class="d-flex justify-content-start">
+                                        <span class="ql-formats me-0">
+                                            <button class="ql-bold"></button>
+                                            <button class="ql-italic"></button>
+                                            <button class="ql-underline"></button>
+                                            <button class="ql-list" value="ordered"></button>
+                                            <button class="ql-list" value="bullet"></button>
+                                            <button class="ql-link"></button>
+                                            <button class="ql-image"></button>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="comment-editor border-0 pb-4" id="ecommerce-category-description"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <!-- /First column -->
+            <!-- Second column -->
+            <div class="col-12 col-lg-4 ">
+                <!-- Amount Card -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Amount</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <div class="input-group">
+                                <span class="input-group-text">$</span>
+                                <input type="number" asp-for="Amount"
+                                       class="form-control"
+                                       placeholder="Amount"
+                                       aria-label="Amount (to the nearest dollar)" />
+                                <span class="input-group-text">.00</span>
+                            </div>
+                        </div>
+                        <!-- Charge tax check box -->
+                        <!--div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" value="" id="price-charge-tax" checked />
+                            <label class="form-label" for="price-charge-tax"> Charge tax on this product </label>
+                        </div-->
+                        <!-- Instock switch -->
+                        <!--div class="d-flex justify-content-between align-items-center border-top pt-3">
+                            <span class="mb-0 h6">In stock</span>
+                            <div class="w-25 d-flex justify-content-end">
+                                <label class="switch switch-primary switch-sm me-4 pe-2">
+                                    <input type="checkbox" class="switch-input" checked="" />
+                                    <span class="switch-toggle-slider">
+                                        <span class="switch-on">
+                                            <span class="switch-off"></span>
+                                        </span>
+                                    </span>
+                                </label>
+                            </div>
+                        </div-->
+                    </div>
+                </div>
+                <!-- /Amount Card -->
+                <!-- Stage/Forecast/Type Card -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Stage/Forecast/Type</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label class="form-label" for="stage">Stage</label>
+                            <select asp-for="OpportunityStage" class=" form-select" asp-items="@Html.GetEnumSelectList<OpportunityStage>()">
+                                <option></option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="forecast">Forecast</label>
+                            <select asp-for="OpportunityForecastCategory" class=" form-select" asp-items="@Html.GetEnumSelectList<OpportunityForecastCategory>()">
+                                <option></option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="type">Type</label>
+                            <select asp-for="OpportunityType" class=" form-select" asp-items="@Html.GetEnumSelectList<OpportunityType>()">
+                                <option></option>
+                            </select>
+                        </div>
+                        <!-- Tags -->
+                        <div class="mb-3">
+                            <label for="ecommerce-product-tags" class="form-label mb-1">Tags <span class="text-danger">(developmental design testing)</span></label>
+                            <input id="ecommerce-product-tags"
+                                   class="form-control"
+                                   name="ecommerce-product-tags"
+                                   value="Normal,Standard,Premium"
+                                   aria-label="Product Tags" />
+                        </div>
+                    </div>
+                </div>
+                <!-- /Stage/Forecast/Type Card -->
+            </div>
+            <!-- /Second column -->
+        </div>
+        <button type="submit" class="btn btn-primary me-sm-3 me-1 data-submit">Submit</button>
+        <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="offcanvas">Cancel</button>
+    </form>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <!-- Vendors JS -->
+    <script src="~/assets/vendor/libs/select2/select2.js"></script>
+    <script src="~/assets/vendor/libs/dropzone/dropzone.js"></script>
+    <script src="~/assets/vendor/libs/jquery-repeater/jquery-repeater.js"></script>
+    <script src="~/assets/vendor/libs/flatpickr/flatpickr.js"></script>
+    <script src="~/assets/vendor/libs/tagify/tagify.js"></script>
 
-    <!-- Slimscroll JS -->
-    <script src="~/template/assets/js/jquery.slimscroll.min.js"></script>
-    <!-- Ck Editor JS -->
-    <script src="~/template/assets/js/ckeditor.js"></script>
-
-    <!-- Select2 JS -->
-    <script src="~/template/assets/js/select2.min.js"></script>
-
-    <!-- Theme Settings JS -->
-    <script src="~/template/assets/js/layout.js"></script>
-    <script src="~/template/assets/js/theme-settings.js"></script>
-    <script src="~/template/assets/js/greedynav.js"></script>
-    <!-- Custom JS -->
-    <script src="~/template/assets/js/app.js"></script>
+    <!-- Page JS -->
+    <script src="~/assets/js/app-ecommerce-product-add.js"></script>
 }
+

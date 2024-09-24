@@ -151,7 +151,7 @@ namespace NewTiceAI.Controllers
             string? userId = _userManager.GetUserId(User);
             TAUser? btUser = await _userManager.GetUserAsync(User);
 
-            ModelState.Remove("actionItem.SubmitterId");
+            ModelState.Remove("SubmitterId");
             if (ModelState.IsValid)
             {
                 try
@@ -201,13 +201,19 @@ namespace NewTiceAI.Controllers
             {
                 return NotFound();
             }
-            ViewData["AccountId"] = new SelectList(_context.Accounts, "Id", "Name", actionItem.AccountId);
-            ViewData["ActorId"] = new SelectList(_context.Users.Where(u=>u.OrganizationId==_organizationId), "Id", "FullName", actionItem.ActorId);
+            //ViewData["AccountId"] = new SelectList(_context.Accounts, "Id", "Name", actionItem.AccountId);
+            //ViewData["ActorId"] = new SelectList(_context.Users.Where(u => u.OrganizationId ==_organizationId), "Id", "FullName", actionItem.ActorId);
             //ViewData["ContactId"] = new SelectList(_context.Contacts, "Id", "FirstName", actionItem.ContactId);
             //ViewData["ItemStatus"] = new SelectList(Enum.GetValues(typeof(EnumActionItemStatuses)).Cast<EnumActionItemStatuses>().ToList());
             //ViewData["ItemPriority"] = new SelectList(Enum.GetValues(typeof(EnumActionItemPriorities)).Cast<EnumActionItemPriorities>().ToList());
             //ViewData["ItemType"] = new SelectList(Enum.GetValues(typeof(EnumActionItemTypes)).Cast<EnumActionItemTypes>().ToList());
             //ViewData["SubmitterId"] = new SelectList(_context.Users, "Id", "Id", actionItem.SubmitterId);
+            ViewData["ActorId"] = new SelectList(_context.Users.Where(u => u.OrganizationId == _organizationId).OrderBy(u => u.LastName).ThenBy(u => u.FirstName), "Id", "FullName");
+            ViewData["AccountId"] = new SelectList(_context.Accounts.Where(a => a.ParentOrganizationId == _organizationId).OrderBy(a => a.Name), "Id", "Name");
+            ViewData["ContactId"] = new SelectList(_context.Contacts.Where(c => c.OrganizationId == _organizationId).OrderBy(c => c.LastName).ThenBy(c => c.FirstName), "Id", "FullName");
+            ViewData["ItemPriority"] = new SelectList(Enum.GetValues(typeof(EnumActionItemPriorities)).Cast<EnumActionItemPriorities>().ToList());
+            ViewData["ItemType"] = new SelectList(Enum.GetValues(typeof(EnumActionItemTypes)).Cast<EnumActionItemTypes>().ToList());
+
             return View(actionItem);
         }
 
@@ -313,7 +319,7 @@ namespace NewTiceAI.Controllers
             {
                 SittadelDTO dtoItem = new()
                 {
-
+                    OpportunityId = actionItem.Id,
                     ContactId = actionItem.ContactId,
                     ContactName = actionItem.Contact?.FullName,
                     ContactEmail = actionItem.Contact?.Email,

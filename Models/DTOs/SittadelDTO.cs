@@ -7,6 +7,8 @@ namespace NewTiceAI.Models.DTOs
 {
     public class SittadelDTO
     {
+        [JsonPropertyName("opportunity_id")]
+        public int OpportunityId { get; set; }
         [JsonPropertyName("avatar")]
         public string? Avatar {  get; set; }
         [JsonPropertyName("contact_id")]
