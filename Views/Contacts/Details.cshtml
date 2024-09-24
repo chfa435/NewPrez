@@ -36,7 +36,7 @@
             <a asp-action="Index" class="mx-2 btn btn-secondary rounded-pill btnlinks">Back</a>
             <a asp-action="Edit" asp-route-id="@Model?.Id" class="mx-2 btn btn-warning rounded-pill btnlinks">Edit</a>
             <a asp-action="Delete" asp-route-id="@Model?.Id" class="mx-2 btn btn-danger rounded-pill btnlinks">Delete</a>
-            @if (TiceAI.Name == "Sittadel")
+            @if (TiceAI.Name == "Sittadel" || TiceAI.Name == "Stambrisk")
             {
                 <a data-bs-toggle="modal" data-bs-target="#add_actionitem" class="mx-2 btn btn-primary rounded-pill btnlinks">+ Opportunity</a>
             }
@@ -249,7 +249,7 @@
         <div class="col-md-3">
             @if (Model?.ActionItems.Count > 0)
             {
-                if (TiceAI.Name == "Sittadel")
+                if (TiceAI.Name == "Sittadel" || TiceAI.Name == "Stambrisk")
                 {
                     <h3>OPPORTUNITES </h3>
                 }
@@ -323,7 +323,7 @@
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                @if (TiceAI.Name == "Sittadel")
+                @if (TiceAI.Name == "Sittadel" || TiceAI.Name == "Stambrisk")
                 {
                     <h5 class="modal-title">New Opportunity</h5>
                 }
@@ -340,7 +340,7 @@
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <input type="hidden" asp-for="@ActionItem.ContactId" />
                     <input type="hidden" asp-for="@ActionItem.SubmitterId" />
-                    @if (TiceAI.Name == "Sittadel")
+                    @if (TiceAI.Name == "Sittadel" || TiceAI.Name == "Stambrisk")
                     {
                         <div class="form-group">
                             <label asp-for="@ActionItem.AccountId" class="control-label"></label>

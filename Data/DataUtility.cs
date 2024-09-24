@@ -14,6 +14,7 @@ namespace NewTiceAI.Data
         private static int sittadelId;
         private static int magnareignId;
         private static int hoosierId;
+        private static int stambriskId;
 
         private static int account1Id;
         private static int account2Id;
@@ -23,6 +24,7 @@ namespace NewTiceAI.Data
         private static int sittadelaccountId;
         private static int magnareignaccountId;
         private static int hoosieraccountId;
+        private static int stambriskaccountId;
 
         private static int portfolioId;
         private static int blogId;
@@ -138,7 +140,8 @@ namespace NewTiceAI.Data
                 IList<Organization> defaultorganizations = new List<Organization>() {
                     new Organization() { Name = "Sittadel", Description="This is Sittadel" },
                     new Organization() { Name = "MagnaReign", Description="This is MagnaReign" },
-                    new Organization() { Name = "Hoosier", Description="Hoosier Equipment Service, Inc." }
+                    new Organization() { Name = "Hoosier", Description="Hoosier Equipment Service, Inc." },
+                    new Organization() { Name = "Stambrisk", Description="This is Stambrisk" }
                 };
 
                 //Add them to the database if they do not already exist according to company name
@@ -150,6 +153,7 @@ namespace NewTiceAI.Data
                 sittadelId = context.Organizations.FirstOrDefault(p => p.Name == "Sittadel")!.Id;
                 magnareignId = context.Organizations.FirstOrDefault(p => p.Name == "MagnaReign")!.Id;
                 hoosierId = context.Organizations.FirstOrDefault(p => p.Name == "Hoosier")!.Id;
+                stambriskId = context.Organizations.FirstOrDefault(p => p.Name == "Stambrisk")!.Id;
             }
             catch (Exception ex)
             {
@@ -173,9 +177,10 @@ namespace NewTiceAI.Data
                     new Account() { Name = "Account3", Description="This is default Account 3", ParentOrganizationId = organization1Id },
                     new Account() { Name = "Account4", Description="This is default Account 4", ParentOrganizationId = organization2Id },
                     new Account() { Name = "Account5", Description="This is default Account 5", ParentOrganizationId = organization2Id },
-                    new Account() { Name = "SittadelTestAccount", Description="This is a default Account for Sittadel", ParentOrganizationId = organization1Id },
-                    new Account() { Name = "MagnaReignTestAccount", Description="This is a default Account for MagnaReign", ParentOrganizationId = organization2Id },
-                    new Account() { Name = "HoosierTestAccount", Description="This is a default Account for Hoosier", ParentOrganizationId = organization2Id }
+                    new Account() { Name = "SittadelTestAccount", Description="This is a default Account for Sittadel", ParentOrganizationId = sittadelId },
+                    new Account() { Name = "MagnaReignTestAccount", Description="This is a default Account for MagnaReign", ParentOrganizationId = magnareignId },
+                    new Account() { Name = "HoosierTestAccount", Description="This is a default Account for Hoosier", ParentOrganizationId = hoosierId },
+                    new Account() { Name = "StambriskTestAccount", Description="This is a default Account for Stambrisk", ParentOrganizationId = stambriskId }         
                 };
 
                 var dbAccounts = context.Accounts.Select(c => c.Name).ToList();
@@ -191,6 +196,7 @@ namespace NewTiceAI.Data
                 sittadelaccountId = context.Accounts.FirstOrDefault(p => p.Name == "SittadelTestAccount")!.Id;
                 magnareignaccountId = context.Accounts.FirstOrDefault(p => p.Name == "MagnaReignTestAccount")!.Id;
                 hoosieraccountId = context.Accounts.FirstOrDefault(p => p.Name == "HoosierTestAccount")!.Id;
+                stambriskaccountId = context.Accounts.FirstOrDefault(p => p.Name == "StambriskTestAccount")!.Id;
             }
             catch (Exception ex)
             {
@@ -410,6 +416,38 @@ namespace NewTiceAI.Data
             {
                 Console.WriteLine("*************  ERROR  *************");
                 Console.WriteLine("Error Seeding Medartis Admin User.");
+                Console.WriteLine(ex.Message);
+                Console.WriteLine("***********************************");
+                throw;
+            }
+            #endregion
+
+
+
+            #region Stambrisk Users
+            //Seed Stambrisk Admin User
+            defaultUser = new TAUser
+            {
+                UserName = "taiskander@gmail.com",
+                Email = "taiskander@gmail.com",
+                FirstName = "Tony",
+                LastName = "Iskander",
+                EmailConfirmed = true,
+                OrganizationId = stambriskId
+            };
+            try
+            {
+                var user = await userManager.FindByEmailAsync(defaultUser.Email);
+                if (user == null)
+                {
+                    await userManager.CreateAsync(defaultUser, "Abc&123!");
+                    await userManager.AddToRoleAsync(defaultUser, nameof(BTRoles.Admin));
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("*************  ERROR  *************");
+                Console.WriteLine("Error Seeding Stambrisk Admin User.");
                 Console.WriteLine(ex.Message);
                 Console.WriteLine("***********************************");
                 throw;

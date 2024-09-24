@@ -11,18 +11,18 @@
     //TAUser? btUser = await _UserManager.GetUserAsync(User);
 }
 
-<h4 class="py-3 breadcrumb-wrapper mb-4">
+@* <h4 class="py-3 breadcrumb-wrapper mb-4">
     <span class="text-muted fw-light">eCommerce / Customer Details /</span> Overview
-</h4>
+</h4> *@
 <div class="mb-3">
     <label for="ecommerce-product-tags" class="form-label mb-1"> <span class="text-danger">(development & design testing)</span></label>
 </div>
 <div class="d-flex flex-column flex-sm-row align-items-center justify-content-sm-between mb-4 text-center text-sm-start gap-2">
     <div class="mb-2 mb-sm-0">
-        <h4 class="mb-1">Customer ID #634759</h4>
-        <p class="mb-0">Aug 17, 2020, 5:48 (ET)</p>
+        <h4 class="mb-1">Opportunity Details</h4>
+        <p class="mb-0">@Model.Created.ToString("MMM dd, yyyy, hh:mm tt")</p>
     </div>
-    <button type="button" class="btn btn-label-danger delete-customer">Delete Customer</button>
+    <button type="button" class="btn btn-label-danger delete-customer">Archive Opportunity</button>
 </div>
 
 <div class="row">
@@ -40,8 +40,9 @@
                              alt="User avatar" />
                         <div class="customer-info text-center">
                             <h4 class="mb-1">@Model.Contact?.FullName</h4>
-                            <small>Customer ID #634759</small>
+                            <small>Opportunity Contact</small>
                         </div>
+                        <label class="form-label mb-0"> <span class="text-danger">(development & design testing)</span></label>
                     </div>
                 </div>
                 <div class="d-flex justify-content-around flex-wrap mt-4 py-3">
@@ -63,7 +64,7 @@
                             </div>
                         </div>
                         <div>
-                            <h5 class="mb-0">$12,378</h5>
+                            <h5 class="mb-0">$0</h5>
                             <span>Spent</span>
                         </div>
                     </div>
@@ -73,20 +74,20 @@
                     <small class="d-block pt-4 border-top fw-normal text-uppercase text-muted my-3">DETAILS</small>
                     <ul class="list-unstyled">
                         <li class="mb-3">
-                            <span class="fw-medium me-2">Username:</span>
-                            <span>lorine.hischke</span>
+                            <span class="fw-medium me-2">Account Name:</span>
+                            <span>@Model.Account?.Name</span>
                         </li>
                         <li class="mb-3">
                             <span class="fw-medium me-2">Email:</span>
-                            <span>vafgot@vultukir.org</span>
+                            <span>@Model.Contact?.Email</span>
                         </li>
                         <li class="mb-3">
                             <span class="fw-medium me-2">Status:</span>
                             <span class="badge bg-label-success">Active</span>
                         </li>
                         <li class="mb-3">
-                            <span class="fw-medium me-2">Contact:</span>
-                            <span>(123) 456-7890</span>
+                            <span class="fw-medium me-2">Phone:</span>
+                            <span>@Model.Contact?.PhoneNumber</span>
                         </li>
 
                         <li class="mb-3">
@@ -133,21 +134,21 @@
     <!-- Customer Content -->
     <div class="col-xl-8 col-lg-7 col-md-7 order-0 order-md-1">
         <!-- Customer Pills -->
-        <ul class="nav nav-pills flex-column flex-md-row mb-3">
-            <li class="nav-item">
-                <a class="nav-link active" href="javascript:void(0);"><i class="bx bx-user me-1"></i>Overview</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="app-ecommerce-customer-details-security.html"><i class="bx bx-lock-alt me-1"></i>Security</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="app-ecommerce-customer-details-billing.html"><i class="bx bx-detail me-1"></i>Address & Billing</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="app-ecommerce-customer-details-notifications.html"><i class="bx bx-bell me-1"></i>Notifications</a>
-            </li>
+        @*         <ul class="nav nav-pills flex-column flex-md-row mb-3">
+        <li class="nav-item">
+        <a class="nav-link active" href="javascript:void(0);"><i class="bx bx-user me-1"></i>Overview</a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link" href="app-ecommerce-customer-details-security.html"><i class="bx bx-lock-alt me-1"></i>Security</a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link" href="app-ecommerce-customer-details-billing.html"><i class="bx bx-detail me-1"></i>Address & Billing</a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link" href="app-ecommerce-customer-details-notifications.html"><i class="bx bx-bell me-1"></i>Notifications</a>
+        </li>
         </ul>
-        <!--/ Customer Pills -->
+        *@        <!--/ Customer Pills -->
         <!-- / Customer cards -->
         <div class="row text-nowrap">
             <div class="col-md-6 mb-4">
@@ -163,10 +164,10 @@
                         <div class="card-info">
                             <h4 class="card-title mb-3">Amount</h4>
                             <div class="d-flex align-items-end mb-1 gap-1">
-                                <h4 class="text-primary mb-0">@* @(Model.Amount.ToString("C")) *@$2000.00</h4>
+                                <h4 class="text-primary mb-0">@* @(Model.Amount.ToString("C")) *@$@Model.Amount</h4>
                                 <p class="mb-0"></p>
                             </div>
-                            <p class="text-muted mb-0 text-truncate">Account balance for next purchase</p>
+                            <p class="text-muted mb-0 text-truncate">Additional Descriptive text here.</p>
                         </div>
                     </div>
                 </div>
@@ -183,8 +184,8 @@
                         </div>
                         <div class="card-info">
                             <h4 class="card-title mb-3">Type </h4>
-                            <span class="badge bg-label-success mb-1">Platinum member</span>
-                            <p class="text-muted mb-0">3000 points to next tier</p>
+                            <span class="badge bg-label-success mb-1">@Model.OpportunityType.ToString()</span>
+                            <p class="text-muted mb-0">Additional Descriptive text here.</p>
                         </div>
                     </div>
                 </div>
@@ -201,11 +202,12 @@
                         </div>
                         <div class="card-info">
                             <h4 class="card-title mb-3">Forecast</h4>
-                            <div class="d-flex align-items-end mb-1 gap-1">
-                                <h4 class="text-warning mb-0">15</h4>
-                                <p class="mb-0">Items in wishlist</p>
-                            </div>
-                            <p class="text-muted mb-0 text-truncate">Receive notification when items go on sale</p>
+                            <span class="badge bg-label-warning mb-1">@Model.OpportunityForecastCategory.ToString()</span>
+                            @*                             <div class="d-flex align-items-end mb-1 gap-1">
+                            <h4 class="text-warning mb-0">15</h4>
+                            <p class="mb-0">Items in wishlist</p>
+                            </div> *@
+                            <p class="text-muted mb-0">Additional Descriptive text here.</p>
                         </div>
                     </div>
                 </div>
@@ -222,12 +224,13 @@
                         </div>
                         <div class="card-info">
                             <h4 class="card-title mb-3">Stage</h4>
-                            <div class="d-flex align-items-end mb-1 gap-1">
-                                <h4 class="text-info mb-0">21</h4>
-                                <p class="mb-0">Coupons you win</p>
-                            </div>
+                            <span class="badge bg-label-info mb-1">@Model.OpportunityStage.ToString()</span>
+                            @*                             <div class="d-flex align-items-end mb-1 gap-1">
+                            <h4 class="text-info mb-0">21</h4>
+                            <p class="mb-0">Coupons you win</p>
+                            </div> *@
 
-                            <p class="text-muted mb-0 text-truncate">Use coupon on next purchase</p>
+                            <p class="text-muted mb-0 text-truncate">Additional Descriptive text here.</p>
                         </div>
                     </div>
                 </div>
@@ -237,20 +240,45 @@
         <!-- / customer cards -->
         <!-- Invoice table -->
         <div class="card mb-4">
-            <div class="table-responsive mb-3">
-                <table class="table datatables-customer-order">
-                    <thead>
-                        <tr>
-                            <th>Notes</th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th class="text-md-center"></th>
-                        </tr>
-                    </thead>
-                </table>
+            <div class="mb-3">
+                <div class="card m-0">
+                    <div class="card-body">
+                        <div id="notes-toolbar">
+                            <span class="ql-formats">
+                                <select class="ql-font"></select>
+                                <select class="ql-size"></select>
+                            </span>
+                            <span class="ql-formats">
+                                <button class="ql-bold"></button>
+                                <button class="ql-italic"></button>
+                                <button class="ql-underline"></button>
+                                <button class="ql-strike"></button>
+                            </span>
+                            <span class="ql-formats">
+                                <select class="ql-color"></select>
+                                <select class="ql-background"></select>
+                            </span>
+                            <span class="ql-formats">
+                                <button class="ql-script" value="sub"></button>
+                                <button class="ql-script" value="super"></button>
+                            </span>
+                            <span class="ql-formats">
+                                <button class="ql-header" value="1"></button>
+                                <button class="ql-header" value="2"></button>
+                                <button class="ql-blockquote"></button>
+                                <button class="ql-code-block"></button>
+                            </span>
+                        </div>
+                        <div id="notes-editor" for="@Model.Notes">
+                            <h6>Quill Rich Text Editor</h6>
+                            <p>
+                                @Model.Notes
+                            </p>
+                        </div>
+@*                         <textarea asp-for="@ActionItem.Notes" name="Notes" class="form-control message-input" placeholder="Say it" rows="5" hidden></textarea>
+ *@                    </div>
+                </div>
+
             </div>
         </div>
         <!-- /Invoice table -->
@@ -266,142 +294,69 @@
             <div class="modal-body">
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 <div class="text-center mb-4">
-                    <h3>Edit User Information</h3>
+                    <h3>Edit Opportunity Information</h3>
                     <p>Updating user details will receive a privacy audit.</p>
                 </div>
-                <form id="editUserForm" class="row g-3" onsubmit="return false">
-                    <div class="col-12 col-md-6">
-                        <label class="form-label" for="modalEditUserFirstName">First Name</label>
-                        <input type="text"
-                               id="modalEditUserFirstName"
-                               name="modalEditUserFirstName"
-                               class="form-control"
-                               placeholder="John" />
-                    </div>
-                    <div class="col-12 col-md-6">
-                        <label class="form-label" for="modalEditUserLastName">Last Name</label>
-                        <input type="text"
-                               id="modalEditUserLastName"
-                               name="modalEditUserLastName"
-                               class="form-control"
-                               placeholder="Doe" />
-                    </div>
-                    <div class="col-12">
-                        <label class="form-label" for="modalEditUserName">Username</label>
-                        <input type="text"
-                               id="modalEditUserName"
-                               name="modalEditUserName"
-                               class="form-control"
-                               placeholder="john.doe.007" />
-                    </div>
-                    <div class="col-12 col-md-6">
-                        <label class="form-label" for="modalEditUserEmail">Email</label>
-                        <input type="text"
-                               id="modalEditUserEmail"
-                               name="modalEditUserEmail"
-                               class="form-control"
-                               placeholder="example@domain.com" />
-                    </div>
-                    <div class="col-12 col-md-6">
-                        <label class="form-label" for="modalEditUserStatus">Status</label>
-                        <select id="modalEditUserStatus"
-                                name="modalEditUserStatus"
-                                class="form-select"
-                                aria-label="Default select example">
-                            <option selected>Status</option>
-                            <option value="1">Active</option>
-                            <option value="2">Inactive</option>
-                            <option value="3">Suspended</option>
+                <form asp-action="Edit" asp-controller="ActionItems">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="mb-3">
+                        <label class="form-label" for="contact">Contact</label>
+                        <select asp-for="ContactId" class=" form-control" asp-items="ViewBag.ContactId">
                         </select>
                     </div>
-                    <div class="col-12 col-md-6">
-                        <label class="form-label" for="modalEditTaxID">Tax ID</label>
-                        <input type="text"
-                               id="modalEditTaxID"
-                               name="modalEditTaxID"
-                               class="form-control modal-edit-tax-id"
-                               placeholder="123 456 7890" />
+                    <div class="mb-3">
+                        <label class="form-label" for="account">Account</label>
+                        <select asp-for="AccountId" class=" form-control" asp-items="ViewBag.AccountId">
+                        </select>
                     </div>
-                    <div class="col-12 col-md-6">
-                        <label class="form-label" for="modalEditUserPhone">Phone Number</label>
-                        <div class="input-group input-group-merge">
-                            <span class="input-group-text">+1</span>
-                            <input type="text"
-                                   id="modalEditUserPhone"
-                                   name="modalEditUserPhone"
-                                   class="form-control phone-number-mask"
-                                   placeholder="202 555 0111" />
+                    <div class="mb-3">
+                        <label class="form-label" for="name">Name</label>
+                        <input asp-for="Title" class="form-control" placeholder="Opportunity Name" aria-label="Opportunity Name" />
+                    </div>
+                    <div class="mb-3">
+                        <div class="input-group">
+                            <span class="input-group-text">$</span>
+                            <input type="number" asp-for="Amount"
+                                   class="form-control"
+                                   placeholder="Amount"
+                                   aria-label="Amount (to the nearest dollar)" />
+                            <span class="input-group-text">.00</span>
                         </div>
                     </div>
-                    <div class="col-12 col-md-6">
-                        <label class="form-label" for="modalEditUserLanguage">Language</label>
-                        <select id="modalEditUserLanguage"
-                                name="modalEditUserLanguage"
-                                class="select2 form-select"
-                                multiple>
-                            <option value="">Select</option>
-                            <option value="english" selected>English</option>
-                            <option value="spanish">Spanish</option>
-                            <option value="french">French</option>
-                            <option value="german">German</option>
-                            <option value="dutch">Dutch</option>
-                            <option value="hebrew">Hebrew</option>
-                            <option value="sanskrit">Sanskrit</option>
-                            <option value="hindi">Hindi</option>
+                    <div class="mb-3">
+                        <label class="form-label" for="closedDate">Closed Date</label>
+                        <input class="form-control"
+                               asp-for="ClosedDate"
+                               placeholder="Closed Date" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="stage">Stage</label>
+                        <select asp-for="OpportunityStage" class=" form-select" asp-items="@Html.GetEnumSelectList<OpportunityStage>()">
+                            <option></option>
                         </select>
                     </div>
-                    <div class="col-12 col-md-6">
-                        <label class="form-label" for="modalEditUserCountry">Country</label>
-                        <select id="modalEditUserCountry"
-                                name="modalEditUserCountry"
-                                class="select2 form-select"
-                                data-allow-clear="true">
-                            <option value="">Select</option>
-                            <option value="Australia">Australia</option>
-                            <option value="Bangladesh">Bangladesh</option>
-                            <option value="Belarus">Belarus</option>
-                            <option value="Brazil">Brazil</option>
-                            <option value="Canada">Canada</option>
-                            <option value="China">China</option>
-                            <option value="France">France</option>
-                            <option value="Germany">Germany</option>
-                            <option value="India">India</option>
-                            <option value="Indonesia">Indonesia</option>
-                            <option value="Israel">Israel</option>
-                            <option value="Italy">Italy</option>
-                            <option value="Japan">Japan</option>
-                            <option value="Korea">Korea, Republic of</option>
-                            <option value="Mexico">Mexico</option>
-                            <option value="Philippines">Philippines</option>
-                            <option value="Russia">Russian Federation</option>
-                            <option value="South Africa">South Africa</option>
-                            <option value="Thailand">Thailand</option>
-                            <option value="Turkey">Turkey</option>
-                            <option value="Ukraine">Ukraine</option>
-                            <option value="United Arab Emirates">United Arab Emirates</option>
-                            <option value="United Kingdom">United Kingdom</option>
-                            <option value="United States">United States</option>
+                    <div class="mb-3">
+                        <label class="form-label" for="forecast">Forecast</label>
+                        <select asp-for="OpportunityForecastCategory" class=" form-select" asp-items="@Html.GetEnumSelectList<OpportunityForecastCategory>()">
+                            <option></option>
                         </select>
                     </div>
-                    <div class="col-12">
-                        <label class="switch">
-                            <input type="checkbox" class="switch-input" />
-                            <span class="switch-toggle-slider">
-                                <span class="switch-on"></span>
-                                <span class="switch-off"></span>
+                    <div class="mb-3">
+                        <label class="form-label" for="type">Type</label>
+                        <select asp-for="OpportunityType" class=" form-select" asp-items="@Html.GetEnumSelectList<OpportunityType>()">
+                            <option></option>
+                        </select>
+                    </div>
+                    <div class="mb-4">
+                        <div class="input-group input-group-merge form-send-message">
+                            <textarea asp-for="Notes" class="form-control message-input" placeholder="Say it" rows="5"></textarea>
+                            <span class="message-actions input-group-text">
+                                <i class="bx bx-microphone cursor-pointer speech-to-text"></i>
                             </span>
-                            <span class="switch-label">Use as a billing address?</span>
-                        </label>
+                        </div>
                     </div>
-                    <div class="col-12 text-center mt-4">
-                        <button type="submit" class="btn btn-primary me-sm-3 me-1">Submit</button>
-                        <button type="reset"
-                                class="btn btn-label-secondary"
-                                data-bs-dismiss="modal"
-                                aria-label="Close">
-                            Cancel
-                        </button>
-                    </div>
+                    <button type="submit" class="btn btn-primary me-sm-3 me-1 data-submit">Submit</button>
+                    <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="offcanvas">Cancel</button>
                 </form>
             </div>
         </div>
@@ -450,10 +405,32 @@
 </div>
 <!--/ Add New Credit Card Modal -->
 <!-- /Modal -->
-
-
 @section scripts {
-    <script src="https://cdn.ckeditor.com/ckeditor5/31.0.0/classic/ckeditor.js"></script>
+    <script>
+        (function () {
+            // Snow Theme
+            // --------------------------------------------------------------------
+            const snowEditor = new Quill('#notes-editor', {
+                bounds: '#notes-editor',
+                modules: {
+                    formula: true,
+                    toolbar: '#notes-toolbar'
+                },
+                theme: 'snow'
+            });
+
+            var form = document.querySelector('form');
+            form.onsubmit = function () {
+                // Populate hidden form on submit
+                var notes = document.querySelector('input[name=actionItem.Notes]');
+                notes.value = snowEditor.getContents();
+            };
+        })();
+
+    </script>
+
+
+    @*     <script src="https://cdn.ckeditor.com/ckeditor5/31.0.0/classic/ckeditor.js"></script>
     <script>
         if ($('.editor').length > 0) {
             ClassicEditor
@@ -484,5 +461,5 @@
                 });
         }
 
-    </script>
+    </script> *@
 }
