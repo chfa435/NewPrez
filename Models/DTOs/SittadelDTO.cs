@@ -34,6 +34,8 @@ namespace NewTiceAI.Models.DTOs
         [DataType(DataType.Date)]
         [DisplayName("Date Closed")]
         public string? ClosedDate { get; set; }
+        [JsonPropertyName("opportunity_typeid")]
+        public int OpportunityTypeId { get; set; }
         [JsonPropertyName("opportunity_type")]
         [DisplayName("Type")]
         public string? OpportunityType { get; set; }

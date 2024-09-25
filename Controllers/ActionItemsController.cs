@@ -335,6 +335,7 @@ namespace NewTiceAI.Controllers
                     ClosedDate = actionItem.ClosedDate != null ? actionItem.ClosedDate.Value.ToString("MM-dd-yyyy") : string.Empty,
                     OpportunityForecastCategory = actionItem.OpportunityForecastCategory?.GetDisplayName(),
                     OpportunityStage = actionItem.OpportunityStage?.GetDisplayName(),
+                    OpportunityTypeId = (int)actionItem.OpportunityType.Value,
                     OpportunityType = actionItem.OpportunityType?.GetDisplayName(),
                     Avatar = string.Empty
                 };
