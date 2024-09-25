@@ -11,14 +11,14 @@
 
 
 <h4 class="py-3 breadcrumb-wrapper mb-4">
-    <span class="text-muted fw-light">Home /</span><span> Add Opportunity</span>
+    <span class="text-muted fw-light">Home /</span><span> Edit Opportunity</span>
 </h4>
 
 <div class="app-ecommerce">
     <!-- Add Product -->
     <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-3">
         <div class="d-flex flex-column justify-content-center">
-            <h4 class="mb-1 mt-3">Add a new Opportunity</h4>
+            <h4 class="mb-1 mt-3">Edit Opportunity</h4>
             <p class="text-muted"> </p>
         </div>
         <div class="d-flex align-content-center flex-wrap gap-2">
@@ -29,7 +29,8 @@
             <button type="submit" class="btn btn-primary">Publish product</button>
         </div>
     </div>
-    <form asp-action="Create" asp-controller="ActionItems">
+    <form asp-action="Edit" asp-controller="ActionItems">
+        <input asp-for="SubmitterId" type="hidden"/>
         <div class="row">
             <!-- First column-->
             <div class="col-12 col-lg-8">

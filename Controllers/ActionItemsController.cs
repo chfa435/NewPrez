@@ -225,7 +225,7 @@ namespace NewTiceAI.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,ContactId,SubmitterId,ActorId,AccountId,ItemTypeId,ItemStatusId,ItemPriorityId,Title,Description,Note,Created,Updated,Archived")] ActionItem actionItem)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,ContactId,SubmitterId,AccountId,Amount,OpportunityType,OpportunityForecastCategory,OpportunityStage,ClosedDate,Title,Notes")] ActionItem actionItem)
         {
             if (id != actionItem.Id)
             {
