@@ -197,8 +197,8 @@
                                             <a href="#" class="btn btn-white btn-sm btn-rounded dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-dot-circle-o text-danger"></i> Opt Out </a>
                                         }
                                         <div class="dropdown-menu">
-                                            <a class="dropdown-item" id="false" onclick="emailOpt(this.id,@contact.Id)"><i class="fa fa-dot-circle-o text-success"></i> Opt In</a>
-                                            <a class="dropdown-item" id="true" onclick="emailOpt(this.id,@contact.Id)"><i class="fa fa-dot-circle-o text-danger"></i> Opt Out</a>
+                                            <a class="dropdown-item" id="false" onclick="emailOpt(false,@contact.Id)"><i class="fa fa-dot-circle-o text-success"></i> Opt In</a>
+                                            <a class="dropdown-item" id="true" onclick="emailOpt(true,@contact.Id)"><i class="fa fa-dot-circle-o text-danger"></i> Opt Out</a>
                                         </div>
                                     </div>
                                 </td>
@@ -693,7 +693,10 @@
             });
 
             // DataTable
-            var table = $('#contact-table').DataTable();
+            var table = $('#contact-table').DataTable({
+                lengthMenu: [[10, 20, 25, 50, 100, -1], [10, 20, 25, 50, 100, "All"]],
+                pageLength: 50
+            });
 
             // Filter event handler
             $(table.table().container()).on('keyup', 'tfoot input', function () {
@@ -726,7 +729,7 @@
 
             $.ajax({
                 type: "POST",
-                url: "/Contacts/EmailOption",
+                url: '/Contacts/EmailOption?contactId=' + contactId +'&'+'option='+ option,
                 data: '{contactId, option}',
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",

@@ -134,7 +134,7 @@ namespace NewTiceAI.Services
             {
 
                 throw;
-            }        
+            }
         }
         #endregion
 
@@ -145,8 +145,8 @@ namespace NewTiceAI.Services
 
             try
             {
-                contacts = await _context.Contacts.Where(c => c.RelationshipHolderId == hmsId || 
-                                                              c.MentorId == hmsId || 
+                contacts = await _context.Contacts.Where(c => c.RelationshipHolderId == hmsId ||
+                                                              c.MentorId == hmsId ||
                                                               c.SalesRepresentativeId == hmsId)
                                                   .Include(c => c.ActionItems)
                                                   .Include(c => c.Address)
@@ -173,7 +173,7 @@ namespace NewTiceAI.Services
 
         #endregion
 
-        public async Task<bool> LoadContactsAsync(IList<Contact> contacts)
+        public async Task<bool> ImportContactsAsync(IList<Contact> contacts)
         {
             try
             {
@@ -187,6 +187,24 @@ namespace NewTiceAI.Services
 
                 throw;
             }
+        }
+
+        public async Task<int> GetContactImportIdAsync(Import import)
+        {
+
+            try
+            {
+                await _context.Imports.AddAsync(import);
+                await _context.SaveChangesAsync();
+                return import.Id;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+
         }
 
         #region Update Contact

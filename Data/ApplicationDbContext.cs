@@ -65,5 +65,7 @@ namespace NewTiceAI.Data
         public virtual DbSet<Address> Addresses { get; set; } = default!;
         public virtual DbSet<Contact> Contacts { get; set; } = default!;
         public virtual DbSet<Institution> Institutions { get; set; } = default!;
+        public virtual DbSet<Import> Imports { get; set; } = default!;
+
     }
 }

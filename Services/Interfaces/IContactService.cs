@@ -19,7 +19,9 @@ namespace NewTiceAI.Services.Interfaces
 
         public Task<List<Contact>> GetContactsByHMSIdAsync(int hmsId, int organizationId);
 
-        public Task<bool> LoadContactsAsync(IList<Contact> contacts);
+        public Task<bool> ImportContactsAsync(IList<Contact> contacts);
+
+        public Task<int> GetContactImportIdAsync(Import import);
 
         public Task UpdateContactAsync(Contact ticket);
 

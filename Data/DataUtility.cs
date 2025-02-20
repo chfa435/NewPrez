@@ -35,8 +35,8 @@ namespace NewTiceAI.Data
 
         public static string GetConnectionString(IConfiguration configuration)
         {
-            //var connectionString = configuration.GetConnectionString("DevConnection");
-            var connectionString = configuration.GetConnectionString("LiveConnection");
+            var connectionString = configuration.GetConnectionString("DevConnection");
+            //var connectionString = configuration.GetConnectionString("LiveConnection");
             var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
             return string.IsNullOrEmpty(databaseUrl) ? connectionString! : BuildConnectionString(databaseUrl)!;
         }

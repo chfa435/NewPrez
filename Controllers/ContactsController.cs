@@ -17,6 +17,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.CodeAnalysis;
+
 
 
 //using Microsoft.CodeAnalysis.Elfie.Serialization;
@@ -388,12 +390,83 @@ namespace NewTiceAI.Controllers
                     });
                 }
 
-                await _contactService.LoadContactsAsync(contacts);
+                await _contactService.ImportContactsAsync(contacts);
             }
             ViewData["PageTitle"] = "New Contacts Import";
             return View(nameof(Index), contacts);
 
         }
+
+        [HttpPost]
+        public async Task<IActionResult> PreviewExcelData(IFormFile excelFile)
+        {
+            if (excelFile == null)
+            {
+                return BadRequest("No file uploaded.");
+            }
+
+            IList<Contact> contacts = new List<Contact>();
+
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+            using var stream = new MemoryStream();
+            await excelFile.CopyToAsync(stream);
+            stream.Position = 0;
+
+            using var reader = ExcelReaderFactory.CreateReader(stream);
+            reader.Read(); // Skip header row
+
+            while (reader.Read())
+            {
+                contacts.Add(new Contact
+                {
+                    FirstName = reader.GetValue(0)?.ToString(),
+                    LastName = reader.GetValue(1)?.ToString(),
+                    Title = reader.GetValue(2)?.ToString(),
+                    Gender = Enum.TryParse<Genders>(reader.GetValue(3)?.ToString(), out var gender) ? gender : null,
+                    Email = reader.GetValue(4)?.ToString(),
+                    PhoneNumber = reader.GetValue(5)?.ToString(),
+                    Residency_GradYear = reader.GetValue(6) == null ? null : int.Parse(reader.GetValue(6).ToString()!),
+                    Fellowship_GradYear = reader.GetValue(7) == null ? null : int.Parse(reader.GetValue(7).ToString()!),
+                    OrganizationId = _organizationId,
+                    IsActive = true
+                });
+            }
+
+            return Json(contacts);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SaveImportedContacts([FromBody] List<Contact> contacts)
+        {
+            if (contacts == null || contacts.Count == 0)
+            {
+                return BadRequest("No contacts to save.");
+            }
+
+            // create Import and get the ImportID
+            Import import = new()
+            {
+                ImportDate = DateTime.Now
+            };
+
+            int importId = await _contactService.GetContactImportIdAsync(import);
+
+            if (!(importId > 0))
+            {
+                return BadRequest();
+            }
+            else {
+                // Apply ImportId to the Contacts list
+                contacts.ForEach(c => c.ImportId = importId);
+
+
+                // Save Import Contacts to the database
+                await _contactService.ImportContactsAsync(contacts);
+                return Ok(new { message = "Contacts saved successfully!" });
+            }
+        }
+
+
 
 
         [HttpGet]

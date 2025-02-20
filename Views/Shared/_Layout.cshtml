@@ -59,6 +59,7 @@
 
 
     <link rel="stylesheet" href="~/css/contact.css" />
+    <link rel="stylesheet" href="~/css/freststyle.css"/>
     <!-- Page CSS -->
     <!-- Helpers -->
     <script src="~/assets/vendor/js/helpers.js"></script>
@@ -322,7 +323,7 @@
                                     <a asp-controller="Contacts" asp-action="ExportExcelData" class="menu-link">
                                     @* <i class="menu-icon tf-icons bx bxs-file-export"></i> *@
                                         <i class="fa-solid fa-file-export me-2"></i>
-                                        <div data-i18n="Export Contacts">Export Contacts</div>
+                                        <div data-i18n="Import Contacts">Import Contacts</div>
                                     </a>
                                 </li>
                                 <li class="menu-item">
@@ -935,6 +936,7 @@
     <!-- Main JS -->
     <script src="~/assets/js/main.js"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>

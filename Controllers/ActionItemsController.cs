@@ -155,6 +155,7 @@ namespace NewTiceAI.Controllers
             TAUser? btUser = await _userManager.GetUserAsync(User);
 
             ModelState.Remove("SubmitterId");
+            ModelState.Remove("actionItem.SubmitterId");
             if (ModelState.IsValid)
             {
                 try
@@ -180,8 +181,9 @@ namespace NewTiceAI.Controllers
             }
 
 
-            ViewData["AccountId"] = new SelectList(_context.Accounts.Where(a => a.ParentOrganizationId == _organizationId), "Id", "Name");
-            ViewData["ActorId"] = new SelectList(_context.Contacts.Where(c => c.OrganizationId == _organizationId), "Id", "FullName");
+            ViewData["ActorId"] = new SelectList(_context.Users.Where(u => u.OrganizationId == _organizationId).OrderBy(u => u.LastName).ThenBy(u => u.FirstName), "Id", "FullName");
+            ViewData["AccountId"] = new SelectList(_context.Accounts.Where(a => a.ParentOrganizationId == _organizationId).OrderBy(a => a.Name), "Id", "Name");
+            ViewData["ContactId"] = new SelectList(_context.Contacts.Where(c => c.OrganizationId == _organizationId).OrderBy(c => c.LastName).ThenBy(c => c.FirstName), "Id", "FullName");
             ViewData["ItemPriority"] = new SelectList(Enum.GetValues(typeof(EnumActionItemPriorities)).Cast<EnumActionItemPriorities>().ToList());
             ViewData["ItemType"] = new SelectList(Enum.GetValues(typeof(EnumActionItemTypes)).Cast<EnumActionItemTypes>().ToList());
 
@@ -335,8 +337,8 @@ namespace NewTiceAI.Controllers
                     ClosedDate = actionItem.ClosedDate != null ? actionItem.ClosedDate.Value.ToString("MM-dd-yyyy") : string.Empty,
                     OpportunityForecastCategory = actionItem.OpportunityForecastCategory?.GetDisplayName(),
                     OpportunityStage = actionItem.OpportunityStage?.GetDisplayName(),
-                    OpportunityTypeId = (int)actionItem.OpportunityType.Value,
-                    OpportunityType = actionItem.OpportunityType?.GetDisplayName(),
+                    OpportunityTypeId = actionItem.OpportunityType != null ? (int)actionItem.OpportunityType!.Value : 0,
+                    OpportunityType = actionItem.OpportunityType != null ? actionItem.OpportunityType?.GetDisplayName() : "",
                     Avatar = string.Empty
                 };
 

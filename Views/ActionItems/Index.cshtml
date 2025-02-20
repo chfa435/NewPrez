@@ -211,6 +211,7 @@
             <div class="offcanvas-body mx-0 flex-grow-0">
                 <form asp-action="Create" asp-controller="ActionItems">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    @* <input type="hidden" asp-for="@ActionItem.SubmitterId" name="SubmitterId" /> *@
                     <div class="mb-3">
                         <label class="form-label" for="contact">Contact</label>
                         <select asp-for="@ActionItem.ContactId" class=" form-control" asp-items="ViewBag.ContactId">
@@ -529,11 +530,11 @@ else
                 select2 = $('.select2'),
                 userView = '/frest/app-user-view-account.html',
                 statusObj = {
-                                @((int)OpportunityType.NewBusiness) : { title: 'New Business', class: 'bg-label-success' },
-                                @((int)OpportunityType.Expansion): { title: 'Expansion', class: 'bg-label-secondary' },
-                                @((int)OpportunityType.Renewal): { title: 'Renewal', class: 'bg-label-primary' },
-                                @((int)OpportunityType.PartnerDeal): { title: 'Partner Deal', class: 'bg-label-warning' }
-                            };
+        @((int)OpportunityType.NewBusiness) : { title: 'New Business', class: 'bg-label-success' },
+        @((int)OpportunityType.Expansion): { title: 'Expansion', class: 'bg-label-secondary' },
+        @((int)OpportunityType.Renewal): { title: 'Renewal', class: 'bg-label-primary' },
+        @((int)OpportunityType.PartnerDeal): { title: 'Partner Deal', class: 'bg-label-warning' }
+        };
 
         if (select2.length) {
             var $this = select2;
@@ -653,9 +654,13 @@ else
                         // Opportunity Type
                         targets: 7,
                         render: function (data, type, full, meta) {
-                            var $op_type = full['opportunity_typeid'];
-
-                            return '<span class="badge ' + statusObj[$op_type].class + '">' + statusObj[$op_type].title + '</span>';
+                            //var op_id = full['opportunity_typeid'];
+                            var $op_type = full['opportunity_type'];
+                            //if ($op_type != undefined) {
+                                //return '<span class="badge ' + statusObj[$op_type].class + '">' + statusObj[$op_type].title + '</span>';
+                            //} else {
+                                return '<span>'+$op_type+'</span>';
+                            //}
                         }
                     },
                     {
@@ -1008,7 +1013,7 @@ else
             $('.dataTables_filter .form-control').removeClass('form-control-sm');
             $('.dataTables_length .form-select').removeClass('form-select-sm');
         }, 300);
-                        });
+                                });
     </script>
 
 

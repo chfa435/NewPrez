@@ -7,21 +7,18 @@
 <link rel="stylesheet" href="/assets/vendor/libs/dropzone/dropzone.css" />
 
 <h4 class="py-3 breadcrumb-wrapper mb-4">
-    <span class="text-muted fw-light">Form Wizard/</span> Numbered
+    <span class="text-muted fw-light">Contacts/</span> Import
 </h4>
 <!-- Default -->
 <div class="row">
-    <div class="col-12">
-        <h5>Default</h5>
-    </div>
 
     <!-- Default Wizard -->
     <div class="col-12 mb-4">
-        <small class="text-light fw-medium">Basic</small>
+        <small class="text-light fw-medium"></small>
         <div class="bs-stepper wizard-numbered mt-2">
             <div class="bs-stepper-header">
-                <div class="step" data-target="#select-import">
-                    <button type="button" class="step-trigger">
+                <div class="step" data-target="#select-import" id="selectImport">
+                    <button type="button" class="step-trigger" id="btnSelect">
                         <span class="bs-stepper-circle">1</span>
                         <span class="bs-stepper-label">
                             <span class="bs-stepper-title">Select Import</span>
@@ -30,8 +27,8 @@
                     </button>
                 </div>
                 <div class="line"></div>
-                <div class="step" data-target="#preview-import">
-                    <button type="button" class="step-trigger">
+                <div class="step" data-target="#preview-import" id="previewImport">
+                    <button type="button" class="step-trigger" id="btnPreview">
                         <span class="bs-stepper-circle">2</span>
                         <span class="bs-stepper-label">
                             <span class="bs-stepper-title">Preview Import</span>
@@ -39,169 +36,89 @@
                         </span>
                     </button>
                 </div>
-                <div class="line"></div>
-                <div class="step" data-target="#store-import">
-                    <button type="button" class="step-trigger">
-                        <span class="bs-stepper-circle">3</span>
-                        <span class="bs-stepper-label">
-                            <span class="bs-stepper-title">Store Import</span>
-                            <span class="bs-stepper-subtitle"></span>
-                        </span>
-                    </button>
-                </div>
             </div>
             <div class="bs-stepper-content">
-                <form asp-action="ReadExcelData" asp-controller="Contacts" enctype="multipart/form-data">
-                    <!-- Select Import -->
-                    <div id="select-import" class="content">
-                        @*                         <div class="content-header mb-3">
-                        <h6 class="mb-0">Account Details</h6>
-                        <small>Enter Your Account Details.</small>
-                        </div> *@
-                        <div class="row g-3">
-                            <div class="col-sm-6">
-                                <label class="form-label" for="username">Account Name</label>
-                                <input type="text" id="accountname" class="form-control" placeholder="Account Name" />
-                            </div>
-                            <div class="col-sm-6">
-                                <label class="form-label" for="email">Company</label>
-                                <input type="text"
-                                       id="companyname"
-                                       class="form-control"
-                                       placeholder="Company Name"
-                                       aria-label="companyname" />
-                            </div>
-                            <div class="col-12 d-flex justify-content-between">
-                                <button class="btn btn-label-secondary btn-prev" disabled>
-                                    <i class="bx bx-chevron-left bx-sm ms-sm-n2"></i>
-                                    <span class="d-sm-inline-block d-none">Previous</span>
-                                </button>
-                                <button class="btn btn-primary btn-next">
-                                    <span class="d-sm-inline-block d-none">Next</span>
-                                    <i class="bx bx-chevron-right bx-sm me-sm-n2"></i>
-                                </button>
-                            </div>
+                <div id="select-import" class="content">
+                    <div class="row g-3">
+                        <form id="uploadForm" enctype="multipart/form-data">
                             <!-- Basic  -->
                             <div class="col-12">
                                 <div class="card mb-4">
                                     <div class="card-header d-flex justify-content-between align-items-center">
-                                        <h5 class="mb-0 card-title">Media</h5>
-                                        <a href="javascript:void(0);" class="fw-medium">Add media from URL</a>
+                                        <h5 class="mb-0 card-title"></h5>
                                     </div>
                                     <div class="card-body">
-                                        <div class="dropzone needsclick" id="dropzone-basic">
+                                        <div class="needsclick" id="dropzone-basic">
                                             <div class="dz-message needsclick my-5">
-                                                <p class="fs-4 note needsclick my-2">Drag and drop your image here</p>
-                                                <small class="text-muted d-block fs-6 my-2">or</small>
-                                                <span class="note needsclick btn bg-label-primary d-inline" id="btnBrowse">Browse image</span>
+                                                <p class="fs-4 note needsclick my-2" id="file-upload-filename"><i class='bx bxs-file-import bx-lg'></i></p>
                                             </div>
                                             <div class="fallback">
-                                                <input name="file" type="file" />
+@*                                                 <input type="file" id="fileInput" name="excelFile" accept=".xls,.xlsx" />
+ *@                                                <label for="file-upload" class="custom-file-upload">
+                                                    <i class="fa fa-cloud-upload"></i> Select File to Upload
+                                                </label>
+                                                <input id="file-upload" type="file" name="excelFile" accept=".xls,.xlsx" />
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <!-- /Basic  -->
-                        </div>
-                    </div>
-                    <!-- Preview Import -->
-                    <div id="preview-import" class="content">
-                        <div class="content-header mb-3">
-                            <h6 class="mb-0">Personal Info</h6>
-                            <small>Enter Your Personal Info.</small>
-                        </div>
-                        <div class="row g-3">
-                            <div class="col-sm-6">
-                                <label class="form-label" for="first-name">First Name</label>
-                                <input type="text" id="first-name" class="form-control" placeholder="John" />
-                            </div>
-                            <div class="col-sm-6">
-                                <label class="form-label" for="last-name">Last Name</label>
-                                <input type="text" id="last-name" class="form-control" placeholder="Doe" />
-                            </div>
-                            <div class="col-sm-6">
-                                <label class="form-label" for="country">Country</label>
-                                <select class="select2" id="country">
-                                    <option label=" "></option>
-                                    <option>UK</option>
-                                    <option>USA</option>
-                                    <option>Spain</option>
-                                    <option>France</option>
-                                    <option>Italy</option>
-                                    <option>Australia</option>
-                                </select>
-                            </div>
-                            <div class="col-sm-6">
-                                <label class="form-label" for="language">Language</label>
-                                <select class="selectpicker w-auto"
-                                        id="language"
-                                        data-style="btn-transparent"
-                                        data-icon-base="bx"
-                                        data-tick-icon="bx-check text-white"
-                                        multiple>
-                                    <option>English</option>
-                                    <option>French</option>
-                                    <option>Spanish</option>
-                                </select>
-                            </div>
                             <div class="col-12 d-flex justify-content-between">
-                                <button class="btn btn-primary btn-prev">
-                                    <i class="bx bx-chevron-left bx-sm ms-sm-n2"></i>
-                                    <span class="d-sm-inline-block d-none">Previous</span>
-                                </button>
-                                <button class="btn btn-primary btn-next">
-                                    <span class="d-sm-inline-block d-none">Next</span>
+                                <button class="btn btn-primary btn-next" type="submit">
+                                    <span class="d-sm-inline-block d-none">Upload & Preview</span>
                                     <i class="bx bx-chevron-right bx-sm me-sm-n2"></i>
                                 </button>
                             </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- Preview Import -->
+                <div id="preview-import" class="content">
+                    <div class="row g-3">
+                        <div class="col-12 d-flex justify-content-between">
+                            <button class="btn btn-primary btn-next mb-4" id="saveContacts">
+                                <span class="d-sm-inline-block d-none">Save</span>
+                                <i class="bx bx-chevron-right bx-sm me-sm-n2"></i>
+                            </button>
+                        </div>
+                        <div id="tableDiv" class="row">
+                            <div class="col-md-12">
+                                <div class="card mb-4">
+                                    <div class="card-header d-flex justify-content-between align-items-center">
+                                        <h6 class="mb-0">Contact Import</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div id="previewContainer" style="display:none;">
+                                            <h3>Contact Preview</h3>
+                                            <table id="previewTable" class="table table-striped custom-table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>First Name</th>
+                                                        <th>Last Name</th>
+                                                        <th>Title</th>
+                                                        <th>Gender</th>
+                                                        <th>Email</th>
+                                                        <th>Phone</th>
+                                                        <th>Residency Grad Year</th>
+                                                        <th>Fellowship Grad Year</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 d-flex justify-content-between">
+                            <button class="btn btn-primary btn-next" id="saveContacts">
+                                <span class="d-sm-inline-block d-none">Save</span>
+                                <i class="bx bx-chevron-right bx-sm me-sm-n2"></i>
+                            </button>
                         </div>
                     </div>
-                    <!-- Store Import -->
-                    <div id="store-import" class="content">
-                        <div class="content-header mb-3">
-                            <h6 class="mb-0">Social Links</h6>
-                            <small>Enter Your Social Links.</small>
-                        </div>
-                        <div class="row g-3">
-                            <div class="col-sm-6">
-                                <label class="form-label" for="twitter">Twitter</label>
-                                <input type="text"
-                                       id="twitter"
-                                       class="form-control"
-                                       placeholder="https://twitter.com/abc" />
-                            </div>
-                            <div class="col-sm-6">
-                                <label class="form-label" for="facebook">Facebook</label>
-                                <input type="text"
-                                       id="facebook"
-                                       class="form-control"
-                                       placeholder="https://facebook.com/abc" />
-                            </div>
-                            <div class="col-sm-6">
-                                <label class="form-label" for="google">Google+</label>
-                                <input type="text"
-                                       id="google"
-                                       class="form-control"
-                                       placeholder="https://plus.google.com/abc" />
-                            </div>
-                            <div class="col-sm-6">
-                                <label class="form-label" for="linkedin">LinkedIn</label>
-                                <input type="text"
-                                       id="linkedin"
-                                       class="form-control"
-                                       placeholder="https://linkedin.com/abc" />
-                            </div>
-                            <div class="col-12 d-flex justify-content-between">
-                                <button class="btn btn-primary btn-prev">
-                                    <i class="bx bx-chevron-left bx-sm ms-sm-n2"></i>
-                                    <span class="d-sm-inline-block d-none">Previous</span>
-                                </button>
-                                <button type="submit" class="btn btn-success btn-submit">Submit</button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>
@@ -210,19 +127,6 @@
 
 
 @section scripts {
-    @*     <script src="/assets/vendor/libs/quill/katex.js"></script>
-    <script src="/assets/vendor/libs/quill/quill.js"></script>
-    <script src="/assets/vendor/libs/bs-stepper/bs-stepper.js"></script>
-    <script src="/assets/vendor/libs/bootstrap-select/bootstrap-select.js"></script>
-    <script src="/assets/vendor/libs/select2/select2.js"></script>
-    <script src="/assets/vendor/libs/form-validation/umd/bundle/popular.min.js"></script>
-    <script src="/assets/vendor/libs/form-validation/umd/plugin-bootstrap5/index.min.js"></script>
-    <script src="/assets/vendor/libs/form-validation/umd/plugin-auto-focus/index.min.js"></script>
-    <script src="/assets/vendor/libs/dropzone/dropzone.js"></script>
-    <script src="/assets/vendor/libs/jquery-repeater/jquery-repeater.js"></script>
-    <script src="/assets/vendor/libs/flatpickr/flatpickr.js"></script>
-    <script src="/assets/vendor/libs/tagify/tagify.js"></script> *@
-
     <script src="/assets/vendor/libs/bs-stepper/bs-stepper.js"></script>
     <script src="/assets/vendor/libs/bootstrap-select/bootstrap-select.js"></script>
     <script src="/assets/vendor/libs/select2/select2.js"></script>
@@ -236,21 +140,155 @@
     <script src="/assets/js/form-wizard-validation.js"></script>
 
 
-    <script src="/assets/js/forms-file-upload.js"></script>
-    <script src="/assets/js/forms-file-upload.js"></script>
-    @*     <script src="/assets/js/app-ecommerce-product-add.js"></script>
+@*     <script src="/assets/js/forms-file-upload.js"></script>
  *@
+    <script>
+        $(document).ready(function () {
+            $("#uploadForm").on("submit", function (event) {
+                event.preventDefault();
+                var formData = new FormData();
+                formData.append("excelFile", $("#file-upload")[0].files[0]);
+                var file = $('input[type="file"]').val().trim();
+                if(file == ''){
+                    Swal.fire({
+                        icon: "error",
+                        title: "No file selected",
+                        text: "You must select a file before attempting to upload.",
+                    });
+                    let wizardNumbered = document.querySelector('.wizard-numbered');
+                    let numberedStepper = new Stepper(wizardNumbered, {linear: false});
+                    numberedStepper.previous();
+                }else{
+                    $.ajax({
+                    url: "/Contacts/PreviewExcelData",
+                    type: "POST",
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    beforeSend: function () {
+                        Swal.fire({
+                            title: "Processing...",
+                            text: "Reading the Excel file...",
+                            allowOutsideClick: false,
+                            didOpen: () => {
+                                Swal.showLoading();
+                            }
+                        });
+                    },
+                    success: function (contacts) {
+                        Swal.close();
+                        if (contacts.length > 0) {
+                            previewData = contacts;
+                            $("#previewContainer").show();
+                            $("#previewTable tbody").empty();
 
-    <script type=”text/javascript”>
-        $(document).ready(function ()
-        {
-            Dropzone.autoDiscover = false;
-            $(“#file-upload-form”).dropzone(
-                {
-                    // Set any desired options for dropzone
-                    // For example, you can set upload URL and max file size
-                    url: '@Url.Action("Upload", "Contacts")', maxFilesize: 3, maxFiles: 2
+                            contacts.forEach(contact => {
+                                $("#previewTable tbody").append(
+                                    `<tr>
+                                        <td>${contact.firstName}</td>
+                                        <td>${contact.lastName}</td>
+                                        <td>${contact.title}</td>
+                                        <td>${contact.gender}</td>
+                                        <td>${contact.email}</td>
+                                        <td>${contact.phoneNumber}</td>
+                                        <td>${contact.residencyGradYear ? undefined : ''}</td>
+                                        <td>${contact.fellowshipGradYear ? undefined : ''}</td>
+                                    </tr>`
+                                );
+                            });
+
+                            $("#saveContacts").show();
+                            Swal.fire({
+                                icon: "success",
+                                title: "Preview Ready",
+                                text: "Contacts loaded successfully. Review before saving.",
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: "warning",
+                                title: "No Data Found",
+                                text: "No contacts were extracted from the file.",
+                            });
+                        }
+                    },
+                    error: function (err) {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Upload Failed",
+                            text: "There was an issue processing the file.",
+                        });
+                        console.error(err);
+                    }
                 });
+                }
+            });
+
+            $("#saveContacts").on("click", function () {
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "This will save the contacts to the database.",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonText: "Yes, save them!",
+                    cancelButtonText: "Cancel"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: "/Contacts/SaveImportedContacts",
+                            type: "POST",
+                            contentType: "application/json",
+                            data: JSON.stringify(previewData),
+                            beforeSend: function () {
+                                Swal.fire({
+                                    title: "Saving...",
+                                    text: "Please wait while contacts are being saved.",
+                                    allowOutsideClick: false,
+                                    didOpen: () => {
+                                        Swal.showLoading();
+                                    }
+                                });
+                            },
+                            success: function () {
+                                Swal.fire({
+                                    icon: "success",
+                                    title: "Contacts Saved!",
+                                    text: "All contacts have been successfully saved.",
+                                }).then(() => {
+                                    location.reload();
+                                });
+                            },
+                            error: function () {
+                                Swal.fire({
+                                    icon: "error",
+                                    title: "Error",
+                                    text: "An error occurred while saving contacts.",
+                                });
+                            }
+                        });
+                    }
+                });
+            });
+
+            // Dropzone.autoDiscover = false;
+            // $("#file-upload-form").dropzone(
+            //     {
+            //         // Set any desired options for dropzone
+            //         // For example, you can set upload URL and max file size
+            //         url: '@Url.Action("Upload", "Contacts")', maxFilesize: 3, maxFiles: 2
+            //     }
+            // );
         });
+    </script>
+    <script>
+        let input = $('#file-upload')[0];
+        let infoArea = $('#file-upload-filename')[0];
+
+        $(input).on('change', showFileName);
+
+        function showFileName(event) {
+          let input = event.target;
+          let fileName = input.files[0].name;
+          $(infoArea).text('Selected file: ' + fileName);
+        }
     </script>
 }

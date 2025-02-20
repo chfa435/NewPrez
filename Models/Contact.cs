@@ -48,6 +48,10 @@ namespace NewTiceAI.Models
 
         //public string ContactEditedBy { get; set; }  //???
 
+        // Foreign Key
+        public int? ImportId { get; set; }
+
+
         [Required]
         [Display(Name = "First Name")]
         [StringLength(50, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 2)]
@@ -344,6 +348,7 @@ namespace NewTiceAI.Models
             }
         }
 
+        // Navigation Properties
 
         public virtual Contact? RelationshipHolder { get; set; }
         public virtual Contact? SalesRepresentative { get; set; }
@@ -360,11 +365,11 @@ namespace NewTiceAI.Models
 
 
 
-        // Navigation Properties
         public virtual Organization? Organization { get; set; }
         public virtual Account? Account { get; set; }
         public virtual TAUser? ContactOwner { get; set; }
         public virtual Address? Address { get; set; }
+        public virtual Import? Import {  get; set; } 
 
 
         public ICollection<Institution> Hospitals { get; set; } = new HashSet<Institution>();

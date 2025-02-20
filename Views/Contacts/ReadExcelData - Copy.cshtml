@@ -1,0 +1,124 @@
+﻿<link rel="stylesheet" href="/assets/vendor/libs/bs-stepper/bs-stepper.css" />
+<link rel="stylesheet" href="/assets/vendor/libs/bootstrap-select/bootstrap-select.css" />
+<link rel="stylesheet" href="/assets/vendor/libs/select2/select2.css" />
+<link rel="stylesheet" href="/assets/vendor/libs/form-validation/umd/styles/index.min.css" />
+
+@* File Upload *@
+<link rel="stylesheet" href="/assets/vendor/libs/dropzone/dropzone.css" />
+
+<h4 class="py-3 breadcrumb-wrapper mb-4">
+    <span class="text-muted fw-light">Form Wizard/</span> Numbered
+</h4>
+<!-- Default -->
+<div class="row">
+    <div class="col-12">
+        <h5>Default</h5>
+    </div>
+
+    <form id="uploadForm" enctype="multipart/form-data">
+        <input type="file" id="fileInput" name="excelFile" accept=".xls,.xlsx" />
+        <button type="submit">Preview</button>
+    </form>
+
+    <div id="previewContainer" style="display:none;">
+        <h3>Contact Preview</h3>
+        <table id="previewTable" border="1">
+            <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Title</th>
+                    <th>Gender</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Residency Grad Year</th>
+                    <th>Fellowship Grad Year</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        <button id="saveContacts" style="display:none;">Save Contacts</button>
+    </div>
+</div>
+
+
+@section scripts {
+    <script src="/assets/vendor/libs/bs-stepper/bs-stepper.js"></script>
+    <script src="/assets/vendor/libs/bootstrap-select/bootstrap-select.js"></script>
+    <script src="/assets/vendor/libs/select2/select2.js"></script>
+    <script src="/assets/vendor/libs/form-validation/umd/bundle/popular.min.js"></script>
+    <script src="/assets/vendor/libs/form-validation/umd/plugin-bootstrap5/index.min.js"></script>
+    <script src="/assets/vendor/libs/form-validation/umd/plugin-auto-focus/index.min.js"></script>
+
+
+    <!-- Page JS -->
+    <script src="/assets/js/form-wizard-numbered.js"></script>
+    <script src="/assets/js/form-wizard-validation.js"></script>
+
+
+    <script src="/assets/js/forms-file-upload.js"></script>
+    <script src="/assets/js/forms-file-upload.js"></script>
+    @*     <script src="/assets/js/app-ecommerce-product-add.js"></script>
+ *@
+
+    <script>
+        $(document).ready(function () {
+            $("#uploadForm").on("submit", function (event) {
+                event.preventDefault();
+                var formData = new FormData();
+                formData.append("excelFile", $("#fileInput")[0].files[0]);
+
+                $.ajax({
+                    url: "/Contacts/PreviewExcelData",
+                    type: "POST",
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function (contacts) {
+                        if (contacts.length > 0) {
+                            $("#previewContainer").show();
+                            $("#previewTable tbody").empty();
+
+                            contacts.forEach(contact => {
+                                $("#previewTable tbody").append(
+                                    `<tr>
+                                        <td>${contact.firstName}</td>
+                                        <td>${contact.lastName}</td>
+                                        <td>${contact.title}</td>
+                                        <td>${contact.gender}</td>
+                                        <td>${contact.email}</td>
+                                        <td>${contact.phoneNumber}</td>
+                                        <td>${contact.residencyGradYear}</td>
+                                        <td>${contact.fellowshipGradYear}</td>
+                                    </tr>`
+                                );
+                            });
+
+                            $("#saveContacts").show();
+                        }
+                    },
+                    error: function (err) {
+                        alert("Error processing file.");
+                        console.error(err);
+                    }
+                });
+            });
+
+            $("#saveContacts").on("click", function () {
+                $.ajax({
+                    url: "/Contacts/SaveImportedContacts",
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify({ contacts: previewData }),
+                    success: function (response) {
+                        alert("Contacts saved successfully!");
+                        location.reload();
+                    },
+                    error: function () {
+                        alert("Error saving contacts.");
+                    }
+                });
+            });
+        });
+    </script>
+}
