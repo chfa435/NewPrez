@@ -11,16 +11,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\**" />
     <Compile Remove="Views\ContactFields\**" />
+    <Content Remove="Migrations\**" />
     <Content Remove="Views\ContactFields\**" />
+    <EmbeddedResource Remove="Migrations\**" />
     <EmbeddedResource Remove="Views\ContactFields\**" />
+    <None Remove="Migrations\**" />
     <None Remove="Views\ContactFields\**" />
   </ItemGroup>
 
   <ItemGroup>
     <Compile Remove="Controllers\ContactFieldsController.cs" />
-    <Compile Remove="Data\Migrations\20240308211801_Initial_NewTice_0001.cs" />
-    <Compile Remove="Data\Migrations\20240308211801_Initial_NewTice_0001.Designer.cs" />
     <Compile Remove="Enums\DefaultImage.cs" />
     <Compile Remove="Models\Opportunity.cs" />
   </ItemGroup>

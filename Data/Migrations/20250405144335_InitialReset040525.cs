@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace NewTiceAI.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial_NewTice_0001 : Migration
+    public partial class InitialReset040525 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -107,6 +107,22 @@ namespace NewTiceAI.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_FileUploads", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Imports",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    ImportDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    RevertDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    ImportComment = table.Column<string>(type: "text", nullable: true),
+                    RevertReason = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Imports", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -351,6 +367,7 @@ namespace NewTiceAI.Data.Migrations
                     AvatarName = table.Column<string>(type: "text", nullable: true),
                     AvatarData = table.Column<byte[]>(type: "bytea", nullable: true),
                     AvatarContentType = table.Column<string>(type: "text", nullable: true),
+                    AvatarId = table.Column<Guid>(type: "uuid", nullable: true),
                     ActionProjectId = table.Column<int>(type: "integer", nullable: true),
                     CompanyId = table.Column<int>(type: "integer", nullable: true),
                     UserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
@@ -380,6 +397,11 @@ namespace NewTiceAI.Data.Migrations
                         name: "FK_AspNetUsers_Companies_CompanyId",
                         column: x => x.CompanyId,
                         principalTable: "Companies",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_AspNetUsers_FileUploads_AvatarId",
+                        column: x => x.AvatarId,
+                        principalTable: "FileUploads",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_AspNetUsers_Organizations_OrganizationId",
@@ -837,14 +859,19 @@ namespace NewTiceAI.Data.Migrations
                     ActorId = table.Column<string>(type: "text", nullable: true),
                     AccountId = table.Column<int>(type: "integer", nullable: true),
                     ActionProjectId = table.Column<int>(type: "integer", nullable: true),
-                    ItemType = table.Column<int>(type: "integer", nullable: false),
-                    ItemStatus = table.Column<int>(type: "integer", nullable: false),
-                    ItemPriority = table.Column<int>(type: "integer", nullable: false),
+                    Amount = table.Column<decimal>(type: "numeric", nullable: false),
+                    ItemType = table.Column<int>(type: "integer", nullable: true),
+                    ItemStatus = table.Column<int>(type: "integer", nullable: true),
+                    ItemPriority = table.Column<int>(type: "integer", nullable: true),
+                    OpportunityType = table.Column<int>(type: "integer", nullable: true),
+                    OpportunityForecastCategory = table.Column<int>(type: "integer", nullable: true),
+                    OpportunityStage = table.Column<int>(type: "integer", nullable: true),
                     Title = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    Description = table.Column<string>(type: "character varying(2000)", maxLength: 2000, nullable: false),
-                    Note = table.Column<string>(type: "text", nullable: true),
+                    Description = table.Column<string>(type: "character varying(2000)", maxLength: 2000, nullable: true),
                     Created = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Updated = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    ClosedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    Notes = table.Column<string>(type: "text", nullable: true),
                     Archived = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
@@ -962,6 +989,7 @@ namespace NewTiceAI.Data.Migrations
                     AccountId = table.Column<int>(type: "integer", nullable: true),
                     AddressId = table.Column<int>(type: "integer", nullable: true),
                     ContactOwnerId = table.Column<string>(type: "text", nullable: true),
+                    ImportId = table.Column<int>(type: "integer", nullable: true),
                     FirstName = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     LastName = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     DateOfBirth = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
@@ -1033,6 +1061,11 @@ namespace NewTiceAI.Data.Migrations
                         name: "FK_Contacts_FileUploads_ImageId",
                         column: x => x.ImageId,
                         principalTable: "FileUploads",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Contacts_Imports_ImportId",
+                        column: x => x.ImportId,
+                        principalTable: "Imports",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Contacts_Organizations_OrganizationId",
@@ -1190,6 +1223,11 @@ namespace NewTiceAI.Data.Migrations
                 column: "ActionProjectId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_AvatarId",
+                table: "AspNetUsers",
+                column: "AvatarId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_AspNetUsers_CompanyId",
                 table: "AspNetUsers",
                 column: "CompanyId");
@@ -1249,6 +1287,11 @@ namespace NewTiceAI.Data.Migrations
                 name: "IX_Contacts_ImageId",
                 table: "Contacts",
                 column: "ImageId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Contacts_ImportId",
+                table: "Contacts",
+                column: "ImportId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Contacts_MentorId",
@@ -1663,6 +1706,9 @@ namespace NewTiceAI.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "FileUploads");
+
+            migrationBuilder.DropTable(
+                name: "Imports");
 
             migrationBuilder.DropTable(
                 name: "Institutions");
