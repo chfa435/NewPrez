@@ -589,6 +589,8 @@ namespace NewTiceAI.Controllers
             ViewData["InstitutionsList"] = new SelectList((await _institutionService.GetInstitutionsAsync()).OrderBy(i => i.Name), "Id", "Name");
             ViewData["ContactsList"] = new SelectList((await _context.Contacts.Where(c => c.OrganizationId == _organizationId).ToListAsync()).OrderBy(c => c.FullName), "Id", "FullName");
 
+            ViewData["Years"] = new SelectList(Enumerable.Range(1920, DateTime.Now.Year - 1919).OrderDescending());
+
             return View(new Contact());
         }
 
