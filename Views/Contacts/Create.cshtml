@@ -141,13 +141,15 @@
                             </div>
                             <div class="col-6 col-lg-6 mt-3">
                                 <label asp-for="ResidencyId" class="control-label"></label>
-                                <select asp-for="ResidencyId" class="form-control" asp-items="ViewBag.InstitutionsList">
-                                    <option value="">&lt;select institution&gt;</option>
+                                <select asp-for="ResidencyId" class="form-control" asp-items="ViewBag.InstitutionList">
+                                    <option></option>
                                 </select>
                             </div>
                             <div class="col-6 col-lg-6 mt-3">
                                 <label asp-for="Residency_GradYear" class="control-label"></label>
-                                <input asp-for="Residency_GradYear" class="form-control" />
+                                <select asp-for="Residency_GradYear" class="form-control" asp-items="ViewBag.Years">
+                                    <option></option>
+                                </select>
                                 <span asp-validation-for="Residency_GradYear" class="text-danger"></span>
                             </div>
                             <div class="col-6 col-lg-6 mt-3">
@@ -158,7 +160,9 @@
                             </div>
                             <div class="col-6 col-lg-6 mt-3">
                                 <label asp-for="Fellowship_GradYear" class="control-label"></label>
-                                <input asp-for="Fellowship_GradYear" class="form-control" />
+                                <select asp-for="Fellowship_GradYear" class="form-control" asp-items="ViewBag.Years">
+                                    <option></option>
+                                </select>
                                 <span asp-validation-for="Fellowship_GradYear" class="text-danger"></span>
                             </div>
                             <div class="col-6 col-lg-6 mt-3">
@@ -169,7 +173,9 @@
                             </div>
                             <div class="col-6 col-lg-6 mt-3">
                                 <label asp-for="Fellowship2_GradYear" class="control-label"></label>
-                                <input asp-for="Fellowship2_GradYear" class="form-control" />
+                                <select asp-for="Fellowship2_GradYear" class="form-control" asp-items="ViewBag.Years">
+                                    <option></option>
+                                </select>
                                 <span asp-validation-for="Fellowship2_GradYear" class="text-danger"></span>
                             </div>
                             <div class="col-7 col-lg-6 mt-3">
