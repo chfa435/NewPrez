@@ -27,8 +27,8 @@ namespace NewTiceAI.Controllers
             //Org Id
             IEnumerable<Account> accounts = await _context.Accounts
                                                           .Where(a => a.ParentOrganizationId == _organizationId)
-                                                          .Include(a=>a.ShippingAddress)
-                                                          .Include(a=>a.Contacts).ToListAsync();
+                                                          .Include(a => a.ShippingAddress)
+                                                          .Include(a => a.Contacts).ToListAsync();
 
             return View(accounts);
         }
@@ -62,7 +62,7 @@ namespace NewTiceAI.Controllers
                 return NotFound();
             }
 
-            var account = await _context.Accounts.Include(a=>a.ParentOrganization).Include(a=>a.ShippingAddress)
+            var account = await _context.Accounts.Include(a => a.ParentOrganization).Include(a => a.ShippingAddress)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (account == null)
             {
@@ -83,27 +83,18 @@ namespace NewTiceAI.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,BTUser,Name")] Account account, bool isOrganization, Address? acctAddress)
+        public async Task<IActionResult> Create([Bind("Name,EmailAddress,AnnualRevenue,Description,Website,LegalName,CountryRegion")] Account account, string isInstitution, Address? acctAddress)
         {
 
             if (ModelState.IsValid)
             {
-                //account.AccountOwnerId = _userManager.GetUserId(User);
-                if (isOrganization == false)
-                {
-                    account.ParentOrganizationId = _organizationId;
-                }
-                else
-                {
-                    Organization org = new()
-                    {
-                        Name = account.Name,
-                        Description = account.Description
-                    };
-                    _context.Add(org);
-                    await _context.SaveChangesAsync();
 
-                    account.ParentOrganizationId = org.Id;
+                Institution institution = new();
+
+                if (isInstitution.ToLower() == "on")
+                {
+                    institution.Name = account.Name;
+                    institution.Description = account.Description;
                 }
 
                 if (acctAddress != null)
@@ -111,8 +102,11 @@ namespace NewTiceAI.Controllers
                     await _context.AddAsync(acctAddress);
                     await _context.SaveChangesAsync();
                     account.ShippingAddressId = acctAddress.Id;
+                    if (isInstitution.ToLower() == "on") institution.AddressId = acctAddress.Id;
                 }
 
+                account.ParentOrganizationId = _organizationId;
+                _context.Add(institution);
                 _context.Add(account);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(AllAccounts));
@@ -128,7 +122,7 @@ namespace NewTiceAI.Controllers
                 return NotFound();
             }
 
-            var account = await _context.Accounts.Include(a=>a.ShippingAddress).FirstOrDefaultAsync(a=>a.Id==id);
+            var account = await _context.Accounts.Include(a => a.ShippingAddress).FirstOrDefaultAsync(a => a.Id == id);
             if (account == null)
             {
                 return NotFound();

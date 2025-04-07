@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace NewTiceAI.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250405144335_InitialReset040525")]
-    partial class InitialReset040525
+    [Migration("20250406185619_AccountUpdateProps")]
+    partial class AccountUpdateProps
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -186,10 +186,19 @@ namespace NewTiceAI.Data.Migrations
                     b.Property<int?>("BillingAddressId")
                         .HasColumnType("integer");
 
+                    b.Property<int?>("CountryRegion")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime?>("CreateDate")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<string>("EmailAddress")
+                        .HasColumnType("text");
+
+                    b.Property<string>("LegalName")
                         .HasColumnType("text");
 
                     b.Property<string>("Name")
