@@ -170,7 +170,7 @@ namespace NewTiceAI.Models
         //}
 
         //Fellowship
-        [Display(Name = "Fellowship Two")]
+        [Display(Name = "Fellowship")]
         public int? FellowshipId { get; set; }
 
         //Fellowship Graduation Year

@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace NewTiceAI.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240308211801_Initial_NewTice_0001")]
-    partial class Initial_NewTice_0001
+    [Migration("20250405213054_GradYearsForFellowshipFellowship2")]
+    partial class GradYearsForFellowshipFellowship2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -233,8 +233,14 @@ namespace NewTiceAI.Data.Migrations
                     b.Property<string>("ActorId")
                         .HasColumnType("text");
 
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("numeric");
+
                     b.Property<bool>("Archived")
                         .HasColumnType("boolean");
+
+                    b.Property<DateTime?>("ClosedDate")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<int?>("ContactId")
                         .HasColumnType("integer");
@@ -243,21 +249,29 @@ namespace NewTiceAI.Data.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasMaxLength(2000)
                         .HasColumnType("character varying(2000)");
 
-                    b.Property<int>("ItemPriority")
+                    b.Property<int?>("ItemPriority")
                         .HasColumnType("integer");
 
-                    b.Property<int>("ItemStatus")
+                    b.Property<int?>("ItemStatus")
                         .HasColumnType("integer");
 
-                    b.Property<int>("ItemType")
+                    b.Property<int?>("ItemType")
                         .HasColumnType("integer");
 
-                    b.Property<string>("Note")
+                    b.Property<string>("Notes")
                         .HasColumnType("text");
+
+                    b.Property<int?>("OpportunityForecastCategory")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("OpportunityStage")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("OpportunityType")
+                        .HasColumnType("integer");
 
                     b.Property<string>("SubmitterId")
                         .IsRequired()
@@ -618,6 +632,9 @@ namespace NewTiceAI.Data.Migrations
                     b.Property<Guid?>("ImageId")
                         .HasColumnType("uuid");
 
+                    b.Property<int?>("ImportId")
+                        .HasColumnType("integer");
+
                     b.Property<bool>("IsActive")
                         .HasColumnType("boolean");
 
@@ -689,6 +706,8 @@ namespace NewTiceAI.Data.Migrations
                     b.HasIndex("FellowshipId");
 
                     b.HasIndex("ImageId");
+
+                    b.HasIndex("ImportId");
 
                     b.HasIndex("MentorId");
 
@@ -762,6 +781,31 @@ namespace NewTiceAI.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("FileUploads");
+                });
+
+            modelBuilder.Entity("NewTiceAI.Models.Import", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ImportComment")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("ImportDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("RevertDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("RevertReason")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Imports");
                 });
 
             modelBuilder.Entity("NewTiceAI.Models.Institution", b =>
@@ -1051,6 +1095,9 @@ namespace NewTiceAI.Data.Migrations
                     b.Property<byte[]>("AvatarData")
                         .HasColumnType("bytea");
 
+                    b.Property<Guid?>("AvatarId")
+                        .HasColumnType("uuid");
+
                     b.Property<string>("AvatarName")
                         .HasColumnType("text");
 
@@ -1117,6 +1164,8 @@ namespace NewTiceAI.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ActionProjectId");
+
+                    b.HasIndex("AvatarId");
 
                     b.HasIndex("CompanyId");
 
@@ -1508,7 +1557,7 @@ namespace NewTiceAI.Data.Migrations
             modelBuilder.Entity("NewTiceAI.Models.ActionItem", b =>
                 {
                     b.HasOne("NewTiceAI.Models.Account", "Account")
-                        .WithMany()
+                        .WithMany("Opportunities")
                         .HasForeignKey("AccountId");
 
                     b.HasOne("NewTiceAI.Models.ActionProject", "ActionProject")
@@ -1646,6 +1695,10 @@ namespace NewTiceAI.Data.Migrations
                         .WithMany()
                         .HasForeignKey("ImageId");
 
+                    b.HasOne("NewTiceAI.Models.Import", "Import")
+                        .WithMany("Contacts")
+                        .HasForeignKey("ImportId");
+
                     b.HasOne("NewTiceAI.Models.Contact", "Mentor")
                         .WithMany()
                         .HasForeignKey("MentorId");
@@ -1685,6 +1738,8 @@ namespace NewTiceAI.Data.Migrations
                     b.Navigation("Fellowship2");
 
                     b.Navigation("Image");
+
+                    b.Navigation("Import");
 
                     b.Navigation("Mentor");
 
@@ -1847,6 +1902,10 @@ namespace NewTiceAI.Data.Migrations
                         .WithMany("Members")
                         .HasForeignKey("ActionProjectId");
 
+                    b.HasOne("NewTiceAI.Models.FileUpload", "Avatar")
+                        .WithMany()
+                        .HasForeignKey("AvatarId");
+
                     b.HasOne("NewTiceAI.Models.Company", null)
                         .WithMany("Members")
                         .HasForeignKey("CompanyId");
@@ -1856,6 +1915,8 @@ namespace NewTiceAI.Data.Migrations
                         .HasForeignKey("OrganizationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Avatar");
 
                     b.Navigation("Organization");
                 });
@@ -2004,6 +2065,8 @@ namespace NewTiceAI.Data.Migrations
                 {
                     b.Navigation("Contacts");
 
+                    b.Navigation("Opportunities");
+
                     b.Navigation("Projects");
 
                     b.Navigation("Tickets");
@@ -2043,6 +2106,11 @@ namespace NewTiceAI.Data.Migrations
                     b.Navigation("Attachments");
 
                     b.Navigation("Hospitals");
+                });
+
+            modelBuilder.Entity("NewTiceAI.Models.Import", b =>
+                {
+                    b.Navigation("Contacts");
                 });
 
             modelBuilder.Entity("NewTiceAI.Models.Organization", b =>

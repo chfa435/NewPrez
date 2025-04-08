@@ -1,5 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Xml.Linq;
+using NewTiceAI.Models.Enums;
 
 namespace NewTiceAI.Models
 {
@@ -26,11 +28,15 @@ namespace NewTiceAI.Models
         [Display(Name = "Account Name")]
         public string? Name { get; set; }
 
-
+        public string? EmailAddress { get; set; }
         public decimal? AnnualRevenue { get; set; }
         public DateTime? CreateDate { get; set; }
         public string? Description { get; set; }
         public string? Website { get; set; }
+        public string? LegalName { get; set; }
+
+        [DisplayName("Country/Region")]
+        public EnumCountryRegion? CountryRegion { get; set; }
 
         //public string? Industry { get; set; }
         //public string? Ticker { get; set; }

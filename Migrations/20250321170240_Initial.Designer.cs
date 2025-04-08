@@ -2,18 +2,21 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NewTiceAI.Data;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace NewTiceAI.Data.Migrations
+namespace NewTiceAI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250321170240_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -183,19 +186,10 @@ namespace NewTiceAI.Data.Migrations
                     b.Property<int?>("BillingAddressId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("CountryRegion")
-                        .HasColumnType("integer");
-
                     b.Property<DateTime?>("CreateDate")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Description")
-                        .HasColumnType("text");
-
-                    b.Property<string>("EmailAddress")
-                        .HasColumnType("text");
-
-                    b.Property<string>("LegalName")
                         .HasColumnType("text");
 
                     b.Property<string>("Name")
