@@ -72,22 +72,22 @@ namespace NewTiceAI.Data
             //Migration: This is the programmatic equivalent to Update-Database
             await dbContextSvc.Database.MigrateAsync();
 
-            await SeedRolesAsync(roleManagerSvc);
-            await SeedDefaultOrganizationsAsync(dbContextSvc);
-            await SeedNewOrganizationsAsync(dbContextSvc);
-            await SeedDefaultAccountsAsync(dbContextSvc);
-            await SeedDefaultUsersAsync(userManagerSvc);
-            await SeedDemoUsersAsync(userManagerSvc);
-            await SeedDefaultTicketTypesAsync(dbContextSvc);
-            await SeedDefaultTicketStatusesAsync(dbContextSvc);
-            await SeedDefaultTicketPrioritiesAsync(dbContextSvc);
-            await SeedDefaultProjectPrioritiesAsync(dbContextSvc);
-            await SeedDefaultProjectsAsync(dbContextSvc);
-            await SeedDefaultTicketsAsync(dbContextSvc, userManagerSvc);
-            await SeedDefaultNotificationTypesAsync(dbContextSvc);
-            await SeedDefaultActionItemTypesAsync(dbContextSvc);
-            await SeedDefaultActionItemStatusesAsync(dbContextSvc);
-            await SeedDefaultActionItemPrioritiesAsync(dbContextSvc);
+            //await SeedRolesAsync(roleManagerSvc);
+            //await SeedDefaultOrganizationsAsync(dbContextSvc);
+            //await SeedNewOrganizationsAsync(dbContextSvc);
+            //await SeedDefaultAccountsAsync(dbContextSvc);
+            //await SeedDefaultUsersAsync(userManagerSvc);
+            //await SeedDemoUsersAsync(userManagerSvc);
+            //await SeedDefaultTicketTypesAsync(dbContextSvc);
+            //await SeedDefaultTicketStatusesAsync(dbContextSvc);
+            //await SeedDefaultTicketPrioritiesAsync(dbContextSvc);
+            //await SeedDefaultProjectPrioritiesAsync(dbContextSvc);
+            //await SeedDefaultProjectsAsync(dbContextSvc);
+            //await SeedDefaultTicketsAsync(dbContextSvc, userManagerSvc);
+            //await SeedDefaultNotificationTypesAsync(dbContextSvc);
+            //await SeedDefaultActionItemTypesAsync(dbContextSvc);
+            //await SeedDefaultActionItemStatusesAsync(dbContextSvc);
+            //await SeedDefaultActionItemPrioritiesAsync(dbContextSvc);
 
             //Special: TO BE REMOVED
             //await TransferImagesFromContactsToImages(dbContextSvc);
