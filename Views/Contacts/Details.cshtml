@@ -228,7 +228,9 @@
                         </div>
                         <div class="col-12 col-lg-12 mt-3">
                             <label asp-for="ContactNotes" class="control-label"></label>
-                            @Html.Raw(Model?.ContactNotes)
+                            @* @Html.Raw(Model?.ContactNotes) *@
+                            <label asp-for="ContactNotes" class="control-label"></label>
+                            <textarea asp-for="ContactNotes" class="form-control" id="editor" rows="5" disabled></textarea>
                             <span asp-validation-for="ContactNotes" class="text-danger"></span>
                         </div>
                         <div class="col-12 col-lg-12 mt-3">
