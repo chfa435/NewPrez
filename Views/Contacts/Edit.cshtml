@@ -16,10 +16,23 @@
         <div class="card">
             <h5 class="card-header">Edit Contact Information</h5>
             <div class="card-body">
-                <form asp-action="Edit">
+                <form asp-action="Edit" method="post" enctype="multipart/form-data">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <input type="hidden" asp-for="Id" />
                     <input type="hidden" asp-for="OrganizationId" />
+
+                    <!-- Contact Image -->
+                    <div class="row mb-4">
+                        <div class="col-12 col-md-4">
+                            <div class="square-img-container">
+                                <img id="contactImage" class="square-img" src="@(Model.ImageId == null ? FileUploader.DefaultUserImage :$"/api/uploads/{Model.ImageId}")">
+                            </div>
+                            <div class="mt-2">
+                                <input asp-for="ImageFile" class="form-control" accept=".png,.jpg,.jpeg,.gif" onchange="document.getElementById('contactImage').src= window.URL.createObjectURL(this.files[0])" />
+                                <span asp-validation-for="ImageFile" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
 
                     <!-- Contact Details -->
                     <div class="row">
@@ -61,10 +74,145 @@
                             <span asp-validation-for="Title" class="text-danger"></span>
                         </div>
 
+                        <div class="col-12 col-md-6">
+                            <label class="form-label" asp-for="AccountId"></label>
+                            <select asp-for="AccountId" class="form-control" asp-items="ViewBag.AccountsList">
+                                <option value="">Select Account</option>
+                            </select>
+                            <span asp-validation-for="AccountId" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <label class="form-label" asp-for="DateOfBirth"></label>
+                            <input asp-for="DateOfBirth" class="form-control" type="date" />
+                            <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <label class="form-label" asp-for="Gender"></label>
+                            <select asp-for="Gender" class="form-control" asp-items="@Html.GetEnumSelectList<Genders>()">
+                                <option value="">Select Gender</option>
+                            </select>
+                            <span asp-validation-for="Gender" class="text-danger"></span>
+                        </div>
+
                         <div class="col-12">
-                            <label class="form-label" asp-for="ContactNotes"></label>
-                            <textarea asp-for="ContactNotes" class="form-control" rows="6" placeholder="Contact Notes"></textarea>
-                            <span asp-validation-for="ContactNotes" class="text-danger"></span>
+                            <label class="form-label" asp-for="Specialty"></label>
+                            <input asp-for="Specialty" class="form-control" placeholder="Specialty" />
+                            <span asp-validation-for="Specialty" class="text-danger"></span>
+                        </div>
+
+                        <!-- Education Information -->
+                        <div class="col-12">
+                            <h6 class="mt-2 fw-normal">Education Information</h6>
+                            <hr class="mt-0" />
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <label class="form-label" asp-for="ResidencyId"></label>
+                            <select asp-for="ResidencyId" class="form-control" asp-items="ViewBag.InstitutionList">
+                                <option value="">Select Residency</option>
+                            </select>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label class="form-label" asp-for="Residency_GradYear"></label>
+                            <select asp-for="Residency_GradYear" class="form-control" asp-items="ViewBag.Years">
+                                <option value="">Select Year</option>
+                            </select>
+                            <span asp-validation-for="Residency_GradYear" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <label class="form-label" asp-for="FellowshipId"></label>
+                            <select asp-for="FellowshipId" class="form-control" asp-items="ViewBag.InstitutionsList">
+                                <option value="">Select Fellowship</option>
+                            </select>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label class="form-label" asp-for="Fellowship_GradYear"></label>
+                            <select asp-for="Fellowship_GradYear" class="form-control" asp-items="ViewBag.Years">
+                                <option value="">Select Year</option>
+                            </select>
+                            <span asp-validation-for="Fellowship_GradYear" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <label class="form-label" asp-for="Fellowship2Id"></label>
+                            <select asp-for="Fellowship2Id" class="form-control" asp-items="ViewBag.InstitutionsList">
+                                <option value="">Select Second Fellowship</option>
+                            </select>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label class="form-label" asp-for="Fellowship2_GradYear"></label>
+                            <select asp-for="Fellowship2_GradYear" class="form-control" asp-items="ViewBag.Years">
+                                <option value="">Select Year</option>
+                            </select>
+                            <span asp-validation-for="Fellowship2_GradYear" class="text-danger"></span>
+                        </div>
+
+                        <!-- Professional Information -->
+                        <div class="col-12">
+                            <h6 class="mt-2 fw-normal">Professional Information</h6>
+                            <hr class="mt-0" />
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <label class="form-label" asp-for="RelationshipHolderId"></label>
+                            <select asp-for="RelationshipHolderId" class="form-control" asp-items="ViewBag.ContactsList">
+                                <option value="">Select Relationship Holder</option>
+                            </select>
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <label class="form-label" asp-for="CurrentDistributorId"></label>
+                            <select asp-for="CurrentDistributorId" class="form-control" asp-items="ViewBag.InstitutionsList">
+                                <option value="">Select Distributor</option>
+                            </select>
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <label class="form-label" asp-for="SalesRepresentativeId"></label>
+                            <select asp-for="SalesRepresentativeId" class="form-control" asp-items="ViewBag.ContactsList">
+                                <option value="">Select Sales Representative</option>
+                            </select>
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <label class="form-label" asp-for="PracticeId"></label>
+                            <select asp-for="PracticeId" class="form-control" asp-items="ViewBag.InstitutionsList">
+                                <option value="">Select Practice</option>
+                            </select>
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <label class="form-label" asp-for="MentorId"></label>
+                            <select asp-for="MentorId" class="form-control" asp-items="ViewBag.ContactsList">
+                                <option value="">Select Mentor</option>
+                            </select>
+                        </div>
+
+                        <!-- Activity Dates -->
+                        <div class="col-12">
+                            <h6 class="mt-2 fw-normal">Activity Dates</h6>
+                            <hr class="mt-0" />
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <label class="form-label" asp-for="LastMeetingDate"></label>
+                            <input asp-for="LastMeetingDate" class="form-control" type="date" />
+                            <span asp-validation-for="LastMeetingDate" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <label class="form-label" asp-for="NextActivityDate"></label>
+                            <input asp-for="NextActivityDate" class="form-control" type="date" />
+                            <span asp-validation-for="NextActivityDate" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <label class="form-label" asp-for="FollowupDate"></label>
+                            <input asp-for="FollowupDate" class="form-control" type="date" />
+                            <span asp-validation-for="FollowupDate" class="text-danger"></span>
                         </div>
 
                         <!-- Address Information -->
@@ -77,6 +225,12 @@
                             <label class="form-label" asp-for="Address!.Address1"></label>
                             <input asp-for="Address!.Address1" class="form-control" placeholder="Street Address" />
                             <span asp-validation-for="Address!.Address1" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label" asp-for="Address!.Address2"></label>
+                            <input asp-for="Address!.Address2" class="form-control" placeholder="Address Line 2" />
+                            <span asp-validation-for="Address!.Address2" class="text-danger"></span>
                         </div>
 
                         <div class="col-12 col-md-6">
@@ -115,6 +269,37 @@
                                 <input class="form-check-input" type="checkbox" asp-for="EmailOptOut" />
                                 <label class="form-check-label" asp-for="EmailOptOut"></label>
                             </div>
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <div class="form-check form-switch mb-2">
+                                <input class="form-check-input" type="checkbox" asp-for="HandoffConfirmed" />
+                                <label class="form-check-label" asp-for="HandoffConfirmed"></label>
+                            </div>
+                        </div>
+
+                        <!-- Additional Information -->
+                        <div class="col-12">
+                            <h6 class="mt-2 fw-normal">Additional Information</h6>
+                            <hr class="mt-0" />
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label" asp-for="ContactNotes"></label>
+                            <textarea asp-for="ContactNotes" class="form-control" rows="6" placeholder="Contact Notes"></textarea>
+                            <span asp-validation-for="ContactNotes" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label" asp-for="ProfileUrl"></label>
+                            <input asp-for="ProfileUrl" class="form-control" placeholder="Profile URL" />
+                            <span asp-validation-for="ProfileUrl" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label" asp-for="ProfileUrl2"></label>
+                            <input asp-for="ProfileUrl2" class="form-control" placeholder="Secondary Profile URL" />
+                            <span asp-validation-for="ProfileUrl2" class="text-danger"></span>
                         </div>
 
                         <div class="col-12 mt-3">
