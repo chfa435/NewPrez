@@ -79,7 +79,7 @@ namespace Tice_AI.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,OrganizationId,AccountId,AddressId,ContactOwnerId,FirstName,LastName,DateOfBirth,Email,PhoneNumber,Mobile,DateAdded,ImageData,ImageType,Title,DoNotCall,EmailOptOut,IsActive,Gender,Specialty,ResidencyId,Residency_GradYear,FellowshipId,Fellowship_GradYear,Fellowship2Id,Fellowship2_GradYear,RelationshipHolderId,CurrentDistributorId,SalesRepresentativeId,PracticeId,MentorId,LastMeetingDate,NextActivityDate,FollowupDate,HandoffConfirmed,ContactNotes,ProfileUrl,ProfileUrl2,PacketSentDate")] Contact contact)
+        public async Task<IActionResult> Create([Bind("Id,OrganizationId,AccountId,AddressId,ContactOwnerId,Prefix,MiddleName,FirstName,LastName,DateOfBirth,Email,PhoneNumber,Mobile,DateAdded,ImageData,ImageType,Title,DoNotCall,EmailOptOut,IsActive,Gender,Specialty,ResidencyId,Residency_GradYear,FellowshipId,Fellowship_GradYear,Fellowship2Id,Fellowship2_GradYear,RelationshipHolderId,CurrentDistributorId,SalesRepresentativeId,PracticeId,MentorId,LastMeetingDate,NextActivityDate,FollowupDate,HandoffConfirmed,ContactNotes,ProfileUrl,ProfileUrl2,PacketSentDate")] Contact contact)
         {
             if (ModelState.IsValid)
             {

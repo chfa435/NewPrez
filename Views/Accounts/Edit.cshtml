@@ -21,6 +21,13 @@
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
+            <div class="form-group mt-2">
+                <label asp-for="AccountType" class="control-label"></label>
+                <select asp-for="AccountType" class="form-select" asp-items="@Html.GetEnumSelectList<EnumAccountType>()">
+                    <option value="">Select Account Type</option>
+                </select>
+                <span asp-validation-for="AccountType" class="text-danger"></span>
+            </div>
             <div class="col-12 mt-2">
                 <label asp-for="@AcctAddress.Address1" class="control-label"></label>
                 <input asp-for="@AcctAddress.Address1" class="form-control" />

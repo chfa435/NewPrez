@@ -83,7 +83,7 @@ namespace NewTiceAI.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name,EmailAddress,AnnualRevenue,Description,Website,LegalName,CountryRegion")] Account account, string isInstitution, Address? acctAddress)
+        public async Task<IActionResult> Create([Bind("Name,EmailAddress,AnnualRevenue,Description,Website,LegalName,CountryRegion,AccountType")] Account account, string isInstitution, Address? acctAddress)
         {
 
             if (ModelState.IsValid)
@@ -135,7 +135,7 @@ namespace NewTiceAI.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,BTUser,Name,ParentOrganizationId")] Account account, Address acctAddress)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,BTUser,Name,ParentOrganizationId,AccountType")] Account account, Address acctAddress)
         {
             if (id != account.Id)
             {

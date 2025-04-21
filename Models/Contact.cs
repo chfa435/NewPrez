@@ -57,6 +57,14 @@ namespace NewTiceAI.Models
         [StringLength(50, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 2)]
         public string? FirstName { get; set; }
 
+        [Display(Name = "Prefix")]
+        public Prefix? Prefix { get; set; }
+
+        [Display(Name = "Middle Name")]
+        [RegularExpression(@"^[A-Za-z]{1}\.?$|^[A-Za-z]{2,}$", ErrorMessage = "Middle name must be either a single letter with optional period or a full name.")]
+        [StringLength(50, ErrorMessage = "The {0} must be at max {1} characters long.")]
+        public string? MiddleName { get; set; }
+
         [Required]
         [Display(Name = "Last Name")]
         [StringLength(50, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 2)]

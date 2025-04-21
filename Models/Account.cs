@@ -28,6 +28,9 @@ namespace NewTiceAI.Models
         [Display(Name = "Account Name")]
         public string? Name { get; set; }
 
+        [Display(Name = "Account Type")]
+        public EnumAccountType AccountType { get; set; }
+
         public string? EmailAddress { get; set; }
         public decimal? AnnualRevenue { get; set; }
         public DateTime? CreateDate { get; set; }

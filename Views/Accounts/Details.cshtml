@@ -68,6 +68,11 @@
                             <span asp-for="Email" class="form-control">@Model?.Name</span>
                             <span asp-validation-for="Name" class="text-danger"></span>
                         </div>
+                        <div class="col-12 col-lg-6 mt-2">
+                            <label asp-for="AccountType" class="control-label"></label>
+                            <span asp-for="AccountType" class="form-control">@Model?.AccountType</span>
+                            <span asp-validation-for="AccountType" class="text-danger"></span>
+                        </div>
                         <div class="col-12 mt-2">
                             <label asp-for="ShippingAddress!.Address1" class="control-label"></label>
                             <span asp-for="Address!.Address1" class="form-control">@Model?.ShippingAddress?.Address1</span>

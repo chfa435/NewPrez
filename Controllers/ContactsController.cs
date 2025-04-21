@@ -599,7 +599,7 @@ namespace NewTiceAI.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,OrganizationId,AccountId,AddressId,ContactOwnerId,FirstName,LastName,DateOfBirth,Email,PhoneNumber,Mobile,DateAdded,ImageFile,Title,DoNotCall,EmailOptOut,IsActive,Gender,Specialty,ResidencyId,Residency_GradYear,FellowshipId,Fellowship_GradYear,Fellowship2Id,Fellowship2_GradYear,RelationshipHolderId,CurrentDistributorId,SalesRepresentativeId,PracticeId,MentorId,LastMeetingDate,NextActivityDate,FollowupDate,HandoffConfirmed,ContactNotes,ProfileUrl,ProfileUrl2,PacketSentDate")] Contact contact, Address address)
+        public async Task<IActionResult> Create([Bind("Id,OrganizationId,AccountId,AddressId,ContactOwnerId,Prefix,MiddleName,FirstName,LastName,DateOfBirth,Email,PhoneNumber,Mobile,DateAdded,ImageFile,Title,DoNotCall,EmailOptOut,IsActive,Gender,Specialty,ResidencyId,Residency_GradYear,FellowshipId,Fellowship_GradYear,Fellowship2Id,Fellowship2_GradYear,RelationshipHolderId,CurrentDistributorId,SalesRepresentativeId,PracticeId,MentorId,LastMeetingDate,NextActivityDate,FollowupDate,HandoffConfirmed,ContactNotes,ProfileUrl,ProfileUrl2,PacketSentDate")] Contact contact, Address address)
         {
 
             ModelState.Remove("OrganizationId");
@@ -661,7 +661,7 @@ namespace NewTiceAI.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateNew([Bind("Id,OrganizationId,AccountId,AddressId,ContactOwnerId,FirstName,LastName,DateOfBirth,Email,PhoneNumber,Mobile,DateAdded,ImageFile,Title,DoNotCall,EmailOptOut,IsActive,Gender,Specialty,ResidencyId,Residency_GradYear,FellowshipId,Fellowship_GradYear,Fellowship2Id,Fellowship2_GradYear,RelationshipHolderId,CurrentDistributorId,SalesRepresentativeId,PracticeId,MentorId,LastMeetingDate,NextActivityDate,FollowupDate,HandoffConfirmed,ContactNotes,ProfileUrl,ProfileUrl2,PacketSentDate")] Contact contact, Address address)
+        public async Task<IActionResult> CreateNew([Bind("Id,OrganizationId,AccountId,AddressId,ContactOwnerId,Prefix,MiddleName,FirstName,LastName,DateOfBirth,Email,PhoneNumber,Mobile,DateAdded,ImageFile,Title,DoNotCall,EmailOptOut,IsActive,Gender,Specialty,ResidencyId,Residency_GradYear,FellowshipId,Fellowship_GradYear,Fellowship2Id,Fellowship2_GradYear,RelationshipHolderId,CurrentDistributorId,SalesRepresentativeId,PracticeId,MentorId,LastMeetingDate,NextActivityDate,FollowupDate,HandoffConfirmed,ContactNotes,ProfileUrl,ProfileUrl2,PacketSentDate")] Contact contact, Address address)
         {
 
             ModelState.Remove("OrganizationId");
