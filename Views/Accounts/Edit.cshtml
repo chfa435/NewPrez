@@ -1,73 +1,100 @@
-﻿@model Account
+﻿@model NewTiceAI.Models.Account
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edit Account";
     Address? AcctAddress = Model.ShippingAddress == null ? new() : Model.ShippingAddress;
 }
 
-<h1>Edit</h1>
-
-<h4>Account</h4>
-<hr />
+<h4 class="py-3 breadcrumb-wrapper mb-4"><span class="text-muted fw-light">Accounts /</span> Edit Account</h4>
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <input type="hidden" asp-for="ParentOrganizationId" />
+    <div class="col-12">
+        <div class="card">
+            <h5 class="card-header">Edit Account Information</h5>
+            <div class="card-body">
+                <form asp-action="Edit">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Id" />
+                    <input type="hidden" asp-for="ParentOrganizationId" />
 
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+                    <!-- Account Details -->
+                    <div class="row">
+                        <div class="col-12">
+                            <h6 class="fw-normal">Account Details</h6>
+                            <hr class="mt-0" />
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <label class="form-label" asp-for="Name"></label>
+                            <input asp-for="Name" class="form-control" placeholder="Account Name" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label class="form-label" asp-for="EmailAddress">Email</label>
+                            <input class="form-control" asp-for="EmailAddress" placeholder="account@email.com" />
+                            <span asp-validation-for="EmailAddress" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label" asp-for="Description">Description</label>
+                            <textarea asp-for="Description" class="form-control" rows="6" placeholder="Description"></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+
+                        <!-- Account Type -->
+                        <div class="col-12">
+                            <h6 class="mt-2 fw-normal">Account Type</h6>
+                            <hr class="mt-0" />
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label class="form-label" asp-for="AccountType"></label>
+                            <select asp-for="AccountType" class="form-select" asp-items="@Html.GetEnumSelectList<EnumAccountType>()">
+                                <option value="">Select Account Type</option>
+                            </select>
+                            <span asp-validation-for="AccountType" class="text-danger"></span>
+                        </div>
+
+                        <!-- Address Information -->
+                        <div class="col-12">
+                            <h6 class="mt-2 fw-normal">Address Information</h6>
+                            <hr class="mt-0" />
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label" asp-for="@AcctAddress.Address1"></label>
+                            <input asp-for="@AcctAddress.Address1" class="form-control" />
+                            <span asp-validation-for="@AcctAddress.Address1" class="text-danger"></span>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label" asp-for="@AcctAddress.Address2"></label>
+                            <input asp-for="@AcctAddress.Address2" class="form-control" />
+                            <span asp-validation-for="@AcctAddress.Address2" class="text-danger"></span>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <label class="form-label" asp-for="@AcctAddress.City"></label>
+                            <input asp-for="@AcctAddress.City" class="form-control" />
+                            <span asp-validation-for="@AcctAddress.City" class="text-danger"></span>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <label class="form-label" asp-for="@AcctAddress.State"></label>
+                            <input asp-for="@AcctAddress.State" class="form-control" />
+                            <span asp-validation-for="@AcctAddress.State" class="text-danger"></span>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <label class="form-label" asp-for="@AcctAddress.ZipCode"></label>
+                            <input asp-for="@AcctAddress.ZipCode" class="form-control" />
+                            <span asp-validation-for="@AcctAddress.ZipCode" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-12 mt-4">
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                            <a asp-action="Details" asp-route-id="@Model.Id" class="btn btn-secondary">Cancel</a>
+                        </div>
+                    </div>
+                </form>
             </div>
-            <div class="form-group mt-2">
-                <label asp-for="AccountType" class="control-label"></label>
-                <select asp-for="AccountType" class="form-select" asp-items="@Html.GetEnumSelectList<EnumAccountType>()">
-                    <option value="">Select Account Type</option>
-                </select>
-                <span asp-validation-for="AccountType" class="text-danger"></span>
-            </div>
-            <div class="col-12 mt-2">
-                <label asp-for="@AcctAddress.Address1" class="control-label"></label>
-                <input asp-for="@AcctAddress.Address1" class="form-control" />
-                <span asp-validation-for="@AcctAddress.Address1" class="text-danger"></span>
-            </div>
-            <div class="col-12 mt-2">
-                <label asp-for="@AcctAddress.Address2" class="control-label"></label>
-                <input asp-for="@AcctAddress.Address2" class="form-control" />
-                <span asp-validation-for="@AcctAddress.Address2" class="text-danger"></span>
-            </div>
-            <div class="col-12 col-lg-6 mt-2">
-                <label asp-for="@AcctAddress.City" class="control-label"></label>
-                <input asp-for="@AcctAddress.City" class="form-control" />
-                <span asp-validation-for="@AcctAddress.City" class="text-danger"></span>
-            </div>
-            <div class="col-12 col-lg-4 mt-2">
-                <label asp-for="@AcctAddress.State" class="control-label"></label>
-                <select asp-for="@AcctAddress.State" class="form-select" asp-items="@Html.GetEnumSelectList<States>()">
-                    <option></option>
-                </select>
-                <span asp-validation-for="@AcctAddress.State" class="text-danger"></span>
-            </div>
-            <div class="col-12 col-lg-2 mt-2">
-                <label asp-for="@AcctAddress.ZipCode" class="control-label"></label>
-                <input asp-for="@AcctAddress.ZipCode" class="form-control" />
-                <span asp-validation-for="@AcctAddress.ZipCode" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="AllAccounts">Back to List</a>
-</div>
-
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
