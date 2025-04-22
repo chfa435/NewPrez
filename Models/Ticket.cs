@@ -25,6 +25,9 @@ namespace NewTiceAI.Models
         public int? AccountId { get; set; }
 
         // Foreign Key
+        public int? ContactId { get; set; }
+
+        // Foreign Key
         public int TicketTypeId { get; set; }
 
         // Foreign Key
@@ -61,7 +64,7 @@ namespace NewTiceAI.Models
 
 
         // Navigation Properties
-        //public virtual Contact? Contact { get; set; }
+        public virtual Contact? Contact { get; set; }
 
         public virtual Project? Project { get; set; }
         public virtual Account? Account { get; set; }
