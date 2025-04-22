@@ -42,6 +42,7 @@
                                 <th style="width: 12%">Type</th>
                                 <th style="width: 10%">Status</th>
                                 <th style="width: 13%">Developer</th>
+                                <th style="width: 10%">Attachments</th>
                                 <th style="width: 10%">Actions</th>
                             </tr>
                         </thead>
@@ -56,6 +57,16 @@
                                     <td>@Html.DisplayFor(modelItem => item.TicketType!.Name)</td>
                                     <td>@Html.DisplayFor(modelItem => item.TicketStatus!.Name)</td>
                                     <td>@Html.DisplayFor(modelItem => item.DeveloperUser!.FullName)</td>
+                                    <td>
+                                        @if (item.Attachments?.Count > 0)
+                                        {
+                                            <span class="badge bg-primary">@item.Attachments.Count</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-secondary">0</span>
+                                        }
+                                    </td>
                                     <td>
                                         <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                                         <a asp-action="Details" asp-route-id="@item.Id">Details</a>

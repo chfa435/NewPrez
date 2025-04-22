@@ -67,6 +67,7 @@
                                 <th>Status</th>
                                 <th>Owner</th>
                                 <th>Developer</th>
+                                <th>Attachments</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -99,6 +100,16 @@
                                         @Html.DisplayFor(modelItem => item.DeveloperUser!.FullName)
                                     </td>
                                     <td>
+                                        @if (item.Attachments?.Count > 0)
+                                        {
+                                            <span class="badge bg-primary">@item.Attachments.Count</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-secondary">0</span>
+                                        }
+                                    </td>
+                                    <td>
                                         <a asp-action="Edit" asp-route-id="@item.Id"> <i class="material-icons" style="color:gray">mode_edit</i></a> |
                                         <a asp-action="Details" asp-route-id="@item.Id"> <i class="material-icons" style="color:black">description</i></a> |
                                         <a asp-action="Archive" asp-route-id="@item.Id"> <i class="material-icons" style="color:red">archive</i></a>
@@ -116,6 +127,7 @@
                                 <th>Status</th>
                                 <th>Owner</th>
                                 <th>Developer</th>
+                                <th>Attachments</th>
                                 <th></th>
                             </tr>
                         </tfoot>
