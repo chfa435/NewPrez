@@ -31,83 +31,71 @@
                 <strong>All Tickets</strong>
             </div>
             <div class="card-body">
-                <table class="table" id="allTable">
-                    <thead>
-                        <tr>
-                            <th>
-                                Title
-                            </th>
-                            <th>
-                                Created
-                            </th>
-                            <th>
-                                Last Updated
-                            </th>
-                            <th>
-                                Priority
-                            </th>
-                            <th>
-                                Type
-                            </th>
-                            <th>
-                                Status
-                            </th>
-                            <th>
-                                Developer
-                            </th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model)
-                        {
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered w-100" id="allTable">
+                        <thead>
                             <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Title)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Created)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Updated)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.TicketPriority!.Name)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.TicketType!.Name)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.TicketStatus!.Name)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.DeveloperUser!.FullName)
-                                </td>
-                                <td>
-                                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                                    <a asp-action="Details" asp-route-id="@item.Id">Details</a>
-                                    @if (User.IsInRole(nameof(BTRoles.Admin)) || User.IsInRole(nameof(BTRoles.ProjectManager)))
-                                    {
-                                        <span>|</span>
-                                        <a asp-action="Archive" asp-route-id="@item.Id">Archive</a>
-
-                                    }
-                                </td>
+                                <th style="width: 25%">Title</th>
+                                <th style="width: 10%">Created</th>
+                                <th style="width: 10%">Last Updated</th>
+                                <th style="width: 10%">Priority</th>
+                                <th style="width: 12%">Type</th>
+                                <th style="width: 10%">Status</th>
+                                <th style="width: 13%">Developer</th>
+                                <th style="width: 10%">Actions</th>
                             </tr>
-                        }
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@Html.DisplayFor(modelItem => item.Title)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Created)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Updated)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.TicketPriority!.Name)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.TicketType!.Name)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.TicketStatus!.Name)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.DeveloperUser!.FullName)</td>
+                                    <td>
+                                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                        <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                                        @if (User.IsInRole(nameof(BTRoles.Admin)) || User.IsInRole(nameof(BTRoles.ProjectManager)))
+                                        {
+                                            <span>|</span>
+                                            <a asp-action="Archive" asp-route-id="@item.Id">Archive</a>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
-
 @section scripts{
-<script>
-    $(document).ready( function () {
-        $('#allTable').DataTable();
-    } );
-</script>
+    <script>
+        $(document).ready(function () {
+            $('#allTable').DataTable({
+                scrollX: true,
+                autoWidth: false,
+                fixedHeader: true,
+                responsive: false,
+                dom: '<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>' +
+                     '<"row"<"col-sm-12"tr>>' +
+                     '<"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>',
+                language: {
+                    search: "Filter:"
+                },
+                initComplete: function () {
+                    $(this).find('th').each(function () {
+                        $(this).width($(this).width());
+                    });
+                }
+            });
+        });
+    </script>
 }
 
