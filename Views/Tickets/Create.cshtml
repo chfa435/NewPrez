@@ -1,78 +1,165 @@
 ﻿@model NewTiceAI.Models.Ticket
+@using NewTiceAI.Models.Enums
+@using NewTiceAI.Services.Interfaces
+@using Microsoft.AspNetCore.Identity
+
+@inject UserManager<TAUser> UserManager
+@inject IBTProjectService ProjectService
+@inject IBTFileService FileService
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create Ticket";
+    TAUser? btUser = await UserManager.GetUserAsync(User);
 }
 
-<h1>Create</h1>
-
-<h4>Ticket</h4>
-<hr />
+<h4 class="py-3 breadcrumb-wrapper mb-4"><span class="text-muted fw-light">Tickets /</span> Create Ticket</h4>
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="SubmitterUserId" />
-            <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Note" class="control-label"></label>
-                <textarea asp-for="Note" class="form-control" rows="5"></textarea>
-                <span asp-validation-for="Note" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="TicketStatusId" class="control-label"></label>
-                <select asp-for="TicketStatusId" class="form-control" asp-items="ViewBag.TicketStatusId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="ProjectId" class="control-label"></label>
-                <select asp-for="ProjectId" class="form-control" asp-items="ViewBag.ProjectId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="DeveloperUserId" class="control-label"></label>
-                <select asp-for="DeveloperUserId" class="form-control" asp-items="ViewBag.DeveloperUserId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="TicketTypeId" class="control-label"></label>
-                <select asp-for="TicketTypeId" class="form-control" asp-items="ViewBag.TicketTypeId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="TicketPriorityId" class="control-label"></label>
-                <select asp-for="TicketPriorityId" class="form-control" asp-items="ViewBag.TicketPriorityId"></select>
-            </div>
-            <div class="form-group">
-                <label>Attachments</label>
-                <div class="media-body ml-3">
-                    <label>
-                        Description
-                        <input name="Description" type="text" class="form-control" />
-                    </label><br />
-                    <label class="btn btn-outline-primary btn-sm">
-                        <input name="FormFile" type="file" class="form-control-file" />
-                    </label>
-                </div>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
+    <div class="col-12">
+        <div class="card">
+            <h5 class="card-header">Create New Ticket</h5>
+            <div class="card-body">
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="SubmitterUserId" />
 
-<div>
-    <a asp-action="AllTickets">Back to List</a>
+                    <div class="row">
+                        <div class="col-12">
+                            <h6 class="fw-normal">Ticket Details</h6>
+                            <hr class="mt-0" />
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <div class="form-group">
+                                <label asp-for="Title" class="form-label"></label>
+                                <input asp-for="Title" class="form-control" />
+                                <span asp-validation-for="Title" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="form-group">
+                                <label asp-for="TicketStatusId" class="form-label">Status</label>
+                                <select asp-for="TicketStatusId" class="form-control" asp-items="ViewBag.TicketStatusId"></select>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label asp-for="Description" class="form-label"></label>
+                                <textarea asp-for="Description" class="form-control editor" rows="5"></textarea>
+                                <span asp-validation-for="Description" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <h6 class="mt-2 fw-normal">Ticket Properties</h6>
+                            <hr class="mt-0" />
+                        </div>
+
+                        <div class="col-12 col-md-4">
+                            <div class="form-group">
+                                <label asp-for="TicketTypeId" class="form-label">Type</label>
+                                <select asp-for="TicketTypeId" class="form-control" asp-items="ViewBag.TicketTypeId"></select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <div class="form-group">
+                                <label asp-for="TicketPriorityId" class="form-label">Priority</label>
+                                <select asp-for="TicketPriorityId" class="form-control" asp-items="ViewBag.TicketPriorityId"></select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <div class="form-group">
+                                <label asp-for="ProjectId" class="form-label">Project</label>
+                                <select asp-for="ProjectId" class="form-control" asp-items="ViewBag.ProjectId"></select>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <h6 class="mt-2 fw-normal">Team Information</h6>
+                            <hr class="mt-0" />
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <div class="form-group">
+                                <label asp-for="DeveloperUserId" class="form-label">Developer</label>
+                                <select asp-for="DeveloperUserId" class="form-control" asp-items="ViewBag.DeveloperUserId"></select>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <h6 class="mt-2 fw-normal">Additional Information</h6>
+                            <hr class="mt-0" />
+                        </div>
+
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label asp-for="Note" class="form-label">Notes</label>
+                                <textarea asp-for="Note" class="form-control editor" rows="5"></textarea>
+                                <span asp-validation-for="Note" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label class="form-label">Attachments</label>
+                                <div class="media-body ml-3">
+                                    <label>
+                                        Description
+                                        <input name="Description" type="text" class="form-control" />
+                                    </label><br />
+                                    <label class="btn btn-outline-primary btn-sm">
+                                        <input name="FormFile" type="file" class="form-control-file" />
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 mt-4">
+                            <button type="submit" class="btn btn-primary">Create Ticket</button>
+                            <a asp-action="AllTickets" class="btn btn-secondary">Back to List</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+    <!-- Ck Editor JS -->
+    <script src="~/template/assets/js/ckeditor.js"></script>
+
+    <script>
+        if ($('.editor').length > 0) {
+            ClassicEditor
+                .create(document.querySelector('.editor'), {
+                    toolbar: {
+                        items: [
+                            'heading', '|',
+                            'fontfamily', 'fontsize', '|',
+                            'alignment', '|',
+                            'fontColor', 'fontBackgroundColor', '|',
+                            'bold', 'italic', 'strikethrough', 'underline', 'subscript', 'superscript', '|',
+                            'link', '|',
+                            'outdent', 'indent', '|',
+                            'bulletedList', 'numberedList', 'todoList', '|',
+                            'code', 'codeBlock', '|',
+                            'insertTable', '|',
+                            'uploadImage', 'blockQuote', '|',
+                            'undo', 'redo'
+                        ],
+                        shouldNotGroupWhenFull: true
+                    }
+                })
+                .then(editor => {
+                    window.editor = editor;
+                })
+                .catch(err => {
+                    console.error(err.stack);
+                });
+        }
+    </script>
 }
